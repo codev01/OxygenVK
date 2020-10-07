@@ -9,8 +9,12 @@
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	mc:Ignorable="d">
 
+	<Page.Resources>
+		<ResourceDictionary Source="/AppSource/Dictionaries/ApplicationThemeDictionary.xaml"/>
+	</Page.Resources>
 	<Grid>
 		<controls:NavigationView
+			Background="{ThemeResource RegionBrush}"
 			x:Name="Navigation"
 			AlwaysShowHeader="True"
 			DisplayModeChanged="Navigation_DisplayModeChanged"
@@ -97,37 +101,16 @@
 			</controls:NavigationView.MenuItems>
 
 			<Grid x:Name="NavigationGrid">
-				<Frame x:Name="contentFrame" SizeChanged="contentFrame_SizeChanged">
+				<Frame x:Name="contentFrame" SizeChanged="contentFrame_SizeChanged" Margin="0,90,0,0" Background="{ThemeResource RegionBrush}">
 					<Frame.ContentTransitions>
 						<TransitionCollection>
 							<NavigationThemeTransition />
 						</TransitionCollection>
 					</Frame.ContentTransitions>
 				</Frame>
-				<shadow:DropShadowPanel
-					x:Name="headerShadow"
-					Margin="16,0,0,0"
-					BlurRadius="8"
-					IsMasked="True"
-					OffsetX="0"
-					OffsetY="1"
-					ShadowOpacity="1"
-					Color="Black">
-					<Border
-						x:Name="header"
-						Height="89"
-						VerticalAlignment="Top"
-						Background="{ThemeResource SystemChromeLowColor}" />
-				</shadow:DropShadowPanel>
-
-				<Border
-					Height="89"
-					HorizontalAlignment="Stretch"
-					VerticalAlignment="Top"
-					Background="{ThemeResource SystemChromeLowColor}" />
-
 				<TextBlock
 					x:Name="headerText"
+					Style="{StaticResource HeaderTextBlockStyle}"
 					Margin="24,40,0,16"
 					VerticalAlignment="Top"
 					FontSize="24"

@@ -1,7 +1,7 @@
 ﻿using OxygenVK.AppSource;
 
 using System;
-
+using System.Reflection;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
@@ -63,6 +63,15 @@ namespace OxygenVK
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Сохранить состояние приложения и остановить все фоновые операции
             deferral.Complete();
+        }
+
+        public static TEnum GetEnum<TEnum>(string text) where TEnum : struct
+        {
+            if (!typeof(TEnum).GetTypeInfo().IsEnum)
+            {
+                throw new InvalidOperationException("Generic parameter 'TEnum' must be an enum.");
+            }
+            return (TEnum)Enum.Parse(typeof(TEnum), text);
         }
     }
 }

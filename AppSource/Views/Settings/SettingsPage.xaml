@@ -1,0 +1,42 @@
+﻿<Page
+	x:Class="OxygenVK.AppSource.Views.Settings.SettingsPage"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="using:OxygenVK.AppSource.Views.Settings"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:my="using:OxygenVK.AppSource.Views.Settings.Controls"
+	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+	mc:Ignorable="d">
+	<Page.Resources>
+		<ResourceDictionary Source="/AppSource/Dictionaries/ApplicationThemeDictionary.xaml"/>
+	</Page.Resources>
+	<ScrollViewer>
+		<StackPanel Margin="24,0,24,0">
+			<StackPanel>
+				<TextBlock
+                    Style="{StaticResource TitleTextBlockStyle}"
+                    Margin="0,4,0,0"
+                    FontWeight="Normal"
+                    Text="Тема" />
+				<StackPanel x:Name="ThemePanel" Margin="0,10,0,0">
+					<RadioButton Tag="Light" Checked="OnThemeRadioButtonChecked"  Content="Светлая"/>
+					<RadioButton Tag="Dark" Checked="OnThemeRadioButtonChecked" Content="Тёмная" />
+					<RadioButton Tag="Default" Checked="OnThemeRadioButtonChecked" Content="Использовать системные настройки" />
+				</StackPanel>
+			</StackPanel>
+			<StackPanel Margin="0,40,0,0">
+				<TextBlock
+                    Style="{StaticResource TitleTextBlockStyle}"
+                    Margin="0,4,0,0"
+                    FontWeight="Normal"
+                    Text="Тема" />
+				<StackPanel  Margin="0,10,0,0">
+					<RadioButton Tag="Light" Content="Светлая"/>
+					<RadioButton Tag="Dark"  Content="Тёмная" />
+					<RadioButton Tag="Default"  Content="Использовать системные настройки" />
+				</StackPanel>
+			</StackPanel>
+		</StackPanel>
+	</ScrollViewer>
+</Page>
