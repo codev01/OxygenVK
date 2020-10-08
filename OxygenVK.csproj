@@ -119,6 +119,24 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AppSource\Authorization\AuthFailedDialog.xaml.cs">
+      <DependentUpon>AuthFailedDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppSource\Authorization\Authorization.cs" />
+    <Compile Include="AppSource\Authorization\AuthorizationPage.xaml.cs">
+      <DependentUpon>AuthorizationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppSource\Authorization\AuthorizedUserCardsAttachment.cs" />
+    <Compile Include="AppSource\Authorization\Controls\UserCard.xaml.cs">
+      <DependentUpon>UserCard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppSource\Authorization\InWhichWindowDialog.xaml.cs">
+      <DependentUpon>InWhichWindowDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppSource\Authorization\ListOfAuthorizedUsers.cs" />
+    <Compile Include="AppSource\Authorization\Controls\WebAuthControl.xaml.cs">
+      <DependentUpon>WebAuthControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AppSource\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -195,6 +213,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="AppSource\Authorization\AuthFailedDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppSource\Authorization\AuthorizationPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppSource\Authorization\Controls\UserCard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppSource\Authorization\InWhichWindowDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppSource\Authorization\Controls\WebAuthControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="AppSource\Dictionaries\ApplicationThemeDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -232,9 +270,12 @@
     <PackageReference Include="Microsoft.UI.Xaml">
       <Version>2.4.3</Version>
     </PackageReference>
+    <PackageReference Include="VkNet">
+      <Version>1.56.0</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

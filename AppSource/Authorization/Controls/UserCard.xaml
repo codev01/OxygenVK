@@ -1,0 +1,74 @@
+﻿<UserControl
+	x:Class="OxygenVK.Authorization.Controls.UserCard"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:controls="using:Windows.UI.Xaml.Controls"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	d:DesignHeight="300"
+	d:DesignWidth="400"
+	mc:Ignorable="d">
+	<UserControl.Resources>
+		<ResourceDictionary Source="/AppSource/Dictionaries/ApplicationThemeDictionary.xaml" />
+	</UserControl.Resources>
+	<Button>
+		<Button.Flyout>
+			<Flyout x:Name="flyout">
+				<StackPanel>
+					<TextBlock Margin="0,0,0,12" Text="В каком окне желаете продолжить?" />
+					<StackPanel Orientation="Horizontal">
+						<Button
+							x:Name="ThisWindow"
+							Background="{ThemeResource SystemAccentColor}"
+							Click="ThisWindow_Click"
+							Content="В этом"
+							CornerRadius="{ThemeResource ControlCornerRadius}" />
+						<Button
+							x:Name="NewWindow"
+							Margin="12,0,0,0"
+							Click="NewWindow_Click"
+							Content="Новое окно"
+							CornerRadius="{ThemeResource ControlCornerRadius}" />
+					</StackPanel>
+				</StackPanel>
+			</Flyout>
+		</Button.Flyout>
+		<controls:ToolTipService.ToolTip>
+			<controls:ToolTip
+				Name="screenNameToolTip"
+				Content="{Binding ScreenName}"
+				Loaded="screenNameToolTip_Loaded"
+				Opacity="{Binding OpacityToolTip}" />
+		</controls:ToolTipService.ToolTip>
+		<Grid>
+			<Border Name="card" Width="200">
+				<controls:StackPanel>
+					<TextBlock
+						x:Name="userID"
+						Text="{Binding UserID}"
+						Visibility="Collapsed" />
+					<controls:Button
+						x:Name="deleteCard"
+						Width="26"
+						Height="26"
+						Padding="0"
+						HorizontalAlignment="Right"
+						Click="deleteCard_Click">
+						<FontIcon
+							FontFamily="Segoe MDL2 Assets"
+							FontSize="10"
+							Glyph="&#xE106;" />
+					</controls:Button>
+					<PersonPicture Name="avatar" ProfilePicture="{Binding AvatarUrl}" />
+					<TextBlock
+						x:Name="userName"
+						Margin="0,50,0,25"
+						HorizontalAlignment="Center"
+						FontSize="17"
+						Text="{Binding UserName}"
+						TextWrapping="WrapWholeWords" />
+				</controls:StackPanel>
+			</Border>
+		</Grid>
+	</Button>
+</UserControl>

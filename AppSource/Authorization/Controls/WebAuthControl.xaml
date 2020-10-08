@@ -1,0 +1,61 @@
+﻿<UserControl
+	x:Class="OxygenVK.Authorization.Controls.WebAuthControl"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:c="using:Windows.UI.Xaml.Controls"
+	xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d">
+	<UserControl.Resources>
+		<ResourceDictionary Source="/AppSource/Dictionaries/ApplicationThemeDictionary.xaml" />
+	</UserControl.Resources>
+	<Grid
+		x:Name="WebAuth"
+		Opacity="1"
+		Visibility="Visible">
+
+		<c:Grid.OpacityTransition>
+			<ScalarTransition Duration="0:0:0.9" />
+		</c:Grid.OpacityTransition>
+		<Grid.Background>
+			<AcrylicBrush TintColor="#66000000" />
+		</Grid.Background>
+
+		<Rectangle Fill="Transparent" Tapped="Rectangle_Tapped" />
+		<Viewbox MaxHeight="400">
+			<Border
+				Width="655"
+				Height="350"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Center"
+				CornerRadius="10">
+				<Grid>
+					<WebView
+						x:Name="wv"
+						Width="655"
+						c:ScrollViewer.VerticalScrollMode="Disabled"
+						NavigationCompleted="wv_NavigationCompleted"
+						NavigationFailed="wv_NavigationFailed"
+						ScrollViewer.VerticalScrollBarVisibility="Disabled" />
+					<Grid
+						x:Name="Expectation"
+						Opacity="1"
+						Visibility="Visible">
+						<c:Grid.OpacityTransition>
+							<ScalarTransition Duration="0:0:0.9" />
+						</c:Grid.OpacityTransition>
+						<Grid.Background>
+							<AcrylicBrush TintColor="#91000000" />
+						</Grid.Background>
+						<controls:ProgressRing
+							Width="50"
+							Height="50"
+							Background="{StaticResource SystemAccentColor}"
+							IsActive="True" />
+					</Grid>
+				</Grid>
+			</Border>
+		</Viewbox>
+	</Grid>
+</UserControl>
