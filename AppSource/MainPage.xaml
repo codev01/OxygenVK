@@ -14,7 +14,6 @@
 	</Page.Resources>
 	<Grid>
 		<controls:NavigationView
-			Background="{ThemeResource RegionBrush}"
 			x:Name="Navigation"
 			AlwaysShowHeader="True"
 			DisplayModeChanged="Navigation_DisplayModeChanged"

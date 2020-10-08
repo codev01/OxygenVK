@@ -19,11 +19,14 @@
 				Style="{StaticResource SubtitleTextBlockStyle}"
 				Text="Предварительный просмотр" />
 		</Border>
+		
 		<TextBlock
 			x:Uid="TestContentButtonsBlock"
 			Margin="0,0,0,16"
 			Style="{StaticResource BaseTextBlockStyle}"
 			Text="Buttons" />
+		
+		<!--Buttons-->
 		<Button
 			x:Uid="TestContentEnabledButton"
 			Margin="0,0,0,12"
@@ -54,11 +57,14 @@
 			Content="Disabled accent button"
 			IsEnabled="False"
 			Style="{StaticResource AccentButtonStyle}" />
+		
 		<TextBlock
 			x:Uid="TestContentCheckboxBlock"
 			Margin="0,0,0,16"
 			Style="{StaticResource BaseTextBlockStyle}"
 			Text="Check box" />
+		
+		<!--Check box-->
 		<CheckBox
 			x:Uid="TestContentUncheckedCheckbox"
 			Margin="0,0,0,12"
@@ -79,11 +85,14 @@
 			Content="Disabled"
 			IsChecked="True"
 			IsEnabled="False" />
+		
 		<TextBlock
 			x:Uid="TestContentRadioBlock"
 			Margin="0,0,0,16"
 			Style="{StaticResource BaseTextBlockStyle}"
 			Text="Radio button" />
+		
+		<!--Radio buttons-->
 		<RadioButton
 			x:Uid="TestContentUncheckedRadio"
 			Margin="0,0,0,12"
@@ -102,11 +111,14 @@
 			GroupName="Test2"
 			IsChecked="True"
 			IsEnabled="False" />
+		
 		<TextBlock
 			x:Uid="TestContentComboBlock"
 			Margin="0,0,0,16"
 			Style="{StaticResource BaseTextBlockStyle}"
 			Text="Combo box" />
+		
+		<!--Combo box-->
 		<ComboBox
 			Width="200"
 			Margin="0,0,0,12"
@@ -126,11 +138,14 @@
 			<x:String>Red</x:String>
 			<x:String>Yellow</x:String>
 		</ComboBox>
+		
 		<TextBlock
 			x:Uid="TestContentTextboxBlock"
 			Margin="0,0,0,16"
 			Style="{StaticResource BaseTextBlockStyle}"
 			Text="Text box" />
+		
+		<!--Text box-->
 		<TextBox
 			x:Uid="TestContentTextbox"
 			Width="200"
@@ -138,30 +153,39 @@
 			HorizontalAlignment="Left"
 			Foreground="Gray"
 			Text="Enter text here" />
+		
 		<TextBlock
 			x:Uid="TestContentToggleBlock"
 			Margin="0,0,0,16"
 			Style="{StaticResource BaseTextBlockStyle}"
 			Text="Toggle switch" />
+		
+		<!--Toggle switch-->
 		<ToggleSwitch Margin="0,0,0,12" IsOn="False" />
 		<ToggleSwitch Margin="0,0,0,28" IsOn="True" />
+		
 		<TextBlock
 			x:Uid="TestContentSliderBlock"
 			Margin="0,0,0,16"
 			Style="{StaticResource BaseTextBlockStyle}"
 			Text="Slider" />
+		
+		<!--Slider-->
 		<Slider
 			Margin="0,0,0,28"
 			HorizontalAlignment="Stretch"
 			Maximum="100"
 			Minimum="0"
 			Value="50" />
+		
 		<TextBlock
 			x:Uid="TestContentListviewBlock"
 			Margin="0,0,0,16"
 			Style="{StaticResource BaseTextBlockStyle}"
 			Text="List view" />
-		<ListView Margin="0,0,0,28" HorizontalAlignment="Stretch">
+		
+		<!--List view-->
+		<ListView Margin="0,0,0,28" HorizontalAlignment="Left" Width="450">
 			<ListView.ItemTemplate>
 				<DataTemplate>
 					<TextBlock Text="{Binding}" />
@@ -174,33 +198,46 @@
 				<x:String>Hola!</x:String>
 			</ListView.Items>
 		</ListView>
+		
 		<TextBlock
 			x:Uid="TestContentCommandBarBlock"
 			Margin="0,0,0,16"
 			Style="{StaticResource BaseTextBlockStyle}"
 			Text="Comand bar" />
+		
+		<!--Comand bar-->
 		<CommandBar
 			Margin="0,0,0,28"
 			HorizontalAlignment="Stretch"
 			Content="Information">
 			<AppBarButton x:Uid="TestContentAppBarButton" Icon="Add" />
 		</CommandBar>
+		
 		<TextBlock
 			x:Uid="TestContentDatePickerBlock"
 			Margin="0,0,0,16"
 			Style="{StaticResource BaseTextBlockStyle}"
 			Text="Date picker" />
+		
+		<!--Date picker-->
 		<DatePicker Margin="0,0,0,28" HorizontalAlignment="Left" />
+		
 		<TextBlock
 			x:Uid="TestContentTimePickerBlock"
 			Margin="0,0,0,16"
 			Style="{StaticResource BaseTextBlockStyle}"
 			Text="Time picker" />
-		<TimePicker Margin="0,0,0,0" HorizontalAlignment="Left" />
+		
+		<!--Time picker-->
+		<TimePicker Margin="0,0,0,28" HorizontalAlignment="Left" />
+
 		<TextBlock
 			x:Uid="TestContentCalendarViewBlock"
 			Margin="0,0,0,16"
-			Style="{StaticResource BaseTextBlockStyle}" />
+			Style="{StaticResource BaseTextBlockStyle}" 
+			Text="Acrylic controls"/>
+
+		<!--Acrylic controls-->
 		<Grid
 			Height="120"
 			Margin="0,0,0,16"
@@ -214,7 +251,6 @@
 				FontStyle="Italic"
 				Text="Base Acrylic" />
 		</Grid>
-
 		<Grid
 			Height="120"
 			Margin="0,0,0,16"
@@ -229,7 +265,14 @@
 				RequestedTheme="Dark"
 				Text="Primary Acrylic" />
 		</Grid>
-		<CalendarView Margin="0,0,0,28" HorizontalAlignment="Stretch" />
+
+		<TextBlock
+			Margin="0,0,0,16"
+			Style="{StaticResource BaseTextBlockStyle}" 
+			Text="Calendar view"/>
+
+		<!--Calendar view-->
+		<CalendarView Margin="0,0,0,28" HorizontalAlignment="Left" Width="450" />
 
 	</StackPanel>
 </UserControl>

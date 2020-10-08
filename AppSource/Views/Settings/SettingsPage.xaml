@@ -32,7 +32,27 @@
 						Content="Использовать системные настройки"
 						Tag="Default" />
 				</StackPanel>
-				<my:StylePreviewControl Margin="0,40,0,0"/>
+				<TextBlock
+					Margin="0,40,0,0"
+					FontWeight="Normal"
+					Style="{StaticResource TitleTextBlockStyle}"
+					Text="Звуки" />
+				<StackPanel Margin="0,10,0,0">
+					<ToggleSwitch
+						x:Name="soundToggle"
+						Margin="0,0,0,4"
+						Header="Органы управления обеспечивают обратную звуковую связь"
+						OffContent="Откл."
+						OnContent="Вкл."
+						Toggled="soundToggle_Toggled" />
+					<CheckBox
+						x:Name="spatialSoundBox"
+						Checked="spatialSoundBox_Checked"
+						Content="Пространственный звук"
+						IsEnabled="False"
+						Unchecked="spatialSoundBox_Unchecked" />
+				</StackPanel>
+				<my:StylePreviewControl Margin="0,40,0,0" />
 			</StackPanel>
 		</StackPanel>
 	</ScrollViewer>
