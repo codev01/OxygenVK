@@ -8,15 +8,20 @@ namespace OxygenVK.Authorization
 		public delegate void AuthorizationCompleted(VkApi vkApi);
 		public static event AuthorizationCompleted OnAuthorizationComleted;
 
-		public Authorization(string token)
-		{
-			VkApi vkApi = new VkApi();
+		public VkApi VkApi;
 
-			vkApi.AuthorizeAsync(new ApiAuthParams
+		public Authorization(string token, bool re_authorization = false)
+		{
+			VkApi = new VkApi();
+
+			VkApi.AuthorizeAsync(new ApiAuthParams
 			{
 				AccessToken = token
 			});
-			OnAuthorizationComleted?.Invoke(vkApi);
+			if (!re_authorization)
+			{
+				OnAuthorizationComleted?.Invoke(VkApi);
+			}
 		}
 	}
 }

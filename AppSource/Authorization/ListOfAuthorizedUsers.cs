@@ -146,6 +146,17 @@ namespace OxygenVK.Authorization
 				});
 			}
 		}
+		public string GetUserToken(string userID)
+		{
+			foreach (XElement i in xDoc.Root.Elements(User))
+			{
+				if (i.Element(UserID).Value == userID.ToString())
+				{
+					return i.Element(Token).Value;
+				}
+			}
+			return null;
+		}
 
 		public void DeleteUserData(long userID)
 		{

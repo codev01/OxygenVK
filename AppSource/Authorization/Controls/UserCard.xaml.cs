@@ -1,5 +1,8 @@
 ﻿using System;
 
+using OxygenVK.AppSource;
+using OxygenVK.AppSource.Views;
+
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -9,6 +12,7 @@ namespace OxygenVK.Authorization.Controls
 	{
 		public delegate void ClickButtonDelete(AuthorizedUserCardsAttachment authorizedUserCardsAttachment);
 		public event ClickButtonDelete ClickDelete;
+
 		public UserCard()
 		{
 			InitializeComponent();
@@ -37,19 +41,14 @@ namespace OxygenVK.Authorization.Controls
 			}
 		}
 
-		private void UserControl_Loaded(object sender, RoutedEventArgs e)
-		{
-		}
-
-
 		private void ThisWindow_Click(object sender, RoutedEventArgs e)
 		{
-			//
+			new RootFrameNavigation(new Authorization(new ListOfAuthorizedUsers().GetUserToken(userID.Text), true).VkApi);
 		}
 
 		private void NewWindow_Click(object sender, RoutedEventArgs e)
 		{
-			//
+			new WindowGenerator(new Authorization(new ListOfAuthorizedUsers().GetUserToken(userID.Text), true).VkApi);
 		}
 	}
 }

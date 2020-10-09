@@ -58,6 +58,7 @@
 								</Grid.ColumnDefinitions>
 								<StackPanel
 									x:Name="hintRecentlyLoggedIn"
+									Width="0"
 									Padding="10,0,10,10"
 									HorizontalAlignment="Left">
 									<TextBlock Style="{StaticResource SubtitleTextBlockStyle}" TextWrapping="Wrap">

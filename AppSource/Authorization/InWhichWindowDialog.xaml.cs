@@ -1,5 +1,8 @@
 ﻿using System.Threading.Tasks;
 
+using OxygenVK.AppSource;
+using OxygenVK.AppSource.Views;
+
 using VkNet;
 
 using Windows.UI.Xaml.Controls;
@@ -17,11 +20,13 @@ namespace OxygenVK.Authorization
 		private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
 		{
 			Task.Run(SaveProfailInfo);
+			new RootFrameNavigation(VkApi);
 		}
 
 		private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
 		{
 			Task.Run(SaveProfailInfo);
+			new WindowGenerator(VkApi);
 		}
 
 		private void SaveProfailInfo()

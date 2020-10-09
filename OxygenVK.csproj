@@ -140,6 +140,7 @@
     <Compile Include="AppSource\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AppSource\Views\RootFrameNavigation.cs" />
     <Compile Include="AppSource\Views\Settings\Controls\StylePreviewControl.xaml.cs">
       <DependentUpon>StylePreviewControl.xaml</DependentUpon>
     </Compile>
@@ -147,6 +148,7 @@
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppSource\Views\Settings\ThemeHelper.cs" />
+    <Compile Include="AppSource\WindowGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -234,10 +236,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="AppSource\Dictionaries\ApplicationThemeDictionary.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="AppSource\Dictionaries\ThicknessDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
