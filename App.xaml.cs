@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Reflection;
 
-using OxygenVK.AppSource;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
-using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -19,6 +20,8 @@ namespace OxygenVK
 	{
 		public App()
 		{
+			AppCenter.Start("3c3e5a5d-e0bf-4620-a497-60b4b7fdf590", typeof(Analytics), typeof(Crashes));
+
 			InitializeComponent();
 			Suspending += OnSuspending;
 		}
@@ -45,7 +48,7 @@ namespace OxygenVK
 				{
 					rootFrame.Navigate(typeof(Authorization.AuthorizationPage), e.Arguments);
 				}
-			    ApplicationViewTitleBar appViewTitleBar = ApplicationView.GetForCurrentView().TitleBar;
+				ApplicationViewTitleBar appViewTitleBar = ApplicationView.GetForCurrentView().TitleBar;
 				appViewTitleBar.ButtonBackgroundColor = Colors.Transparent;
 				CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
 				coreTitleBar.ExtendViewIntoTitleBar = true;
