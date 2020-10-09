@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Numerics;
+using System.Threading.Tasks;
+using Microsoft.Toolkit.Uwp.UI.Controls.TextToolbarSymbols;
 
+using OxygenVK.AppSource.Authorization.Controls;
 using OxygenVK.AppSource.Views.Settings;
-
+using OxygenVK.Authorization;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
@@ -17,6 +21,8 @@ namespace OxygenVK.AppSource
 		public bool paneIsOpen;
 		public static double ContainerAdapterWidth { get; set; }
 
+		private DispatcherTimer timer;
+
 		public MainPage()
 		{
 			InitializeComponent();
@@ -25,7 +31,52 @@ namespace OxygenVK.AppSource
 		private void Navigation_Loaded(object sender, RoutedEventArgs e)
 		{
 			//contentFrame.Navigate(typeof(NewsPage), null, new DrillInNavigationTransitionInfo());
+			accauntsSplitButtonList_Add();
+		}
 
+		private void accauntsSplitButtonList_Add()
+		{
+			accauntsSplitButtonList.Items.Clear();
+			if (ListOfAuthorizedUsers.listOfAuthorizedUsers.Count != 0)
+			{
+				ListOfAuthorizedUsers.listOfAuthorizedUsers.Reverse();
+				foreach (AuthorizedUserCardsAttachment item in ListOfAuthorizedUsers.listOfAuthorizedUsers)
+				{
+					accauntsSplitButtonList.Items.Add(new AuthorizedUserCardsAttachment
+					{
+						UserID = item.UserID,
+						UserName = item.UserName,
+						ScreenName = item.ScreenName,
+						AvatarUrl = item.AvatarUrl
+					});
+				}
+			}
+			else
+			{
+				//borderHintRecentlyLoggedIn.Visibility = Visibility.Collapsed;
+				//cardAddButton.Content = "Войти в аккаунт";
+				//cardAdd_Click(this, null);
+			}
+		}
+
+		private void HorizontalUserCard_ClickDelete(AuthorizedUserCardsAttachment authorizedUserCardsAttachment)
+		{
+			foreach (AuthorizedUserCardsAttachment item in accauntsSplitButtonList.Items)
+			{
+				if (item.UserID == authorizedUserCardsAttachment.UserID)
+				{
+					accauntsSplitButtonList.Items.Remove(item);
+					Task.Run(() =>
+					{
+						new ListOfAuthorizedUsers().DeleteUserData(item.UserID);
+					});
+				}
+			}
+			if (accauntsSplitButtonList.Items.Count == 0)
+			{
+				//cardAdd_Click(this, null);
+				//borderHintRecentlyLoggedIn.Visibility = Visibility.Collapsed;
+			}
 		}
 
 		private void contentFrame_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -63,16 +114,17 @@ namespace OxygenVK.AppSource
 
 		private void Navigation_PaneClosing(MUXC.NavigationView sender, MUXC.NavigationViewPaneClosingEventArgs args)
 		{
-			accaunts.Visibility = Visibility.Collapsed;
-			accaunts.Opacity = 0;
+			accauntsSplitButton.Visibility = Visibility.Collapsed;
+			accauntsSplitButton.Opacity = 0;
+
 			paneIsOpen = false;
 			AppNameTextBlock_Margin(displayMode, paneIsOpen);
 		}
 
 		private void Navigation_PaneOpening(MUXC.NavigationView sender, object args)
 		{
-			accaunts.Visibility = Visibility.Visible;
-			accaunts.Opacity = 1;
+			accauntsSplitButton.Opacity = 1;
+			accauntsSplitButton.Visibility = Visibility.Visible;
 			paneIsOpen = true;
 			AppNameTextBlock_Margin(displayMode, paneIsOpen);
 		}
@@ -87,8 +139,7 @@ namespace OxygenVK.AppSource
 						AppTitleBar.Margin = new Thickness(320, 0, 0, 0);
 						AppNameTextBlock.Visibility = Visibility.Collapsed;
 						AppNameTextBlock.Opacity = 0;
-						accaunts.Margin = new Thickness(0, 4, 10, -4);
-						accauntBorder.Width = 196;
+						accauntsSplitButtonContent.Width = 189;
 					}
 					else
 					{
@@ -96,11 +147,10 @@ namespace OxygenVK.AppSource
 						AppNameTextBlock.Visibility = Visibility.Visible;
 						AppNameTextBlock.Opacity = 1;
 						AppNameTextBlock.Translation = new Vector3(0, 0, 0);
-						accaunts.Margin = new Thickness(0, 0, 10, 0);
-						accauntBorder.Width = 230;
 					}
 					break;
 				case MUXC.NavigationViewDisplayMode.Compact:
+					accauntsSplitButtonContent.Width = 229;
 					AppTitleBar.Margin = new Thickness(40, 0, 0, 0);
 					if (paneIsOpen)
 					{
@@ -112,7 +162,7 @@ namespace OxygenVK.AppSource
 					}
 					break;
 				case MUXC.NavigationViewDisplayMode.Expanded:
-
+					accauntsSplitButtonContent.Width = 229;
 					AppTitleBar.Margin = new Thickness(40, 0, 0, 0);
 					AppNameTextBlock.Visibility = Visibility.Visible;
 					AppNameTextBlock.Opacity = 1;

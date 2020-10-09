@@ -122,11 +122,14 @@
     <Compile Include="AppSource\Authorization\AuthFailedDialog.xaml.cs">
       <DependentUpon>AuthFailedDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AppSource\Authorization\Authorization.cs" />
+    <Compile Include="AppSource\Authorization\Authorize.cs" />
     <Compile Include="AppSource\Authorization\AuthorizationPage.xaml.cs">
       <DependentUpon>AuthorizationPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppSource\Authorization\AuthorizedUserCardsAttachment.cs" />
+    <Compile Include="AppSource\Authorization\Controls\HorizontalUserCard.xaml.cs">
+      <DependentUpon>HorizontalUserCard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AppSource\Authorization\Controls\UserCard.xaml.cs">
       <DependentUpon>UserCard.xaml</DependentUpon>
     </Compile>
@@ -222,6 +225,10 @@
     <Page Include="AppSource\Authorization\AuthorizationPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppSource\Authorization\Controls\HorizontalUserCard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AppSource\Authorization\Controls\UserCard.xaml">
       <Generator>MSBuild:Compile</Generator>

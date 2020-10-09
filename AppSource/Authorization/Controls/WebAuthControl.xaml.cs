@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 
+using OxygenVK.AppSource.Authorization;
+
 using Windows.UI.Xaml.Controls;
 
 namespace OxygenVK.Authorization.Controls
@@ -36,7 +38,7 @@ namespace OxygenVK.Authorization.Controls
 					await WebView.ClearTemporaryWebDataAsync();
 					Expectation.Opacity = 1;
 					Expectation.Visibility = Windows.UI.Xaml.Visibility.Visible;
-					new Authorization(token);
+					new Authorize(token);
 				}
 			}
 			catch

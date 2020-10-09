@@ -6,6 +6,7 @@
 	xmlns:controls="using:Microsoft.UI.Xaml.Controls"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:my="using:OxygenVK.AppSource.Authorization.Controls"
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	mc:Ignorable="d">
 	<Page.Resources>
@@ -13,7 +14,7 @@
 	</Page.Resources>
 	<Grid>
 		<c:Grid.OpacityTransition>
-			<ScalarTransition Duration="0:0:0.9" />
+			<ScalarTransition Duration="0:0:0.3" />
 		</c:Grid.OpacityTransition>
 		<Grid.Background>
 			<AcrylicBrush TintColor="#66000000" />
@@ -36,50 +37,56 @@
 			SelectionFollowsFocus="Enabled">
 			<controls:NavigationView.PaneHeader>
 				<controls:SplitButton
-					x:Name="accaunts"
-					Margin="0,0,10,0"
+					x:Name="accauntsSplitButton"
+					Margin="5,0,10,0"
+					Padding="0,0,0,0"
 					HorizontalAlignment="Stretch"
 					VerticalAlignment="Stretch"
-					CornerRadius="8">
+					CornerRadius="{ThemeResource ControlCornerRadius}">
 					<controls:SplitButton.OpacityTransition>
 						<ScalarTransition Duration="0:0:0.5" />
 					</controls:SplitButton.OpacityTransition>
-					<Border
-						x:Name="accauntBorder"
-						Width="230"
-						Height="34"
-						Margin="-6,-6,-10,-6">
-						<Grid>
+					<controls:SplitButton.Content>
+						<Grid
+							x:Name="accauntsSplitButtonContent"
+							Width="234"
+							Height="38">
 							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="34" />
-								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="38" />
+								<ColumnDefinition />
 							</Grid.ColumnDefinitions>
 							<PersonPicture
 								x:Name="personPicture"
 								Grid.Column="0"
-								Height="34" />
-							<TextBlock
-								x:Name="firstANDlastName"
-								Grid.Column="1"
-								Margin="4,-2,6,0"
-								HorizontalAlignment="Stretch"
-								VerticalAlignment="Center"
-								FontSize="14"
-								Text="Rashid Hasanov"
-								TextAlignment="Center"
-								TextWrapping="WrapWholeWords" />
+								Height="38" />
+							<ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
+								<TextBlock
+									x:Name="firstANDlastName"
+									HorizontalAlignment="Center"
+									VerticalAlignment="Center"
+									FontSize="14"
+									HorizontalTextAlignment="Center"
+									Text="Rashid Ибн Муталиб Аль Рамазан (aрабская версия)"
+									TextAlignment="Center"
+									TextWrapping="WrapWholeWords" />
+							</ScrollViewer>
 						</Grid>
-					</Border>
+					</controls:SplitButton.Content>
 					<controls:SplitButton.Flyout>
-						<Flyout>
-							<Grid>
-								<StackPanel Orientation="Vertical">
-									<ListView
-										x:Name="listAccounts"
-										Grid.Row="0"
-										Margin="-12" />
+						<Flyout Placement="Auto">
+							<StackPanel Margin="0">
+								<ListView x:Name="accauntsSplitButtonList" SelectionMode="None">
+									<ListView.ItemTemplate>
+										<DataTemplate>
+											<my:HorizontalUserCard Margin="-12,0,-12,10" ClickDelete="HorizontalUserCard_ClickDelete" />
+										</DataTemplate>
+									</ListView.ItemTemplate>
+								</ListView>
+								<StackPanel Orientation="Horizontal">
+									<Button/>
+									<Button/>
 								</StackPanel>
-							</Grid>
+							</StackPanel>
 						</Flyout>
 					</controls:SplitButton.Flyout>
 				</controls:SplitButton>

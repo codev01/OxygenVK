@@ -1,16 +1,16 @@
 ﻿using VkNet;
 using VkNet.Model;
 
-namespace OxygenVK.Authorization
+namespace OxygenVK.AppSource.Authorization
 {
-	public class Authorization
+	public class Authorize
 	{
 		public delegate void AuthorizationCompleted(VkApi vkApi);
 		public static event AuthorizationCompleted OnAuthorizationComleted;
 
 		public VkApi VkApi;
 
-		public Authorization(string token, bool re_authorization = false)
+		public Authorize(string token, bool re_authorization = false)
 		{
 			VkApi = new VkApi();
 

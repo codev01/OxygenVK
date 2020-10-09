@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 
+using OxygenVK.AppSource.Authorization;
+
 using VkNet;
 
 using Windows.UI.Xaml;
@@ -13,7 +15,7 @@ namespace OxygenVK.Authorization
 		public AuthorizationPage()
 		{
 			InitializeComponent();
-			Authorization.OnAuthorizationComleted += Authorization_OnAuthorizationComleted;
+			Authorize.OnAuthorizationComleted += Authorization_OnAuthorizationComleted;
 			ListOfAuthorizedUsers.OnListStartUpdate += ListOfAuthorizedUsers_OnListStartUpdate;
 			ListOfAuthorizedUsers.OnListUpdated += ListOfAuthorizedUsers_OnListUpdated;
 		}

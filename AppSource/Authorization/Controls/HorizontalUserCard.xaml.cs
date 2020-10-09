@@ -1,20 +1,19 @@
 ﻿using System;
 
-using OxygenVK.AppSource;
-using OxygenVK.AppSource.Authorization;
 using OxygenVK.AppSource.Views;
+using OxygenVK.Authorization;
 
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace OxygenVK.Authorization.Controls
+namespace OxygenVK.AppSource.Authorization.Controls
 {
-	public sealed partial class UserCard : UserControl
+	public sealed partial class HorizontalUserCard : UserControl
 	{
 		public delegate void ClickButtonDelete(AuthorizedUserCardsAttachment authorizedUserCardsAttachment);
 		public event ClickButtonDelete ClickDelete;
 
-		public UserCard()
+		public HorizontalUserCard()
 		{
 			InitializeComponent();
 		}
