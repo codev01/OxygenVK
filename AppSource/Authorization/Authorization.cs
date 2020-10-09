@@ -17,7 +17,6 @@ namespace OxygenVK.Authorization
 				AccessToken = token
 			});
 			OnAuthorizationComleted?.Invoke(vkApi);
-			new ListOfAuthorizedUsers().SetListOfAuthorizedUsers(vkApi);
 		}
 	}
 }

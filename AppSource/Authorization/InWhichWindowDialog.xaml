@@ -18,7 +18,11 @@
 		<ResourceDictionary Source="/AppSource/Dictionaries/ApplicationThemeDictionary.xaml" />
 	</ContentDialog.Resources>
 	<StackPanel>
-		<controls:CheckBox Margin="0,0,0,2" Content="Запомнить логин и пароль" />
+		<controls:CheckBox
+			x:Name="isSave"
+			Margin="0,0,0,2"
+			Content="Запомнить логин и пароль"
+			IsChecked="True" />
 		<TextBlock
 			VerticalAlignment="Center"
 			FontSize="15"

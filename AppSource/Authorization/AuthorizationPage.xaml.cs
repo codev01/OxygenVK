@@ -14,20 +14,18 @@ namespace OxygenVK.Authorization
 		{
 			InitializeComponent();
 			Authorization.OnAuthorizationComleted += Authorization_OnAuthorizationComleted;
+			ListOfAuthorizedUsers.OnListStartUpdate += ListOfAuthorizedUsers_OnListStartUpdate;
 			ListOfAuthorizedUsers.OnListUpdated += ListOfAuthorizedUsers_OnListUpdated;
 		}
 
-		private void Authorization_OnAuthorizationComleted(VkApi vkApi)
+		private async void Authorization_OnAuthorizationComleted(VkApi vkApi)
 		{
-			OpenDialog();
-			VkApi t = vkApi;
-		}
-
-		private async void OpenDialog()
-		{
-			InWhichWindowDialog dialog = new InWhichWindowDialog();
-			await dialog.ShowAsync();
 			webAuthControl_Closing();
+			InWhichWindowDialog dialog = new InWhichWindowDialog
+			{
+				VkApi = vkApi
+			};
+			await dialog.ShowAsync();
 		}
 
 		private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -36,9 +34,22 @@ namespace OxygenVK.Authorization
 			listUsersCard_GridView_Add();
 		}
 
+		private void ListOfAuthorizedUsers_OnListStartUpdate()
+		{
+			if (borderHintRecentlyLoggedIn.Visibility == Visibility.Collapsed)
+			{
+				listUpdatedProgress.Visibility = Visibility.Visible;
+				listUpdatedProgress.IsActive = true;
+			}
+			listUpdatedProgress2.IsActive = true;
+		}
+
 		private void ListOfAuthorizedUsers_OnListUpdated()
 		{
+			listUpdatedProgress.IsActive = false;
+			listUpdatedProgress.Visibility = Visibility.Collapsed;
 			listUsersCard_GridView_Add();
+			listUpdatedProgress2.IsActive = false;
 		}
 
 		private void cardAdd_Click(object sender, RoutedEventArgs e)
@@ -53,7 +64,8 @@ namespace OxygenVK.Authorization
 			listUsersCard_GridView.Items.Clear();
 			if (ListOfAuthorizedUsers.listOfAuthorizedUsers.Count != 0)
 			{
-				listUsersCard_GridView.Visibility = Visibility.Visible;
+				cardAddButton.Content = "Войти в другой аккаунт";
+				borderHintRecentlyLoggedIn.Visibility = Visibility.Visible;
 				ListOfAuthorizedUsers.listOfAuthorizedUsers.Reverse();
 				foreach (AuthorizedUserCardsAttachment item in ListOfAuthorizedUsers.listOfAuthorizedUsers)
 				{
@@ -68,7 +80,8 @@ namespace OxygenVK.Authorization
 			}
 			else
 			{
-				listUsersCard_GridView.Visibility = Visibility.Collapsed;
+				borderHintRecentlyLoggedIn.Visibility = Visibility.Collapsed;
+				cardAddButton.Content = "Войти в аккаунт";
 				cardAdd_Click(this, null);
 			}
 		}
@@ -101,10 +114,7 @@ namespace OxygenVK.Authorization
 
 		private void listUsersCard_GridView_SizeChanged(object sender, SizeChangedEventArgs e)
 		{
-			if (listUsersCard_GridView.Items.Count != 0)
-			{
-				hintRecentlyLoggedIn.Width = e.NewSize.Width;
-			}
+			hintRecentlyLoggedIn.Width = listUsersCard_GridView.ActualWidth - 54;
 		}
 	}
 }

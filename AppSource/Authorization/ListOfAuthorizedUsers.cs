@@ -15,6 +15,7 @@ namespace OxygenVK.Authorization
 	{
 		public delegate void ListUpdated();
 		public static event ListUpdated OnListUpdated;
+		public static event ListUpdated OnListStartUpdate;
 
 		public static List<AuthorizedUserCardsAttachment> listOfAuthorizedUsers = new List<AuthorizedUserCardsAttachment>();
 
@@ -96,10 +97,11 @@ namespace OxygenVK.Authorization
 								   "</Users>";
 		}
 
-		public void SetListOfAuthorizedUsers(VkApi vkApi)
+		public async void SetListOfAuthorizedUsers(VkApi vkApi)
 		{
+			OnListStartUpdate.Invoke();
 			string photoURL = null;
-			foreach (VkNet.Model.Attachments.Photo photo in vkApi.Photo.Get(new VkNet.Model.RequestParams.PhotoGetParams
+			foreach (VkNet.Model.Attachments.Photo photo in await vkApi.Photo.GetAsync(new VkNet.Model.RequestParams.PhotoGetParams
 			{
 				AlbumId = PhotoAlbumType.Profile,
 				Count = 1
@@ -108,11 +110,11 @@ namespace OxygenVK.Authorization
 				photoURL = photo.Sizes.Last().Url.AbsoluteUri;
 			}
 			long userID = 0;
-			foreach (User item in vkApi.Users.Get(new long[0]))
+			foreach (User item in await vkApi.Users.GetAsync(new long[0]))
 			{
 				userID = item.Id;
 			}
-			VkNet.Model.RequestParams.AccountSaveProfileInfoParams profileInfo = vkApi.Account.GetProfileInfo();
+			VkNet.Model.RequestParams.AccountSaveProfileInfoParams profileInfo = await vkApi.Account.GetProfileInfoAsync();
 
 			DeleteUserData(userID);
 
@@ -130,6 +132,7 @@ namespace OxygenVK.Authorization
 			GetUserData();
 			OnListUpdated.Invoke();
 		}
+
 		private void GetUserData()
 		{
 			foreach (XElement item in xDoc.Root.Elements(User))
@@ -143,6 +146,7 @@ namespace OxygenVK.Authorization
 				});
 			}
 		}
+
 		public void DeleteUserData(long userID)
 		{
 			try

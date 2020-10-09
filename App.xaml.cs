@@ -6,6 +6,7 @@ using OxygenVK.AppSource;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
+using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -44,7 +45,7 @@ namespace OxygenVK
 				{
 					rootFrame.Navigate(typeof(Authorization.AuthorizationPage), e.Arguments);
 				}
-				ApplicationViewTitleBar appViewTitleBar = ApplicationView.GetForCurrentView().TitleBar;
+			    ApplicationViewTitleBar appViewTitleBar = ApplicationView.GetForCurrentView().TitleBar;
 				appViewTitleBar.ButtonBackgroundColor = Colors.Transparent;
 				CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
 				coreTitleBar.ExtendViewIntoTitleBar = true;
