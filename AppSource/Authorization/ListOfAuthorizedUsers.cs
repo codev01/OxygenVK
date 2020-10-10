@@ -14,8 +14,8 @@ namespace OxygenVK.Authorization
 	public class ListOfAuthorizedUsers
 	{
 		public delegate void ListUpdated();
-		public static event ListUpdated OnListUpdated;
 		public static event ListUpdated OnListStartUpdate;
+		public static event ListUpdated OnListUpdated;
 
 		public static List<AuthorizedUserCardsAttachment> listOfAuthorizedUsers = new List<AuthorizedUserCardsAttachment>();
 
@@ -135,6 +135,7 @@ namespace OxygenVK.Authorization
 
 		private void GetUserData()
 		{
+			listOfAuthorizedUsers.Clear();
 			foreach (XElement item in xDoc.Root.Elements(User))
 			{
 				listOfAuthorizedUsers.Add(new AuthorizedUserCardsAttachment
@@ -178,6 +179,7 @@ namespace OxygenVK.Authorization
 					xml = null;
 					xml = xDoc.ToString();
 					FileStream(true);
+					OnListUpdated.Invoke();
 				}
 			}
 			catch { }

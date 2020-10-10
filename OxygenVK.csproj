@@ -133,15 +133,13 @@
     <Compile Include="AppSource\Authorization\Controls\UserCard.xaml.cs">
       <DependentUpon>UserCard.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AppSource\Authorization\Controls\UserCardDeletionEvent.cs" />
     <Compile Include="AppSource\Authorization\InWhichWindowDialog.xaml.cs">
       <DependentUpon>InWhichWindowDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppSource\Authorization\ListOfAuthorizedUsers.cs" />
     <Compile Include="AppSource\Authorization\Controls\WebAuthControl.xaml.cs">
       <DependentUpon>WebAuthControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="AppSource\MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppSource\Views\RootFrameNavigation.cs" />
     <Compile Include="AppSource\Views\Settings\Controls\StylePreviewControl.xaml.cs">
@@ -151,7 +149,13 @@
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppSource\Views\Settings\ThemeHelper.cs" />
+    <Compile Include="AppSource\Views\User\UserPage.xaml.cs">
+      <DependentUpon>UserPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AppSource\WindowGenerator.cs" />
+    <Compile Include="AppSource\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -246,15 +250,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AppSource\MainPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="AppSource\Views\Settings\Controls\StylePreviewControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AppSource\Views\Settings\SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppSource\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppSource\Views\User\UserPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -287,9 +295,6 @@
     <PackageReference Include="VkNet">
       <Version>1.56.0</Version>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

@@ -7,8 +7,8 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	d:DesignHeight="300"
 	d:DesignWidth="400"
+	Loaded="UserControl_Loaded"
 	mc:Ignorable="d">
-
 	<UserControl.Resources>
 		<ResourceDictionary Source="/AppSource/Dictionaries/ApplicationThemeDictionary.xaml" />
 	</UserControl.Resources>
@@ -35,11 +35,7 @@
 			</Flyout>
 		</Button.Flyout>
 		<controls:ToolTipService.ToolTip>
-			<controls:ToolTip
-				Name="screenNameToolTip"
-				Content="{Binding ScreenName}"
-				Loaded="screenNameToolTip_Loaded"
-				Opacity="{Binding OpacityToolTip}" />
+			<controls:ToolTip Name="screenNameToolTip" Loaded="screenNameToolTip_Loaded" />
 		</controls:ToolTipService.ToolTip>
 		<Grid>
 			<Border
@@ -52,16 +48,11 @@
 						<ColumnDefinition />
 						<ColumnDefinition Width="45" />
 					</Grid.ColumnDefinitions>
-					<TextBlock
-						x:Name="userID"
-						Text="{Binding UserID}"
-						Visibility="Collapsed" />
 					<PersonPicture
 						Name="avatar"
 						Grid.Column="0"
 						Height="45"
-						Margin="5,0,0,0"
-						ProfilePicture="{Binding AvatarUrl}" />
+						Margin="5,0,0,0" />
 					<ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
 						<TextBlock
 							x:Name="userName"
@@ -69,7 +60,6 @@
 							HorizontalAlignment="Center"
 							VerticalAlignment="Center"
 							FontSize="15"
-							Text="{Binding UserName}"
 							TextAlignment="Center"
 							TextWrapping="WrapWholeWords" />
 					</ScrollViewer>

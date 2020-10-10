@@ -1,15 +1,16 @@
-﻿using VkNet;
+﻿using System;
+
+using VkNet;
+
+using Windows.UI.Xaml.Controls;
 
 namespace OxygenVK.AppSource.Views
 {
 	internal class RootFrameNavigation
 	{
-		public delegate void FrameNavigation(VkApi vkApi);
-		public static event FrameNavigation OnFrameNavigation;
-
-		public RootFrameNavigation(VkApi vkApi)
+		public RootFrameNavigation(Frame frame, Type type, object parameter)
 		{
-			OnFrameNavigation.Invoke(vkApi);
+			frame.Navigate(type, parameter);
 		}
 	}
 }

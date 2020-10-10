@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Numerics;
 using System.Threading.Tasks;
-using Microsoft.Toolkit.Uwp.UI.Controls.TextToolbarSymbols;
 
 using OxygenVK.AppSource.Authorization.Controls;
 using OxygenVK.AppSource.Views.Settings;
+using OxygenVK.AppSource.Views.User;
 using OxygenVK.Authorization;
+
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
@@ -17,76 +17,106 @@ namespace OxygenVK.AppSource
 {
 	public sealed partial class MainPage : Page
 	{
-		public Enum displayMode;
-		public bool paneIsOpen;
-		public static double ContainerAdapterWidth { get; set; }
-
-		private DispatcherTimer timer;
+		private bool paneIsOpen;
+		private Enum displayMode;
+		private readonly DispatcherTimer DispatcherTimer = new DispatcherTimer();
 
 		public MainPage()
 		{
 			InitializeComponent();
-			Window.Current.SetTitleBar(AppTitleBar);
 		}
+
 		private void Navigation_Loaded(object sender, RoutedEventArgs e)
 		{
 			//contentFrame.Navigate(typeof(NewsPage), null, new DrillInNavigationTransitionInfo());
+			Window.Current.SetTitleBar(AppTitleBar);
+			DispatcherTimer.Tick += DispatcherTimer_Tick;
+			ListOfAuthorizedUsers.OnListUpdated += ListOfAuthorizedUsers_OnListUpdated; ;
+			accauntsSplitButtonList_Add();
+		}
+
+		private void ListOfAuthorizedUsers_OnListUpdated()
+		{
 			accauntsSplitButtonList_Add();
 		}
 
 		private void accauntsSplitButtonList_Add()
 		{
-			accauntsSplitButtonList.Items.Clear();
+			accountsSplitButtonList.Items.Clear();
 			if (ListOfAuthorizedUsers.listOfAuthorizedUsers.Count != 0)
 			{
+				listAccounts.Visibility = Visibility.Visible;
 				ListOfAuthorizedUsers.listOfAuthorizedUsers.Reverse();
 				foreach (AuthorizedUserCardsAttachment item in ListOfAuthorizedUsers.listOfAuthorizedUsers)
 				{
-					accauntsSplitButtonList.Items.Add(new AuthorizedUserCardsAttachment
+					HorizontalUserCard horizontalUserCard = new HorizontalUserCard();
+					horizontalUserCard.ClickDelete += HorizontalUserCard_ClickDelete;
+					horizontalUserCard.Margin = new Thickness(-12, 0, -12, 10);
+					horizontalUserCard.Frame = Frame;
+					horizontalUserCard.AuthorizedUserCardsAttachment = new AuthorizedUserCardsAttachment
 					{
 						UserID = item.UserID,
 						UserName = item.UserName,
 						ScreenName = item.ScreenName,
 						AvatarUrl = item.AvatarUrl
-					});
+					};
+
+					accountsSplitButtonList.Items.Add(horizontalUserCard);
+					//accountsSplitButtonList.Items.Add(new AuthorizedUserCardsAttachment
+					//{
+					//	UserID = item.UserID,
+					//	UserName = item.UserName,
+					//	ScreenName = item.ScreenName,
+					//	AvatarUrl = item.AvatarUrl
+					//});
 				}
 			}
 			else
 			{
+				listAccounts.Visibility = Visibility.Collapsed;
 				//borderHintRecentlyLoggedIn.Visibility = Visibility.Collapsed;
 				//cardAddButton.Content = "Войти в аккаунт";
 				//cardAdd_Click(this, null);
 			}
 		}
 
+		private void webAuthControl_Closing()
+		{
+			//webAuthControl.Opacity = 0;
+			//webAuthControl.Visibility = Visibility.Collapsed;
+		}
+
+		private void addAccountsButton_Click(object sender, RoutedEventArgs e)
+		{
+			//webAuthControl.wv_Navigate();
+			flyoutListAccount.Hide();
+			listAccounts.Visibility = Visibility.Collapsed;
+			//webAuthControl.Opacity = 1;
+			//webAuthControl.Visibility = Visibility.Visible;
+		}
+
+		private void accountsSplitButton_Click(MUXC.SplitButton sender, MUXC.SplitButtonClickEventArgs args)
+		{
+			contentFrame.Navigate(typeof(UserPage), null, new DrillInNavigationTransitionInfo());
+		}
+
 		private void HorizontalUserCard_ClickDelete(AuthorizedUserCardsAttachment authorizedUserCardsAttachment)
 		{
-			foreach (AuthorizedUserCardsAttachment item in accauntsSplitButtonList.Items)
+			foreach (HorizontalUserCard item in accountsSplitButtonList.Items)
 			{
-				if (item.UserID == authorizedUserCardsAttachment.UserID)
+				if (item.AuthorizedUserCardsAttachment.UserID == authorizedUserCardsAttachment.UserID)
 				{
-					accauntsSplitButtonList.Items.Remove(item);
+					accountsSplitButtonList.Items.Remove(item);
 					Task.Run(() =>
 					{
-						new ListOfAuthorizedUsers().DeleteUserData(item.UserID);
+						new ListOfAuthorizedUsers().DeleteUserData(item.AuthorizedUserCardsAttachment.UserID);
 					});
 				}
 			}
-			if (accauntsSplitButtonList.Items.Count == 0)
+			if (accountsSplitButtonList.Items.Count == 0)
 			{
-				//cardAdd_Click(this, null);
+				addAccountsButton_Click(this, null);
 				//borderHintRecentlyLoggedIn.Visibility = Visibility.Collapsed;
-			}
-		}
-
-		private void contentFrame_SizeChanged(object sender, SizeChangedEventArgs e)
-		{
-			try
-			{
-			}
-			catch
-			{
-				//
 			}
 		}
 
@@ -114,8 +144,8 @@ namespace OxygenVK.AppSource
 
 		private void Navigation_PaneClosing(MUXC.NavigationView sender, MUXC.NavigationViewPaneClosingEventArgs args)
 		{
-			accauntsSplitButton.Visibility = Visibility.Collapsed;
-			accauntsSplitButton.Opacity = 0;
+			accountsSplitButton.Visibility = Visibility.Collapsed;
+			accountsSplitButton.Opacity = 0;
 
 			paneIsOpen = false;
 			AppNameTextBlock_Margin(displayMode, paneIsOpen);
@@ -123,10 +153,30 @@ namespace OxygenVK.AppSource
 
 		private void Navigation_PaneOpening(MUXC.NavigationView sender, object args)
 		{
-			accauntsSplitButton.Opacity = 1;
-			accauntsSplitButton.Visibility = Visibility.Visible;
+			accountsSplitButton.Opacity = 1;
+			accountsSplitButton.Visibility = Visibility.Visible;
 			paneIsOpen = true;
 			AppNameTextBlock_Margin(displayMode, paneIsOpen);
+		}
+
+		private void Navigation_PaneOpened(MUXC.NavigationView sender, object args)
+		{
+			AppNameTextBlock.Visibility = Visibility.Visible;
+			AppNameTextBlock.Opacity = 1;
+		}
+
+
+		private void DispatcherTimer_Tick(object sender, object e)
+		{
+			AppNameTextBlock.Visibility = Visibility.Visible;
+			AppNameTextBlock.Opacity = 1;
+			DispatcherTimer.Stop();
+		}
+
+		private void Navigation_PaneClosed(MUXC.NavigationView sender, object args)
+		{
+			DispatcherTimer.Interval = new TimeSpan(2000000);
+			DispatcherTimer.Start();
 		}
 
 		public void AppNameTextBlock_Margin(Enum displayMode, bool paneIsOpen)
@@ -136,22 +186,28 @@ namespace OxygenVK.AppSource
 				case MUXC.NavigationViewDisplayMode.Minimal:
 					if (paneIsOpen)
 					{
-						AppTitleBar.Margin = new Thickness(320, 0, 0, 0);
+						AppTitleBar.Margin = new Thickness(80, 0, -70, 0);
 						AppNameTextBlock.Visibility = Visibility.Collapsed;
 						AppNameTextBlock.Opacity = 0;
-						accauntsSplitButtonContent.Width = 189;
+						accountsSplitButtonContent.Width = 270;
+						accountsSplitButton.Margin = new Thickness(5, 48, -70, 0);
+						accountsSplitButton.Translation = new Vector3(-80, 0, 0);
 					}
 					else
 					{
 						AppTitleBar.Margin = new Thickness(80, 0, 0, 0);
-						AppNameTextBlock.Visibility = Visibility.Visible;
-						AppNameTextBlock.Opacity = 1;
+						AppNameTextBlock.Visibility = Visibility.Collapsed;
+						AppNameTextBlock.Opacity = 0;
+						DispatcherTimer.Interval = new TimeSpan(2000000);
+						DispatcherTimer.Start();
 						AppNameTextBlock.Translation = new Vector3(0, 0, 0);
 					}
 					break;
 				case MUXC.NavigationViewDisplayMode.Compact:
-					accauntsSplitButtonContent.Width = 229;
 					AppTitleBar.Margin = new Thickness(40, 0, 0, 0);
+					accountsSplitButtonContent.Width = 230;
+					accountsSplitButton.Margin = new Thickness(5, 0, 10, 0);
+					accountsSplitButton.Translation = new Vector3(0, 0, 0);
 					if (paneIsOpen)
 					{
 						AppNameTextBlock.Translation = new Vector3(0, 0, 0);
@@ -162,10 +218,10 @@ namespace OxygenVK.AppSource
 					}
 					break;
 				case MUXC.NavigationViewDisplayMode.Expanded:
-					accauntsSplitButtonContent.Width = 229;
 					AppTitleBar.Margin = new Thickness(40, 0, 0, 0);
 					AppNameTextBlock.Visibility = Visibility.Visible;
 					AppNameTextBlock.Opacity = 1;
+					accountsSplitButtonContent.Width = 230;
 					if (paneIsOpen)
 					{
 						AppNameTextBlock.Translation = new Vector3(0, 0, 0);
@@ -177,5 +233,8 @@ namespace OxygenVK.AppSource
 					break;
 			}
 		}
+
 	}
 }
+
+

@@ -1,5 +1,5 @@
 ﻿<UserControl
-	x:Class="OxygenVK.Authorization.Controls.WebAuthControl"
+	x:Class="OxygenVK.AppSource.Authorization.Controls.WebAuthControl"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:c="using:Windows.UI.Xaml.Controls"
@@ -7,6 +7,9 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d">
+	<UserControl.OpacityTransition>
+		<ScalarTransition Duration="0:0:0.5" />
+	</UserControl.OpacityTransition>
 	<UserControl.Resources>
 		<ResourceDictionary Source="/AppSource/Dictionaries/ApplicationThemeDictionary.xaml" />
 	</UserControl.Resources>
@@ -14,10 +17,6 @@
 		x:Name="WebAuth"
 		Opacity="1"
 		Visibility="Visible">
-
-		<c:Grid.OpacityTransition>
-			<ScalarTransition Duration="0:0:0.9" />
-		</c:Grid.OpacityTransition>
 		<Grid.Background>
 			<AcrylicBrush TintColor="#66000000" />
 		</Grid.Background>

@@ -1,5 +1,7 @@
 ﻿using System;
 
+using OxygenVK.AppSource.Views;
+
 using VkNet;
 
 using Windows.ApplicationModel.Core;
@@ -24,7 +26,8 @@ namespace OxygenVK.AppSource
 			await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
 			{
 				Frame frame = new Frame();
-				frame.Navigate(typeof(MainPage), null);
+
+				new RootFrameNavigation(frame, typeof(MainPage), vkApi);
 
 				Window.Current.Content = frame;
 

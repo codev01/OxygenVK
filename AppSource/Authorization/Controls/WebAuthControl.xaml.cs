@@ -2,10 +2,10 @@
 using System.Linq;
 
 using OxygenVK.AppSource.Authorization;
-
+using OxygenVK.Authorization;
 using Windows.UI.Xaml.Controls;
 
-namespace OxygenVK.Authorization.Controls
+namespace OxygenVK.AppSource.Authorization.Controls
 {
 	public sealed partial class WebAuthControl : UserControl
 	{

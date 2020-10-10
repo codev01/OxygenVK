@@ -5,7 +5,6 @@ using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 
-using OxygenVK.AppSource;
 using OxygenVK.AppSource.Views;
 
 using Windows.ApplicationModel;
@@ -21,14 +20,12 @@ namespace OxygenVK
 {
 	public sealed partial class App : Application
 	{
-		private Frame RootFrame;
 		public App()
 		{
 			AppCenter.Start("3c3e5a5d-e0bf-4620-a497-60b4b7fdf590", typeof(Analytics), typeof(Crashes));
 
 			InitializeComponent();
 			Suspending += OnSuspending;
-			RootFrameNavigation.OnFrameNavigation += UserCard_OnFrameNavigation;
 		}
 
 		protected override void OnLaunched(LaunchActivatedEventArgs e)
@@ -51,7 +48,7 @@ namespace OxygenVK
 			{
 				if (rootFrame.Content == null)
 				{
-					rootFrame.Navigate(typeof(Authorization.AuthorizationPage), e.Arguments);
+					new RootFrameNavigation(rootFrame, typeof(Authorization.AuthorizationPage), null);
 				}
 
 				ApplicationViewTitleBar appViewTitleBar = ApplicationView.GetForCurrentView().TitleBar;
@@ -64,13 +61,7 @@ namespace OxygenVK
 				coreTitleBar.ExtendViewIntoTitleBar = true;
 
 				Window.Current.Activate();
-				RootFrame = rootFrame;
 			}
-		}
-
-		private void UserCard_OnFrameNavigation(VkNet.VkApi vkApi)
-		{
-			RootFrame.Navigate(typeof(MainPage));
 		}
 
 		private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)

@@ -2,23 +2,18 @@
 	x:Class="OxygenVK.AppSource.MainPage"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:c="using:Windows.UI.Xaml.Controls"
 	xmlns:controls="using:Microsoft.UI.Xaml.Controls"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:my="using:OxygenVK.AppSource.Authorization.Controls"
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	mc:Ignorable="d">
+	<Page.OpacityTransition>
+		<ScalarTransition Duration="0:0:0.3" />
+	</Page.OpacityTransition>
 	<Page.Resources>
 		<ResourceDictionary Source="/AppSource/Dictionaries/ApplicationThemeDictionary.xaml" />
 	</Page.Resources>
 	<Grid>
-		<c:Grid.OpacityTransition>
-			<ScalarTransition Duration="0:0:0.3" />
-		</c:Grid.OpacityTransition>
-		<Grid.Background>
-			<AcrylicBrush TintColor="#66000000" />
-		</Grid.Background>
 		<controls:NavigationView
 			x:Name="Navigation"
 			AlwaysShowHeader="True"
@@ -30,26 +25,29 @@
 			IsTabStop="False"
 			IsTitleBarAutoPaddingEnabled="False"
 			Loaded="Navigation_Loaded"
+			PaneClosed="Navigation_PaneClosed"
 			PaneClosing="Navigation_PaneClosing"
 			PaneDisplayMode="Auto"
+			PaneOpened="Navigation_PaneOpened"
 			PaneOpening="Navigation_PaneOpening"
 			SelectionChanged="Navigation_SelectionChanged"
 			SelectionFollowsFocus="Enabled">
 			<controls:NavigationView.PaneHeader>
 				<controls:SplitButton
-					x:Name="accauntsSplitButton"
+					x:Name="accountsSplitButton"
 					Margin="5,0,10,0"
 					Padding="0,0,0,0"
 					HorizontalAlignment="Stretch"
 					VerticalAlignment="Stretch"
+					Click="accountsSplitButton_Click"
 					CornerRadius="{ThemeResource ControlCornerRadius}">
 					<controls:SplitButton.OpacityTransition>
 						<ScalarTransition Duration="0:0:0.5" />
 					</controls:SplitButton.OpacityTransition>
 					<controls:SplitButton.Content>
 						<Grid
-							x:Name="accauntsSplitButtonContent"
-							Width="234"
+							x:Name="accountsSplitButtonContent"
+							Width="230"
 							Height="38">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="38" />
@@ -64,28 +62,45 @@
 									x:Name="firstANDlastName"
 									HorizontalAlignment="Center"
 									VerticalAlignment="Center"
-									FontSize="14"
+									FontSize="15"
 									HorizontalTextAlignment="Center"
-									Text="Rashid Ибн Муталиб Аль Рамазан (aрабская версия)"
+									Text="Rashid Hasanov"
 									TextAlignment="Center"
 									TextWrapping="WrapWholeWords" />
 							</ScrollViewer>
 						</Grid>
 					</controls:SplitButton.Content>
 					<controls:SplitButton.Flyout>
-						<Flyout Placement="Auto">
+						<Flyout x:Name="flyoutListAccount" Placement="Auto">
 							<StackPanel Margin="0">
-								<ListView x:Name="accauntsSplitButtonList" SelectionMode="None">
-									<ListView.ItemTemplate>
-										<DataTemplate>
-											<my:HorizontalUserCard Margin="-12,0,-12,10" ClickDelete="HorizontalUserCard_ClickDelete" />
-										</DataTemplate>
-									</ListView.ItemTemplate>
-								</ListView>
-								<StackPanel Orientation="Horizontal">
-									<Button/>
-									<Button/>
+								<StackPanel x:Name="listAccounts">
+									<Border
+										Height="0.5"
+										Margin="20,0,20,10"
+										HorizontalAlignment="Stretch"
+										Background="Gray" />
+									<ListView x:Name="accountsSplitButtonList" SelectionMode="None" />
+									<Border
+										Height="0.5"
+										Margin="20,0,20,10"
+										HorizontalAlignment="Stretch"
+										Background="Gray" />
 								</StackPanel>
+								<Button
+									x:Name="addAccountsButton"
+									HorizontalAlignment="Right"
+									Click="addAccountsButton_Click"
+									CornerRadius="{ThemeResource ControlCornerRadius}">
+									<StackPanel Orientation="Horizontal">
+										<Viewbox
+											Width="13"
+											Height="13"
+											Margin="0,0,10,0">
+											<SymbolIcon Symbol="Contact" />
+										</Viewbox>
+										<TextBlock VerticalAlignment="Center" Text="Добавить аккаунт" />
+									</StackPanel>
+								</Button>
 							</StackPanel>
 						</Flyout>
 					</controls:SplitButton.Flyout>
@@ -116,8 +131,7 @@
 				<Frame
 					x:Name="contentFrame"
 					Margin="0,90,0,0"
-					Background="{ThemeResource RegionBrush}"
-					SizeChanged="contentFrame_SizeChanged">
+					Background="{ThemeResource RegionBrush}">
 					<Frame.ContentTransitions>
 						<TransitionCollection>
 							<NavigationThemeTransition />

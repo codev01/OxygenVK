@@ -1,5 +1,5 @@
 ﻿<UserControl
-	x:Class="OxygenVK.Authorization.Controls.UserCard"
+	x:Class="OxygenVK.AppSource.Authorization.Controls.UserCard"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:controls="using:Windows.UI.Xaml.Controls"
@@ -7,6 +7,7 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	d:DesignHeight="300"
 	d:DesignWidth="400"
+	Loaded="UserControl_Loaded"
 	mc:Ignorable="d">
 	<UserControl.Resources>
 		<ResourceDictionary Source="/AppSource/Dictionaries/ApplicationThemeDictionary.xaml" />
@@ -34,19 +35,11 @@
 			</Flyout>
 		</Button.Flyout>
 		<controls:ToolTipService.ToolTip>
-			<controls:ToolTip
-				Name="screenNameToolTip"
-				Content="{Binding ScreenName}"
-				Loaded="screenNameToolTip_Loaded"
-				Opacity="{Binding OpacityToolTip}" />
+			<controls:ToolTip Name="screenNameToolTip" Loaded="screenNameToolTip_Loaded" />
 		</controls:ToolTipService.ToolTip>
 		<Grid>
 			<Border Name="card" Width="200">
 				<controls:StackPanel>
-					<TextBlock
-						x:Name="userID"
-						Text="{Binding UserID}"
-						Visibility="Collapsed" />
 					<controls:Button
 						x:Name="deleteCard"
 						Width="26"
@@ -59,13 +52,12 @@
 							FontSize="10"
 							Glyph="&#xE106;" />
 					</controls:Button>
-					<PersonPicture Name="avatar" ProfilePicture="{Binding AvatarUrl}" />
+					<PersonPicture Name="avatar" />
 					<TextBlock
 						x:Name="userName"
 						Margin="0,50,0,25"
 						HorizontalAlignment="Center"
 						FontSize="17"
-						Text="{Binding UserName}"
 						TextWrapping="WrapWholeWords" />
 				</controls:StackPanel>
 			</Border>

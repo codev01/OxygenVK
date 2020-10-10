@@ -12,6 +12,8 @@ namespace OxygenVK.Authorization
 	public sealed partial class InWhichWindowDialog : ContentDialog
 	{
 		public VkApi VkApi { get; set; }
+		public Frame Frame { get; set; }
+
 		public InWhichWindowDialog()
 		{
 			InitializeComponent();
@@ -20,7 +22,7 @@ namespace OxygenVK.Authorization
 		private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
 		{
 			Task.Run(SaveProfailInfo);
-			new RootFrameNavigation(VkApi);
+			new RootFrameNavigation(Frame, typeof(MainPage), VkApi);
 		}
 
 		private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)

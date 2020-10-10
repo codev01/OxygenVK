@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 
 using OxygenVK.AppSource.Authorization;
+using OxygenVK.AppSource.Authorization.Controls;
 
 using VkNet;
 
@@ -25,6 +26,7 @@ namespace OxygenVK.Authorization
 			webAuthControl_Closing();
 			InWhichWindowDialog dialog = new InWhichWindowDialog
 			{
+				Frame = Frame,
 				VkApi = vkApi
 			};
 			await dialog.ShowAsync();
@@ -71,13 +73,17 @@ namespace OxygenVK.Authorization
 				ListOfAuthorizedUsers.listOfAuthorizedUsers.Reverse();
 				foreach (AuthorizedUserCardsAttachment item in ListOfAuthorizedUsers.listOfAuthorizedUsers)
 				{
-					listUsersCard_GridView.Items.Add(new AuthorizedUserCardsAttachment
+					UserCard userCard = new UserCard();
+					userCard.ClickDelete += UserCard_ClickDelete;
+					userCard.Frame = Frame;
+					userCard.AuthorizedUserCardsAttachment = new AuthorizedUserCardsAttachment
 					{
 						UserID = item.UserID,
 						UserName = item.UserName,
 						ScreenName = item.ScreenName,
 						AvatarUrl = item.AvatarUrl
-					});
+					};
+					listUsersCard_GridView.Items.Add(userCard);
 				}
 			}
 			else
@@ -96,14 +102,14 @@ namespace OxygenVK.Authorization
 
 		private void UserCard_ClickDelete(AuthorizedUserCardsAttachment authorizedUserCardsAttachment)
 		{
-			foreach (AuthorizedUserCardsAttachment item in listUsersCard_GridView.Items)
+			foreach (UserCard item in listUsersCard_GridView.Items)
 			{
-				if (item.UserID == authorizedUserCardsAttachment.UserID)
+				if (item.AuthorizedUserCardsAttachment.UserID == authorizedUserCardsAttachment.UserID)
 				{
 					listUsersCard_GridView.Items.Remove(item);
 					Task.Run(() =>
 					{
-						new ListOfAuthorizedUsers().DeleteUserData(item.UserID);
+						new ListOfAuthorizedUsers().DeleteUserData(item.AuthorizedUserCardsAttachment.UserID);
 					});
 				}
 			}
