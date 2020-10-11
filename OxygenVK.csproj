@@ -133,7 +133,6 @@
     <Compile Include="AppSource\Authorization\Controls\UserCard.xaml.cs">
       <DependentUpon>UserCard.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AppSource\Authorization\Controls\UserCardDeletionEvent.cs" />
     <Compile Include="AppSource\Authorization\InWhichWindowDialog.xaml.cs">
       <DependentUpon>InWhichWindowDialog.xaml</DependentUpon>
     </Compile>
@@ -141,6 +140,7 @@
     <Compile Include="AppSource\Authorization\Controls\WebAuthControl.xaml.cs">
       <DependentUpon>WebAuthControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AppSource\Authorization\ListUsersEvent.cs" />
     <Compile Include="AppSource\Views\RootFrameNavigation.cs" />
     <Compile Include="AppSource\Views\Settings\Controls\StylePreviewControl.xaml.cs">
       <DependentUpon>StylePreviewControl.xaml</DependentUpon>

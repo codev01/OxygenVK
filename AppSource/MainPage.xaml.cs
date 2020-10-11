@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Numerics;
-using System.Threading.Tasks;
 
 using OxygenVK.AppSource.Authorization.Controls;
 using OxygenVK.AppSource.Views.Settings;
@@ -10,6 +10,7 @@ using OxygenVK.Authorization;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
+using Windows.UI.Xaml.Navigation;
 
 using MUXC = Microsoft.UI.Xaml.Controls;
 
@@ -17,6 +18,7 @@ namespace OxygenVK.AppSource
 {
 	public sealed partial class MainPage : Page
 	{
+		private Parameter Parameter;
 		private bool paneIsOpen;
 		private Enum displayMode;
 		private readonly DispatcherTimer DispatcherTimer = new DispatcherTimer();
@@ -26,58 +28,66 @@ namespace OxygenVK.AppSource
 			InitializeComponent();
 		}
 
+		protected override void OnNavigatedTo(NavigationEventArgs e)
+		{
+			Parameter = e.Parameter as Parameter;
+		}
+
 		private void Navigation_Loaded(object sender, RoutedEventArgs e)
 		{
-			//contentFrame.Navigate(typeof(NewsPage), null, new DrillInNavigationTransitionInfo());
-			Window.Current.SetTitleBar(AppTitleBar);
 			DispatcherTimer.Tick += DispatcherTimer_Tick;
-			ListOfAuthorizedUsers.OnListUpdated += ListOfAuthorizedUsers_OnListUpdated; ;
-			accauntsSplitButtonList_Add();
+			ListOfAuthorizedUsers.OnListUpdated += ListOfAuthorizedUsers_OnListUpdated;
+			ListOfAuthorizedUsers.OnListNull += ListOfAuthorizedUsers_OnListNull;
+
+			Window.Current.SetTitleBar(AppTitleBar);
+			new ListOfAuthorizedUsers().GetUserData();
+			accountsSplitButtonList_Add(ListOfAuthorizedUsers.listOfAuthorizedUsers);
+			//contentFrame.Navigate(typeof(NewsPage), null, new DrillInNavigationTransitionInfo());
 		}
+
 
 		private void ListOfAuthorizedUsers_OnListUpdated()
 		{
-			accauntsSplitButtonList_Add();
+			_ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
+			{
+				accountsSplitButtonList_Add(ListOfAuthorizedUsers.listOfAuthorizedUsers);
+			});
 		}
 
-		private void accauntsSplitButtonList_Add()
+		private void ListOfAuthorizedUsers_OnListNull()
 		{
+			listAccounts.Visibility = Visibility.Collapsed;
 			accountsSplitButtonList.Items.Clear();
-			if (ListOfAuthorizedUsers.listOfAuthorizedUsers.Count != 0)
-			{
-				listAccounts.Visibility = Visibility.Visible;
-				ListOfAuthorizedUsers.listOfAuthorizedUsers.Reverse();
-				foreach (AuthorizedUserCardsAttachment item in ListOfAuthorizedUsers.listOfAuthorizedUsers)
-				{
-					HorizontalUserCard horizontalUserCard = new HorizontalUserCard();
-					horizontalUserCard.ClickDelete += HorizontalUserCard_ClickDelete;
-					horizontalUserCard.Margin = new Thickness(-12, 0, -12, 10);
-					horizontalUserCard.Frame = Frame;
-					horizontalUserCard.AuthorizedUserCardsAttachment = new AuthorizedUserCardsAttachment
-					{
-						UserID = item.UserID,
-						UserName = item.UserName,
-						ScreenName = item.ScreenName,
-						AvatarUrl = item.AvatarUrl
-					};
+		}
 
+		private void accountsSplitButtonList_Add(List<AuthorizedUserCardsAttachment> authorizedUserCardsAttachments)
+		{
+			listAccounts.Visibility = Visibility.Visible;
+
+			accountsSplitButtonList.Items.Clear();
+			authorizedUserCardsAttachments.Reverse();
+			try
+			{
+				foreach (AuthorizedUserCardsAttachment item in authorizedUserCardsAttachments)
+				{
+					HorizontalUserCard horizontalUserCard = new HorizontalUserCard()
+					{
+						AuthorizedUserCardsAttachment = new AuthorizedUserCardsAttachment()
+						{
+							UserID = item.UserID,
+							UserName = item.UserName,
+							ScreenName = item.ScreenName,
+							Token = item.Token,
+							AvatarUrl = item.AvatarUrl
+						},
+						Margin = new Thickness(-12, 0, -12, 10),
+						Parameter = Parameter,
+						Frame = Frame
+					};
 					accountsSplitButtonList.Items.Add(horizontalUserCard);
-					//accountsSplitButtonList.Items.Add(new AuthorizedUserCardsAttachment
-					//{
-					//	UserID = item.UserID,
-					//	UserName = item.UserName,
-					//	ScreenName = item.ScreenName,
-					//	AvatarUrl = item.AvatarUrl
-					//});
 				}
 			}
-			else
-			{
-				listAccounts.Visibility = Visibility.Collapsed;
-				//borderHintRecentlyLoggedIn.Visibility = Visibility.Collapsed;
-				//cardAddButton.Content = "Войти в аккаунт";
-				//cardAdd_Click(this, null);
-			}
+			catch { }
 		}
 
 		private void webAuthControl_Closing()
@@ -90,7 +100,6 @@ namespace OxygenVK.AppSource
 		{
 			//webAuthControl.wv_Navigate();
 			flyoutListAccount.Hide();
-			listAccounts.Visibility = Visibility.Collapsed;
 			//webAuthControl.Opacity = 1;
 			//webAuthControl.Visibility = Visibility.Visible;
 		}
@@ -98,26 +107,6 @@ namespace OxygenVK.AppSource
 		private void accountsSplitButton_Click(MUXC.SplitButton sender, MUXC.SplitButtonClickEventArgs args)
 		{
 			contentFrame.Navigate(typeof(UserPage), null, new DrillInNavigationTransitionInfo());
-		}
-
-		private void HorizontalUserCard_ClickDelete(AuthorizedUserCardsAttachment authorizedUserCardsAttachment)
-		{
-			foreach (HorizontalUserCard item in accountsSplitButtonList.Items)
-			{
-				if (item.AuthorizedUserCardsAttachment.UserID == authorizedUserCardsAttachment.UserID)
-				{
-					accountsSplitButtonList.Items.Remove(item);
-					Task.Run(() =>
-					{
-						new ListOfAuthorizedUsers().DeleteUserData(item.AuthorizedUserCardsAttachment.UserID);
-					});
-				}
-			}
-			if (accountsSplitButtonList.Items.Count == 0)
-			{
-				addAccountsButton_Click(this, null);
-				//borderHintRecentlyLoggedIn.Visibility = Visibility.Collapsed;
-			}
 		}
 
 		private void Navigation_SelectionChanged(MUXC.NavigationView sender, MUXC.NavigationViewSelectionChangedEventArgs args)

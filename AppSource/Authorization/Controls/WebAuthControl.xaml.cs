@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 
-using OxygenVK.AppSource.Authorization;
 using OxygenVK.Authorization;
+
 using Windows.UI.Xaml.Controls;
 
 namespace OxygenVK.AppSource.Authorization.Controls

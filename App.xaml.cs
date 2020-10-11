@@ -48,7 +48,7 @@ namespace OxygenVK
 			{
 				if (rootFrame.Content == null)
 				{
-					new RootFrameNavigation(rootFrame, typeof(Authorization.AuthorizationPage), null);
+					new RootFrameNavigation(rootFrame, typeof(Authorization.AuthorizationPage), e.Arguments);
 				}
 
 				ApplicationViewTitleBar appViewTitleBar = ApplicationView.GetForCurrentView().TitleBar;

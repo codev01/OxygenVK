@@ -11,9 +11,7 @@ namespace OxygenVK.AppSource.Authorization.Controls
 {
 	public sealed partial class UserCard : UserControl
 	{
-		public delegate void ClickButtonDelete(AuthorizedUserCardsAttachment authorizedUserCardsAttachment);
-		public event ClickButtonDelete ClickDelete;
-
+		public Parameter Parameter { get; set; }
 		public Frame Frame { get; set; }
 		public AuthorizedUserCardsAttachment AuthorizedUserCardsAttachment { get; set; }
 
@@ -30,7 +28,7 @@ namespace OxygenVK.AppSource.Authorization.Controls
 
 		private void deleteCard_Click(object sender, RoutedEventArgs e)
 		{
-			ClickDelete?.Invoke(AuthorizedUserCardsAttachment);
+			new ListOfAuthorizedUsers().DeleteUserData(AuthorizedUserCardsAttachment.UserID);
 		}
 
 		private void screenNameToolTip_Loaded(object sender, RoutedEventArgs e)
@@ -47,12 +45,12 @@ namespace OxygenVK.AppSource.Authorization.Controls
 
 		private void ThisWindow_Click(object sender, RoutedEventArgs e)
 		{
-			new RootFrameNavigation(Frame, typeof(MainPage), new Authorize(new ListOfAuthorizedUsers().GetUserToken(AuthorizedUserCardsAttachment.UserID.ToString()), true).VkApi);
+			new RootFrameNavigation(Frame, typeof(MainPage), new Authorize(AuthorizedUserCardsAttachment.Token, true).VkApi);
 		}
 
 		private void NewWindow_Click(object sender, RoutedEventArgs e)
 		{
-			new WindowGenerator(new Authorize(new ListOfAuthorizedUsers().GetUserToken(AuthorizedUserCardsAttachment.UserID.ToString()), true).VkApi);
+			new WindowGenerator(Parameter);
 		}
 
 	}

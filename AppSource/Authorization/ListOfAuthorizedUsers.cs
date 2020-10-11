@@ -7,15 +7,16 @@ using System.Xml.Linq;
 
 using VkNet;
 using VkNet.Enums.SafetyEnums;
-using VkNet.Model;
+
+using static OxygenVK.AppSource.Authorization.ListUsersEvent;
 
 namespace OxygenVK.Authorization
 {
 	public class ListOfAuthorizedUsers
 	{
-		public delegate void ListUpdated();
-		public static event ListUpdated OnListStartUpdate;
+		public static event ListStartUpdate OnListStartUpdate;
 		public static event ListUpdated OnListUpdated;
+		public static event ListNull OnListNull;
 
 		public static List<AuthorizedUserCardsAttachment> listOfAuthorizedUsers = new List<AuthorizedUserCardsAttachment>();
 
@@ -33,7 +34,6 @@ namespace OxygenVK.Authorization
 		public ListOfAuthorizedUsers()
 		{
 			FileStream();
-			GetUserData();
 		}
 
 		private void FileStream(bool isSet = false, bool deleteFile = false)
@@ -84,7 +84,7 @@ namespace OxygenVK.Authorization
 					}
 					catch
 					{
-						isoStore.DeleteFile(FileName);
+						//isoStore.DeleteFile(FileName);
 					}
 				}
 			}
@@ -97,43 +97,41 @@ namespace OxygenVK.Authorization
 								   "</Users>";
 		}
 
-		public async void SetListOfAuthorizedUsers(VkApi vkApi)
+		public void SetListOfAuthorizedUsers(VkApi vkApi, long userID, bool isRe_authorization = false)
 		{
-			OnListStartUpdate.Invoke();
-			string photoURL = null;
-			foreach (VkNet.Model.Attachments.Photo photo in await vkApi.Photo.GetAsync(new VkNet.Model.RequestParams.PhotoGetParams
+			if (!isRe_authorization)
 			{
-				AlbumId = PhotoAlbumType.Profile,
-				Count = 1
-			}))
-			{
-				photoURL = photo.Sizes.Last().Url.AbsoluteUri;
+				OnListStartUpdate.Invoke();
+
+				DeleteUserData(userID);
+
+				string photoURL = null;
+				foreach (VkNet.Model.Attachments.Photo photo in vkApi.Photo.Get(new VkNet.Model.RequestParams.PhotoGetParams
+				{
+					AlbumId = PhotoAlbumType.Profile,
+					Count = 1
+				}))
+				{
+					photoURL = photo.Sizes.Last().Url.AbsoluteUri;
+				}
+				VkNet.Model.RequestParams.AccountSaveProfileInfoParams profileInfo = vkApi.Account.GetProfileInfo();
+
+				xDoc.Root.Add(new XElement(new XElement(User, new XAttribute(AttributeName, profileInfo.FirstName + " " + profileInfo.LastName),
+							  new XElement(AvatarURL, photoURL),
+							  new XElement(Token, vkApi.Token),
+							  new XElement(UserID, userID),
+							  new XElement(ScreenName, profileInfo.ScreenName))));
+
+				xml = null;
+				xml = xDoc.ToString();
+				FileStream(true);
+
 			}
-			long userID = 0;
-			foreach (User item in await vkApi.Users.GetAsync(new long[0]))
-			{
-				userID = item.Id;
-			}
-			VkNet.Model.RequestParams.AccountSaveProfileInfoParams profileInfo = await vkApi.Account.GetProfileInfoAsync();
 
-			DeleteUserData(userID);
-
-			xDoc.Root.Add(new XElement(new XElement(User, new XAttribute(AttributeName, profileInfo.FirstName + " " + profileInfo.LastName),
-						  new XElement(AvatarURL, photoURL),
-						  new XElement(Token, vkApi.Token),
-						  new XElement(UserID, userID),
-						  new XElement(ScreenName, profileInfo.ScreenName))));
-
-			xml = null;
-			xml = xDoc.ToString();
-			FileStream(true);
-
-			listOfAuthorizedUsers.Clear();
-			GetUserData();
-			OnListUpdated.Invoke();
+			GetUserData(true);
 		}
 
-		private void GetUserData()
+		public void GetUserData(bool i = false)
 		{
 			listOfAuthorizedUsers.Clear();
 			foreach (XElement item in xDoc.Root.Elements(User))
@@ -143,20 +141,18 @@ namespace OxygenVK.Authorization
 					UserName = item.Attribute(AttributeName).Value,
 					AvatarUrl = item.Element(AvatarURL).Value,
 					ScreenName = item.Element(ScreenName).Value,
+					Token = item.Element(Token).Value,
 					UserID = Convert.ToInt64(item.Element(UserID).Value)
 				});
 			}
-		}
-		public string GetUserToken(string userID)
-		{
-			foreach (XElement i in xDoc.Root.Elements(User))
+			if (listOfAuthorizedUsers.Count == 0)
 			{
-				if (i.Element(UserID).Value == userID.ToString())
-				{
-					return i.Element(Token).Value;
-				}
+				OnListNull.Invoke();
 			}
-			return null;
+			else if (i)
+			{
+				OnListUpdated.Invoke();
+			}
 		}
 
 		public void DeleteUserData(long userID)
@@ -179,8 +175,8 @@ namespace OxygenVK.Authorization
 					xml = null;
 					xml = xDoc.ToString();
 					FileStream(true);
-					OnListUpdated.Invoke();
 				}
+				GetUserData(true);
 			}
 			catch { }
 		}

@@ -15,11 +15,11 @@ namespace OxygenVK.AppSource
 {
 	internal class WindowGenerator
 	{
-		public WindowGenerator(VkApi vkApi)
+		public WindowGenerator(Parameter parameter)
 		{
-			Initialize(vkApi);
+			Initialize(parameter);
 		}
-		private async void Initialize(VkApi vkApi)
+		private async void Initialize(Parameter parameter)
 		{
 			CoreApplicationView newView = CoreApplication.CreateNewView();
 			int newViewId = 0;
@@ -27,7 +27,7 @@ namespace OxygenVK.AppSource
 			{
 				Frame frame = new Frame();
 
-				new RootFrameNavigation(frame, typeof(MainPage), vkApi);
+				new RootFrameNavigation(frame, typeof(MainPage), parameter);
 
 				Window.Current.Content = frame;
 
@@ -47,5 +47,11 @@ namespace OxygenVK.AppSource
 			});
 			bool viewShown = await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewId);
 		}
+	}
+
+	public class Parameter
+	{
+		public VkApi VkApi;
+		public long UserID;
 	}
 }

@@ -1,9 +1,6 @@
-﻿using System.Threading.Tasks;
-
+﻿
 using OxygenVK.AppSource;
 using OxygenVK.AppSource.Views;
-
-using VkNet;
 
 using Windows.UI.Xaml.Controls;
 
@@ -11,7 +8,7 @@ namespace OxygenVK.Authorization
 {
 	public sealed partial class InWhichWindowDialog : ContentDialog
 	{
-		public VkApi VkApi { get; set; }
+		public Parameter Parameter { get; set; }
 		public Frame Frame { get; set; }
 
 		public InWhichWindowDialog()
@@ -21,25 +18,26 @@ namespace OxygenVK.Authorization
 
 		private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
 		{
-			Task.Run(SaveProfailInfo);
-			new RootFrameNavigation(Frame, typeof(MainPage), VkApi);
+			SaveProfailInfo();
+			new RootFrameNavigation(Frame, typeof(MainPage), Parameter);
 		}
 
 		private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
 		{
-			Task.Run(SaveProfailInfo);
-			new WindowGenerator(VkApi);
+			SaveProfailInfo();
+			new WindowGenerator(new Parameter()
+			{
+				UserID = Parameter.UserID,
+				VkApi = Parameter.VkApi
+			});
 		}
 
 		private void SaveProfailInfo()
 		{
-			_ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+			if (isSave.IsChecked == true)
 			{
-				if (isSave.IsChecked == true)
-				{
-					new ListOfAuthorizedUsers().SetListOfAuthorizedUsers(VkApi);
-				}
-			});
+				new ListOfAuthorizedUsers().SetListOfAuthorizedUsers(Parameter.VkApi, Parameter.UserID);
+			}
 		}
 	}
 }

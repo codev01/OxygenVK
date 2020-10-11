@@ -1,7 +1,5 @@
 ﻿using System;
 
-using VkNet;
-
 using Windows.UI.Xaml.Controls;
 
 namespace OxygenVK.AppSource.Views
