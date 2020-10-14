@@ -49,8 +49,6 @@ namespace OxygenVK.AppSource
 			isNVFirstLoaded = true;
 			DispatcherTimer.Tick += DispatcherTimer_Tick;
 
-			Authorize.OnAuthorizationComleted += Authorization_OnAuthorizationComleted;
-
 			ListOfAuthorizedUsers.OnListUpdated += ListOfAuthorizedUsers_OnListUpdated;
 			ListOfAuthorizedUsers.OnListNull += ListOfAuthorizedUsers_OnListNull;
 
@@ -79,19 +77,6 @@ namespace OxygenVK.AppSource
 			accountsSplitButtonProgressBar.Visibility = Visibility.Collapsed;
 			accountsSplitButtonContent.Visibility = Visibility.Visible;
 			accountsSplitButtonContent.Opacity = 1;
-		}
-
-		private async void Authorization_OnAuthorizationComleted(Parameter parameter)
-		{
-			await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-			{
-				InWhichWindowDialog dialog = new InWhichWindowDialog
-				{
-					Frame = Frame,
-					Parameter = parameter
-				};
-				_ = dialog.ShowAsync();
-			});
 		}
 
 		private void ListOfAuthorizedUsers_OnListUpdated()
