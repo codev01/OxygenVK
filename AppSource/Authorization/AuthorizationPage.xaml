@@ -3,8 +3,8 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+	xmlns:c="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:controls="using:Microsoft.UI.Xaml.Controls"
-	xmlns:controls1="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:OxygenVK.AppSource.Authorization.Controls"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -48,25 +48,34 @@
 						HorizontalAlignment="Center"
 						animations:ReorderGridAnimation.Duration="200"
 						CornerRadius="10"
-						SelectionMode="None"
-						SizeChanged="listUsersCard_GridView_SizeChanged">
+						SelectionMode="None">
 						<GridView.Header>
-							<Grid Margin="0,0,16,0">
+							<Grid
+								x:Name="headerListPanel"
+								Margin="0,0,16,0"
+								HorizontalAlignment="Stretch"
+								SizeChanged="headerListPanel_SizeChanged">
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition />
 									<ColumnDefinition Width="38" />
 								</Grid.ColumnDefinitions>
 								<StackPanel
 									x:Name="hintRecentlyLoggedIn"
-									Width="0"
+									Grid.Column="0"
+									Width="444"
 									Padding="10,0,10,10"
-									HorizontalAlignment="Left">
-									<TextBlock Style="{StaticResource SubtitleTextBlockStyle}" TextWrapping="Wrap">
+									HorizontalAlignment="Left"
+									Orientation="Vertical">
+									<TextBlock
+										HorizontalAlignment="Left"
+										Style="{StaticResource SubtitleTextBlockStyle}"
+										TextWrapping="WrapWholeWords">
 										<Bold>
 											Недавно входили на сайт с этого приложения
 										</Bold>
 									</TextBlock>
 									<TextBlock
+										HorizontalAlignment="Left"
 										FontSize="15"
 										Foreground="Gray"
 										TextWrapping="Wrap">
@@ -86,7 +95,7 @@
 									Visibility="Visible" />
 							</Grid>
 						</GridView.Header>
-						<controls1:GridView.ItemContainerStyle>
+						<c:GridView.ItemContainerStyle>
 							<Style TargetType="GridViewItem">
 								<Setter Property="Template">
 									<Setter.Value>
@@ -96,7 +105,7 @@
 									</Setter.Value>
 								</Setter>
 							</Style>
-						</controls1:GridView.ItemContainerStyle>
+						</c:GridView.ItemContainerStyle>
 					</GridView>
 				</Border>
 				<Button

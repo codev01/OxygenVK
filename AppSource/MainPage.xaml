@@ -21,6 +21,7 @@
 			DisplayModeChanged="Navigation_DisplayModeChanged"
 			IsBackButtonVisible="Visible"
 			IsBackEnabled="True"
+			IsPaneOpen="False"
 			IsSettingsVisible="True"
 			IsTabStop="False"
 			IsTitleBarAutoPaddingEnabled="False"
@@ -45,29 +46,48 @@
 						<ScalarTransition Duration="0:0:0.5" />
 					</controls:SplitButton.OpacityTransition>
 					<controls:SplitButton.Content>
-						<Grid
-							x:Name="accountsSplitButtonContent"
-							Width="230"
-							Height="38">
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="38" />
-								<ColumnDefinition />
-							</Grid.ColumnDefinitions>
-							<PersonPicture
-								x:Name="personPicture"
-								Grid.Column="0"
-								Height="38" />
-							<ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
-								<TextBlock
-									x:Name="firstANDlastName"
-									HorizontalAlignment="Center"
-									VerticalAlignment="Center"
-									FontSize="15"
-									HorizontalTextAlignment="Center"
-									Text="Rashid Hasanov"
-									TextAlignment="Center"
-									TextWrapping="WrapWholeWords" />
-							</ScrollViewer>
+						<Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+							<Grid.OpacityTransition>
+								<ScalarTransition Duration="0:0:0.9" />
+							</Grid.OpacityTransition>
+							<controls:ProgressBar
+								x:Name="accountsSplitButtonProgressBar"
+								Margin="30,0,30,0"
+								HorizontalAlignment="Stretch"
+								Background="Transparent"
+								Foreground="{ThemeResource SystemAccentColor}"
+								IsIndeterminate="True"
+								ShowError="False"
+								ShowPaused="False" />
+							<Grid
+								x:Name="accountsSplitButtonContent"
+								Width="230"
+								Height="38"
+								Opacity="0"
+								Visibility="Visible">
+								<Grid.OpacityTransition>
+									<ScalarTransition Duration="0:0:0.9" />
+								</Grid.OpacityTransition>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="38" />
+									<ColumnDefinition />
+								</Grid.ColumnDefinitions>
+								<PersonPicture
+									x:Name="personPictureSplitButton"
+									Grid.Column="0"
+									Height="38" />
+								<ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
+									<TextBlock
+										x:Name="firstANDlastNameSplitButton"
+										HorizontalAlignment="Center"
+										VerticalAlignment="Center"
+										FontSize="15"
+										HorizontalTextAlignment="Center"
+										Text="Rashid Hasanov"
+										TextAlignment="Center"
+										TextWrapping="WrapWholeWords" />
+								</ScrollViewer>
+							</Grid>
 						</Grid>
 					</controls:SplitButton.Content>
 					<controls:SplitButton.Flyout>

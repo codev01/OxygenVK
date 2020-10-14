@@ -50,8 +50,8 @@ namespace OxygenVK.AppSource.Authorization.Controls
 
 		private void NewWindow_Click(object sender, RoutedEventArgs e)
 		{
+			Parameter.VkApi = new Authorize(AuthorizedUserCardsAttachment.Token, true).VkApi;
 			new WindowGenerator(Parameter);
 		}
-
 	}
 }

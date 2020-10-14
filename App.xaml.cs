@@ -20,6 +20,8 @@ namespace OxygenVK
 {
 	public sealed partial class App : Application
 	{
+		public static int MainWindow = 0;
+
 		public App()
 		{
 			AppCenter.Start("3c3e5a5d-e0bf-4620-a497-60b4b7fdf590", typeof(Analytics), typeof(Crashes));
@@ -61,6 +63,7 @@ namespace OxygenVK
 				coreTitleBar.ExtendViewIntoTitleBar = true;
 
 				Window.Current.Activate();
+				MainWindow = ApplicationView.GetForCurrentView().Id;
 			}
 		}
 

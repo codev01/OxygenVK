@@ -19,7 +19,7 @@ namespace OxygenVK.AppSource
 		{
 			Initialize(parameter);
 		}
-		private async void Initialize(Parameter parameter)
+		private async void Initialize(object parameter)
 		{
 			CoreApplicationView newView = CoreApplication.CreateNewView();
 			int newViewId = 0;

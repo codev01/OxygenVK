@@ -13,16 +13,15 @@ namespace OxygenVK.Authorization
 {
 	public partial class AuthorizationPage : Page
 	{
-		private Parameter Parameter;
-
 		public AuthorizationPage()
 		{
 			InitializeComponent();
+			NavigationCacheMode = NavigationCacheMode.Enabled;
 		}
 
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
-			Parameter = e.Parameter as Parameter;
+			//Parameter = e.Parameter as Parameter;
 		}
 
 		private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -32,6 +31,8 @@ namespace OxygenVK.Authorization
 			ListOfAuthorizedUsers.OnListStartUpdate += ListOfAuthorizedUsers_OnListStartUpdate;
 			ListOfAuthorizedUsers.OnListUpdated += ListOfAuthorizedUsers_OnListUpdated;
 			ListOfAuthorizedUsers.OnListNull += ListOfAuthorizedUsers_OnListNull;
+
+			MainPage.OnBackNavigation += MainPage_OnBackNavigation;
 
 			new ListOfAuthorizedUsers().GetUserData();
 			listUsersCard_GridView_Add(ListOfAuthorizedUsers.listOfAuthorizedUsers);
@@ -85,7 +86,10 @@ namespace OxygenVK.Authorization
 				{
 					UserCard userCard = new UserCard
 					{
-						Parameter = Parameter,
+						Parameter = new Parameter() 
+						{
+							UserID = item.UserID
+						},
 						Frame = Frame,
 						AuthorizedUserCardsAttachment = new AuthorizedUserCardsAttachment
 						{
@@ -100,6 +104,14 @@ namespace OxygenVK.Authorization
 				}
 			}
 			catch { }
+		}
+
+		private void MainPage_OnBackNavigation()
+		{
+			_ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+			{
+				cardAdd_Click(this, null);
+			});
 		}
 
 		private void cardAdd_Click(object sender, RoutedEventArgs e)
@@ -118,17 +130,22 @@ namespace OxygenVK.Authorization
 			cardAdd_Click(this, null);
 		}
 
-
-
 		private void webAuthControl_Closing()
 		{
 			webAuthControl.Opacity = 0;
 			webAuthControl.Visibility = Visibility.Collapsed;
 		}
 
-		private void listUsersCard_GridView_SizeChanged(object sender, SizeChangedEventArgs e)
+		private void headerListPanel_SizeChanged(object sender, SizeChangedEventArgs e)
 		{
-			hintRecentlyLoggedIn.Width = listUsersCard_GridView.ActualWidth - 55;
+			if (e.NewSize.Width < 655)
+			{
+				hintRecentlyLoggedIn.Width = 444 - 48;
+			}
+			else
+			{
+				hintRecentlyLoggedIn.Width = 500;
+			}
 		}
 	}
 }

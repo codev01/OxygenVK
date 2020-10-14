@@ -97,9 +97,9 @@ namespace OxygenVK.Authorization
 								   "</Users>";
 		}
 
-		public void SetListOfAuthorizedUsers(VkApi vkApi, long userID, bool isRe_authorization = false)
+		public void SetListOfAuthorizedUsers(VkApi vkApi, long userID, bool isRe_authorizated = false)
 		{
-			if (!isRe_authorization)
+			if (!isRe_authorizated)
 			{
 				OnListStartUpdate.Invoke();
 
@@ -125,7 +125,6 @@ namespace OxygenVK.Authorization
 				xml = null;
 				xml = xDoc.ToString();
 				FileStream(true);
-
 			}
 
 			GetUserData(true);

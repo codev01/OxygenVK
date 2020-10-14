@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="266fdc49-1a1f-42e0-a1b0-f9b46cfb6241"
+    Name="OxygenVK-Alpha"
     Publisher="CN=codev"
-    Version="1.0.0.0" />
+    Version="0.1.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="266fdc49-1a1f-42e0-a1b0-f9b46cfb6241" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>OxygenVK</DisplayName>
-    <PublisherDisplayName>codev</PublisherDisplayName>
+    <PublisherDisplayName>codev01</PublisherDisplayName>
     <Logo>AppSource\Assets\StoreLogo.png</Logo>
   </Properties>
 

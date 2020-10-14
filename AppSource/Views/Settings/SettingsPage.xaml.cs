@@ -9,10 +9,11 @@ namespace OxygenVK.AppSource.Views.Settings
 		public SettingsPage()
 		{
 			InitializeComponent();
+			NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
 		}
 		private void OnThemeRadioButtonChecked(object sender, RoutedEventArgs e)
 		{
-			var selectedTheme = ((RadioButton)sender)?.Tag?.ToString();
+			string selectedTheme = ((RadioButton)sender)?.Tag?.ToString();
 			ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
 
 			if (selectedTheme != null)
