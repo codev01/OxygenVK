@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 
-using OxygenVK.AppSource.Authorization;
 using OxygenVK.AppSource.Authorization.Controls;
 using OxygenVK.AppSource.Views.Settings;
 using OxygenVK.AppSource.Views.User;
@@ -27,6 +26,11 @@ namespace OxygenVK.AppSource
 		public delegate void BackNavigationEvent();
 		public static event BackNavigationEvent OnBackNavigation;
 
+		public static int ListWindowID = App.MainWindowID;
+
+
+		private bool IsWindowUsed = false;
+		private List<PageStackEntry> pageEntries;
 		private Parameter Parameter;
 		private bool paneIsOpen;
 		private Enum displayMode;
@@ -36,7 +40,7 @@ namespace OxygenVK.AppSource
 		public MainPage()
 		{
 			InitializeComponent();
-			NavigationCacheMode = NavigationCacheMode.Enabled;
+			//NavigationCacheMode = NavigationCacheMode.Enabled;
 		}
 
 		protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -58,7 +62,20 @@ namespace OxygenVK.AppSource
 			new ListOfAuthorizedUsers().GetUserData();
 			accountsSplitButtonList_Add(ListOfAuthorizedUsers.listOfAuthorizedUsers);
 
+			Frame.Navigated += Frame_Navigated;
 			//contentFrame.Navigate(typeof(NewsPage), null, new DrillInNavigationTransitionInfo());
+		}
+
+		private void Frame_Navigated(object sender, NavigationEventArgs e)
+		{
+			pageEntries = Frame.BackStack.ToList();
+			if (pageEntries.Count != 0)
+			{
+				if (pageEntries[0].SourcePageType.Name == "AuthorizationPage")
+				{
+					IsWindowUsed = true;
+				}
+			}
 		}
 
 		private async void LoadNavigationContent()
@@ -81,7 +98,7 @@ namespace OxygenVK.AppSource
 
 		private void ListOfAuthorizedUsers_OnListUpdated()
 		{
-			_ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
+			_ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
 			{
 				accountsSplitButtonList_Add(ListOfAuthorizedUsers.listOfAuthorizedUsers);
 			});
@@ -98,7 +115,7 @@ namespace OxygenVK.AppSource
 			listAccounts.Visibility = Visibility.Visible;
 
 			accountsSplitButtonList.Items.Clear();
-			authorizedUserCardsAttachments.Reverse();
+			//authorizedUserCardsAttachments.Reverse();
 			try
 			{
 				foreach (AuthorizedUserCardsAttachment item in authorizedUserCardsAttachments)
@@ -117,9 +134,8 @@ namespace OxygenVK.AppSource
 									Token = item.Token,
 									AvatarUrl = item.AvatarUrl
 								},
-								Margin = new Thickness(-12, 0, -12, 10),
-								Parameter = Parameter,
-								Frame = Frame
+								Frame = Frame,
+								Margin = new Thickness(-12, 0, -12, 10)
 							};
 							accountsSplitButtonList.Items.Add(horizontalUserCard);
 						}
@@ -140,8 +156,21 @@ namespace OxygenVK.AppSource
 
 		private async void addAccountsButton_Click(object sender, RoutedEventArgs e)
 		{
+			WindowGenerator windowGenerator;
+			if (App.IsWindowUsed)
+			{
+				windowGenerator = new WindowGenerator(Parameter, typeof(AuthorizationPage));
+			}
+			else if (IsWindowUsed)
+			{
+				windowGenerator = new WindowGenerator(Parameter, typeof(AuthorizationPage));
+			}
+			else
+			{
+				await ApplicationViewSwitcher.TryShowAsStandaloneAsync(ListWindowID);
+			}
+
 			OnBackNavigation.Invoke();
-			await ApplicationViewSwitcher.TryShowAsStandaloneAsync(App.MainWindow);
 		}
 
 		private void accountsSplitButton_Click(MUXC.SplitButton sender, MUXC.SplitButtonClickEventArgs args)

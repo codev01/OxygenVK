@@ -16,7 +16,6 @@ namespace OxygenVK.Authorization
 		public AuthorizationPage()
 		{
 			InitializeComponent();
-			NavigationCacheMode = NavigationCacheMode.Enabled;
 		}
 
 		protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -64,7 +63,7 @@ namespace OxygenVK.Authorization
 
 		private void ListOfAuthorizedUsers_OnListUpdated()
 		{
-			_ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
+			_ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
 			{
 				listUpdatedProgress.IsActive = false;
 				listUpdatedProgress.Visibility = Visibility.Collapsed;
@@ -79,18 +78,12 @@ namespace OxygenVK.Authorization
 			borderHintRecentlyLoggedIn.Visibility = Visibility.Visible;
 
 			listUsersCard_GridView.Items.Clear();
-			authorizedUserCardsAttachments.Reverse();
 			try
 			{
 				foreach (AuthorizedUserCardsAttachment item in authorizedUserCardsAttachments)
 				{
 					UserCard userCard = new UserCard
 					{
-						Parameter = new Parameter() 
-						{
-							UserID = item.UserID
-						},
-						Frame = Frame,
 						AuthorizedUserCardsAttachment = new AuthorizedUserCardsAttachment
 						{
 							UserID = item.UserID,
@@ -98,7 +91,8 @@ namespace OxygenVK.Authorization
 							ScreenName = item.ScreenName,
 							Token = item.Token,
 							AvatarUrl = item.AvatarUrl,
-						}
+						},
+						Frame = Frame
 					};
 					listUsersCard_GridView.Items.Add(userCard);
 				}

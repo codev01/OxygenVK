@@ -127,7 +127,7 @@ namespace OxygenVK.Authorization
 				FileStream(true);
 			}
 
-			GetUserData(true);
+			GetUserData(isRe_authorizated);
 		}
 
 		public void GetUserData(bool i = false)
@@ -148,7 +148,7 @@ namespace OxygenVK.Authorization
 			{
 				OnListNull.Invoke();
 			}
-			else if (i)
+			else if (!i)
 			{
 				OnListUpdated.Invoke();
 			}

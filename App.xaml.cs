@@ -20,7 +20,8 @@ namespace OxygenVK
 {
 	public sealed partial class App : Application
 	{
-		public static int MainWindow = 0;
+		public static int MainWindowID = 0;
+		public static bool IsWindowUsed = false;
 
 		public App()
 		{
@@ -51,6 +52,7 @@ namespace OxygenVK
 				if (rootFrame.Content == null)
 				{
 					new RootFrameNavigation(rootFrame, typeof(Authorization.AuthorizationPage), e.Arguments);
+					rootFrame.Navigating += RootFrame_Navigating;
 				}
 
 				ApplicationViewTitleBar appViewTitleBar = ApplicationView.GetForCurrentView().TitleBar;
@@ -63,8 +65,13 @@ namespace OxygenVK
 				coreTitleBar.ExtendViewIntoTitleBar = true;
 
 				Window.Current.Activate();
-				MainWindow = ApplicationView.GetForCurrentView().Id;
+				MainWindowID = ApplicationView.GetForCurrentView().Id;
 			}
+		}
+
+		private void RootFrame_Navigating(object sender, NavigatingCancelEventArgs e)
+		{
+			IsWindowUsed = true;
 		}
 
 		private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)

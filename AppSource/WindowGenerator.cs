@@ -2,8 +2,6 @@
 
 using OxygenVK.AppSource.Views;
 
-using VkNet;
-
 using Windows.ApplicationModel.Core;
 using Windows.UI;
 using Windows.UI.Core;
@@ -15,43 +13,50 @@ namespace OxygenVK.AppSource
 {
 	internal class WindowGenerator
 	{
-		public WindowGenerator(Parameter parameter)
+		private int newWindowID = 0;
+
+		public WindowGenerator(Parameter parameter, Type type = null)
 		{
-			Initialize(parameter);
+			Initialize(parameter, type);
 		}
-		private async void Initialize(object parameter)
+
+		private async void Initialize(object parameter, Type type)
 		{
-			CoreApplicationView newView = CoreApplication.CreateNewView();
-			int newViewId = 0;
-			await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+			if (type == null)
 			{
-				Frame frame = new Frame();
+				type = typeof(MainPage);
+			}
 
-				new RootFrameNavigation(frame, typeof(MainPage), parameter);
+			CoreApplicationView newView = CoreApplication.CreateNewView();
+			await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+		    {
+			   Frame frame = new Frame();
 
-				Window.Current.Content = frame;
+			   new RootFrameNavigation(frame, type, parameter);
 
-				ApplicationViewTitleBar appViewTitleBar = ApplicationView.GetForCurrentView().TitleBar;
-				appViewTitleBar.ButtonBackgroundColor = Colors.Transparent;
-				appViewTitleBar.InactiveForegroundColor = Colors.Transparent;
-				appViewTitleBar.InactiveBackgroundColor = Colors.Transparent;
-				appViewTitleBar.ButtonInactiveForegroundColor = Colors.Transparent;
-				appViewTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+			   Window.Current.Content = frame;
 
-				CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-				coreTitleBar.ExtendViewIntoTitleBar = true;
+			   ApplicationViewTitleBar appViewTitleBar = ApplicationView.GetForCurrentView().TitleBar;
+			   appViewTitleBar.ButtonBackgroundColor = Colors.Transparent;
+			   appViewTitleBar.InactiveForegroundColor = Colors.Transparent;
+			   appViewTitleBar.InactiveBackgroundColor = Colors.Transparent;
+			   appViewTitleBar.ButtonInactiveForegroundColor = Colors.Transparent;
+			   appViewTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
 
-				Window.Current.Activate();
+			   CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+			   coreTitleBar.ExtendViewIntoTitleBar = true;
 
-				newViewId = ApplicationView.GetForCurrentView().Id;
-			});
-			bool viewShown = await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewId);
+			   Window.Current.Activate();
+
+			   newWindowID = ApplicationView.GetForCurrentView().Id;
+		    });
+			MainPage.ListWindowID = newWindowID;
+			NewWindowShowAsync(newWindowID);
 		}
-	}
 
-	public class Parameter
-	{
-		public VkApi VkApi;
-		public long UserID;
+		public async void NewWindowShowAsync(int viewID)
+		{
+			await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newWindowID);
+		}
 	}
 }

@@ -11,7 +11,6 @@ namespace OxygenVK.AppSource.Authorization.Controls
 {
 	public sealed partial class HorizontalUserCard : UserControl
 	{
-		public Parameter Parameter { get; set; }
 		public Frame Frame { get; set; }
 		public AuthorizedUserCardsAttachment AuthorizedUserCardsAttachment { get; set; }
 
@@ -43,15 +42,23 @@ namespace OxygenVK.AppSource.Authorization.Controls
 			}
 		}
 
+		private Parameter GetParameter()
+		{
+			return new Parameter()
+			{
+				UserID = AuthorizedUserCardsAttachment.UserID,
+				VkApi = new Authorize(AuthorizedUserCardsAttachment.Token, true).VkApi
+			};
+		}
+
 		private void ThisWindow_Click(object sender, RoutedEventArgs e)
 		{
-			new RootFrameNavigation(Frame, typeof(MainPage), new Authorize(AuthorizedUserCardsAttachment.Token, true).VkApi);
+			new RootFrameNavigation(Frame, typeof(MainPage), GetParameter());
 		}
 
 		private void NewWindow_Click(object sender, RoutedEventArgs e)
 		{
-			new WindowGenerator(Parameter);
+			new WindowGenerator(GetParameter());
 		}
-
 	}
 }

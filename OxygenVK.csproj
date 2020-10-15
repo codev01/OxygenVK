@@ -148,6 +148,7 @@
       <DependentUpon>WebAuthControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppSource\Authorization\ListUsersEvent.cs" />
+    <Compile Include="AppSource\Parameter.cs" />
     <Compile Include="AppSource\Views\RootFrameNavigation.cs" />
     <Compile Include="AppSource\Views\Settings\Controls\StylePreviewControl.xaml.cs">
       <DependentUpon>StylePreviewControl.xaml</DependentUpon>
