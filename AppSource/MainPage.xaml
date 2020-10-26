@@ -5,6 +5,7 @@
 	xmlns:controls="using:Microsoft.UI.Xaml.Controls"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:my="using:OxygenVK.AppSource.Authorization.Controls"
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	mc:Ignorable="d">
 	<Page.OpacityTransition>
@@ -63,6 +64,7 @@
 								x:Name="accountsSplitButtonContent"
 								Width="230"
 								Height="38"
+								Margin="5,5,0,5"
 								Opacity="0"
 								Visibility="Visible">
 								<Grid.OpacityTransition>

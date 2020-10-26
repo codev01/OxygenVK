@@ -1,4 +1,6 @@
-﻿using VkNet;
+﻿using OxygenVK.Authorization;
+
+using VkNet;
 using VkNet.Model;
 
 namespace OxygenVK.AppSource.Authorization
@@ -6,32 +8,43 @@ namespace OxygenVK.AppSource.Authorization
 	public class Authorize
 	{
 		public delegate void AuthorizationCompleted(Parameter parameter);
-		public static event AuthorizationCompleted OnAuthorizationComleted;
+		public static event AuthorizationCompleted OnAuthorizationCompleted;
 
 		public VkApi VkApi = new VkApi();
 
-		public Authorize(string token, bool isRe_authorization = false)
+		public Authorize(string token, bool re_Authorize = false)
 		{
-			AuthorizeAsync(token, isRe_authorization);
+			AuthorizeAsync(token, re_Authorize);
 		}
-		private async void AuthorizeAsync(string token, bool isRe_authorization = false)
+
+		private async void AuthorizeAsync(string token, bool re_Authorize)
 		{
 			await VkApi.AuthorizeAsync(new ApiAuthParams
 			{
 				AccessToken = token
 			});
 
-			long userID = 0;
-			foreach (User item in VkApi.Users.Get(new long[0]))
+			if (!re_Authorize)
 			{
-				userID = item.Id;
-			}
+				long userID = 0;
+				foreach (User item in await VkApi.Users.GetAsync(new long[0]))
+				{
+					userID = item.Id;
+				}
 
-			new OxygenVK.Authorization.ListOfAuthorizedUsers().SetListOfAuthorizedUsers(VkApi, userID, isRe_authorization);
+				ListOfAuthorizedUsers listOfAuthorizedUsers = new ListOfAuthorizedUsers();
 
-			if (!isRe_authorization)
-			{
-				OnAuthorizationComleted?.Invoke(new Parameter()
+				foreach (AuthorizedUserCardsAttachment item in ListOfAuthorizedUsers.listOfAuthorizedUsers)
+				{
+					if (item.UserID == userID)
+					{
+						listOfAuthorizedUsers.DeleteUserData(userID);
+					}
+				}
+				listOfAuthorizedUsers.SetListOfAuthorizedUsersAsync(VkApi, userID);
+				listOfAuthorizedUsers.InitializeList();
+
+				OnAuthorizationCompleted?.Invoke(new Parameter()
 				{
 					UserID = userID,
 					VkApi = VkApi

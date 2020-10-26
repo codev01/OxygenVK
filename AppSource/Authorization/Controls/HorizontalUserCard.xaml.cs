@@ -27,7 +27,9 @@ namespace OxygenVK.AppSource.Authorization.Controls
 
 		private void deleteCard_Click(object sender, RoutedEventArgs e)
 		{
-			new ListOfAuthorizedUsers().DeleteUserData(AuthorizedUserCardsAttachment.UserID);
+			ListOfAuthorizedUsers listOfAuthorizedUsers = new ListOfAuthorizedUsers();
+			listOfAuthorizedUsers.DeleteUserData(AuthorizedUserCardsAttachment.UserID);
+			listOfAuthorizedUsers.InitializeList();
 		}
 
 		private void screenNameToolTip_Loaded(object sender, RoutedEventArgs e)
@@ -58,7 +60,7 @@ namespace OxygenVK.AppSource.Authorization.Controls
 
 		private void NewWindow_Click(object sender, RoutedEventArgs e)
 		{
-			new WindowGenerator(GetParameter());
+			new WindowGenerator(GetParameter(), typeof(MainPage));
 		}
 	}
 }

@@ -1,6 +1,4 @@
-﻿
-using OxygenVK.AppSource;
-using OxygenVK.AppSource.Authorization;
+﻿using OxygenVK.AppSource;
 using OxygenVK.AppSource.Views;
 
 using Windows.UI.Xaml.Controls;
@@ -21,7 +19,9 @@ namespace OxygenVK.Authorization
 		{
 			if (isSave.IsChecked == true)
 			{
-				new ListOfAuthorizedUsers().SetListOfAuthorizedUsers(Parameter.VkApi, Parameter.UserID);
+				ListOfAuthorizedUsers listOfAuthorizedUsers = new ListOfAuthorizedUsers();
+				listOfAuthorizedUsers.SetListOfAuthorizedUsersAsync(Parameter.VkApi, Parameter.UserID);
+				listOfAuthorizedUsers.InitializeList();
 			}
 		}
 
@@ -34,7 +34,7 @@ namespace OxygenVK.Authorization
 		private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
 		{
 			SaveProfailInfo();
-			new WindowGenerator(Parameter);
+			new WindowGenerator(Parameter, typeof(MainPage));
 		}
 	}
 }

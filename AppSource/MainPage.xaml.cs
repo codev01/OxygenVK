@@ -23,14 +23,6 @@ namespace OxygenVK.AppSource
 {
 	public sealed partial class MainPage : Page
 	{
-		public delegate void BackNavigationEvent();
-		public static event BackNavigationEvent OnBackNavigation;
-
-		public static int ListWindowID = App.MainWindowID;
-
-
-		private bool IsWindowUsed = false;
-		private List<PageStackEntry> pageEntries;
 		private Parameter Parameter;
 		private bool paneIsOpen;
 		private Enum displayMode;
@@ -40,12 +32,6 @@ namespace OxygenVK.AppSource
 		public MainPage()
 		{
 			InitializeComponent();
-			//NavigationCacheMode = NavigationCacheMode.Enabled;
-		}
-
-		protected override void OnNavigatedTo(NavigationEventArgs e)
-		{
-			Parameter = e.Parameter as Parameter;
 		}
 
 		private void Navigation_Loaded(object sender, RoutedEventArgs e)
@@ -54,28 +40,11 @@ namespace OxygenVK.AppSource
 			DispatcherTimer.Tick += DispatcherTimer_Tick;
 
 			ListOfAuthorizedUsers.OnListUpdated += ListOfAuthorizedUsers_OnListUpdated;
-			ListOfAuthorizedUsers.OnListNull += ListOfAuthorizedUsers_OnListNull;
 
 			Window.Current.SetTitleBar(AppTitleBar);
 
 			LoadNavigationContent();
-			new ListOfAuthorizedUsers().GetUserData();
 			accountsSplitButtonList_Add(ListOfAuthorizedUsers.listOfAuthorizedUsers);
-
-			Frame.Navigated += Frame_Navigated;
-			//contentFrame.Navigate(typeof(NewsPage), null, new DrillInNavigationTransitionInfo());
-		}
-
-		private void Frame_Navigated(object sender, NavigationEventArgs e)
-		{
-			pageEntries = Frame.BackStack.ToList();
-			if (pageEntries.Count != 0)
-			{
-				if (pageEntries[0].SourcePageType.Name == "AuthorizationPage")
-				{
-					IsWindowUsed = true;
-				}
-			}
 		}
 
 		private async void LoadNavigationContent()
@@ -96,27 +65,42 @@ namespace OxygenVK.AppSource
 			accountsSplitButtonContent.Opacity = 1;
 		}
 
-		private void ListOfAuthorizedUsers_OnListUpdated()
+		protected override void OnNavigatedTo(NavigationEventArgs e)
+		{
+			Parameter = e?.Parameter as Parameter;
+		}
+
+		private async void addAccountsButton_Click(object sender, RoutedEventArgs e)
+		{
+			if (WindowGenerator.AuthorizationPageWindowOpened && !AuthorizationPage.ThePageIsUsedInNavigation)
+			{
+				await ApplicationViewSwitcher.SwitchAsync(WindowGenerator.AuthorizationPageWindowID);
+			}
+			else
+			{
+				new WindowGenerator(null, typeof(AuthorizationPage));
+			}
+		}
+
+		private void accountsSplitButton_Click(MUXC.SplitButton sender, MUXC.SplitButtonClickEventArgs args)
+		{
+			contentFrame.Navigate(typeof(UserPage), null, new DrillInNavigationTransitionInfo());
+		}
+
+		private void ListOfAuthorizedUsers_OnListUpdated(List<AuthorizedUserCardsAttachment> authorizedUserCardsAttachments)
 		{
 			_ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
 			{
-				accountsSplitButtonList_Add(ListOfAuthorizedUsers.listOfAuthorizedUsers);
+				accountsSplitButtonList_Add(authorizedUserCardsAttachments);
 			});
-		}
-
-		private void ListOfAuthorizedUsers_OnListNull()
-		{
-			listAccounts.Visibility = Visibility.Collapsed;
-			accountsSplitButtonList.Items.Clear();
 		}
 
 		private void accountsSplitButtonList_Add(List<AuthorizedUserCardsAttachment> authorizedUserCardsAttachments)
 		{
 			listAccounts.Visibility = Visibility.Visible;
-
 			accountsSplitButtonList.Items.Clear();
-			//authorizedUserCardsAttachments.Reverse();
-			try
+
+			if (authorizedUserCardsAttachments.Count != 0)
 			{
 				foreach (AuthorizedUserCardsAttachment item in authorizedUserCardsAttachments)
 				{
@@ -141,41 +125,22 @@ namespace OxygenVK.AppSource
 						}
 						else if (authorizedUserCardsAttachments.Count <= 1)
 						{
-							ListOfAuthorizedUsers_OnListNull();
+							listAccounts.Visibility = Visibility.Collapsed;
+							accountsSplitButtonList.Items.Clear();
 						}
 					}
 				}
 			}
-			catch { }
+			else
+			{
+				listAccounts.Visibility = Visibility.Collapsed;
+				accountsSplitButtonList.Items.Clear();
+			}
 			if (isNVFirstLoaded)
 			{
 				Navigation.IsPaneOpen = true;
 				isNVFirstLoaded = false;
 			}
-		}
-
-		private async void addAccountsButton_Click(object sender, RoutedEventArgs e)
-		{
-			WindowGenerator windowGenerator;
-			if (App.IsWindowUsed)
-			{
-				windowGenerator = new WindowGenerator(Parameter, typeof(AuthorizationPage));
-			}
-			else if (IsWindowUsed)
-			{
-				windowGenerator = new WindowGenerator(Parameter, typeof(AuthorizationPage));
-			}
-			else
-			{
-				await ApplicationViewSwitcher.TryShowAsStandaloneAsync(ListWindowID);
-			}
-
-			OnBackNavigation.Invoke();
-		}
-
-		private void accountsSplitButton_Click(MUXC.SplitButton sender, MUXC.SplitButtonClickEventArgs args)
-		{
-			contentFrame.Navigate(typeof(UserPage), null, new DrillInNavigationTransitionInfo());
 		}
 
 		private void Navigation_SelectionChanged(MUXC.NavigationView sender, MUXC.NavigationViewSelectionChangedEventArgs args)
@@ -222,7 +187,6 @@ namespace OxygenVK.AppSource
 			AppNameTextBlock.Visibility = Visibility.Visible;
 			AppNameTextBlock.Opacity = 1;
 		}
-
 
 		private void DispatcherTimer_Tick(object sender, object e)
 		{
@@ -291,7 +255,6 @@ namespace OxygenVK.AppSource
 					break;
 			}
 		}
-
 	}
 }
 
