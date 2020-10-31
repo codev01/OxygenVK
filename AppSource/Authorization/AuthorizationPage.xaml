@@ -119,6 +119,7 @@
 		<local:WebAuthControl
 			x:Name="webAuthControl"
 			Closing="webAuthControl_Closing"
+			OnAuthCompleted="webAuthControl_OnAuthCompleted"
 			Opacity="0"
 			Visibility="Collapsed" />
 	</Grid>

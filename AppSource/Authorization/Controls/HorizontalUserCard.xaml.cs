@@ -3,6 +3,8 @@
 using OxygenVK.AppSource.Views;
 using OxygenVK.Authorization;
 
+using VkNet;
+
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
@@ -44,13 +46,9 @@ namespace OxygenVK.AppSource.Authorization.Controls
 			}
 		}
 
-		private Parameter GetParameter()
+		private VkApi GetParameter()
 		{
-			return new Parameter()
-			{
-				UserID = AuthorizedUserCardsAttachment.UserID,
-				VkApi = new Authorize(AuthorizedUserCardsAttachment.Token, true).VkApi
-			};
+			return new Authorize(AuthorizedUserCardsAttachment.Token, true).VkApi;
 		}
 
 		private void ThisWindow_Click(object sender, RoutedEventArgs e)

@@ -69,7 +69,7 @@ namespace OxygenVK.AppSource
 				WindowActivate();
 				DefinePage(frame);
 			});
-			await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newWindowID);
+			await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newWindowID, ViewSizePreference.Default);
 		}
 
 		private Frame InitializationFrame()

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using OxygenVK.AppSource;
-using OxygenVK.AppSource.Authorization;
 using OxygenVK.AppSource.Authorization.Controls;
 
 using Windows.UI.Xaml;
@@ -26,8 +24,6 @@ namespace OxygenVK.Authorization
 			Frame.Navigating += Frame_Navigating;
 			ThePageIsUsedInNavigation = false;
 			thePageIsUsedInNavigation = false;
-
-			Authorize.OnAuthorizationCompleted += Authorization_OnAuthorizationCompletedAsync;
 
 			ListOfAuthorizedUsers.OnListStartUpdate += ListOfAuthorizedUsers_OnListStartUpdate;
 			ListOfAuthorizedUsers.OnListUpdated += ListOfAuthorizedUsers_OnListUpdated;
@@ -93,23 +89,6 @@ namespace OxygenVK.Authorization
 			});
 		}
 
-		private void Authorization_OnAuthorizationCompletedAsync(Parameter parameter)
-		{
-			if (!thePageIsUsedInNavigation)
-			{
-				_ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
-				{
-					webAuthControl_Closing();
-					InWhichWindowDialog dialog = new InWhichWindowDialog
-					{
-						Frame = Frame,
-						Parameter = parameter
-					};
-					await dialog.ShowAsync();
-				});
-			}
-		}
-
 		private void listUpdatedProgress_SetVisibility(Visibility visibility)
 		{
 			if (visibility == Visibility.Visible)
@@ -145,6 +124,20 @@ namespace OxygenVK.Authorization
 		{
 			webAuthControl.Opacity = 0;
 			webAuthControl.Visibility = Visibility.Collapsed;
+		}
+
+		private async void webAuthControl_OnAuthCompleted(string token)
+		{
+			if (!thePageIsUsedInNavigation)
+			{
+				webAuthControl_Closing();
+				InWhichWindowDialog dialog = new InWhichWindowDialog
+				{
+					Frame = Frame,
+					Token = token
+				};
+				await dialog.ShowAsync();
+			}
 		}
 
 		private void headerListPanel_SizeChanged(object sender, SizeChangedEventArgs e)

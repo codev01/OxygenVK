@@ -7,6 +7,7 @@ using System.Xml.Linq;
 
 using VkNet;
 using VkNet.Enums.SafetyEnums;
+using VkNet.Model;
 
 using static OxygenVK.AppSource.Authorization.ListUsersEvent;
 
@@ -101,10 +102,15 @@ namespace OxygenVK.Authorization
 								   "</Users>";
 		}
 
-		public async void SetListOfAuthorizedUsersAsync(VkApi vkApi, long userID)
+		public async void SetListOfAuthorizedUsersAsync(VkApi vkApi)
 		{
 			OnListStartUpdate.Invoke();
 
+			long userID = 0;
+			foreach (User item in await vkApi.Users.GetAsync(new long[0]))
+			{
+				userID = item.Id;
+			}
 			DeleteUserData(userID);
 
 			string photoURL = null;
@@ -127,6 +133,7 @@ namespace OxygenVK.Authorization
 			xml = null;
 			xml = xDoc.ToString();
 			FileStream(true);
+			GetUserData();
 		}
 
 		private void GetUserData()
@@ -155,6 +162,20 @@ namespace OxygenVK.Authorization
 					i.Remove();
 				}
 			}
+
+			List<AuthorizedUserCardsAttachment> items = new List<AuthorizedUserCardsAttachment>();
+			foreach (AuthorizedUserCardsAttachment item in listOfAuthorizedUsers)
+			{
+				if (item.UserID == userID)
+				{
+					items.Add(item);
+				}
+			}
+			foreach (AuthorizedUserCardsAttachment item in items)
+			{
+				listOfAuthorizedUsers.Remove(item);
+			}
+
 			if (xDoc.ToString() == "<Users />")
 			{
 				FileStream(true, true);

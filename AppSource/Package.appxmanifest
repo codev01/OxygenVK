@@ -8,11 +8,11 @@
   IgnorableNamespaces="uap mp rescap">
 
   <Identity
-    Name="OxygenVK-Alpha"
-    Publisher="CN=codev"
-    Version="0.1.0.0" />
+    Name="40629codev01.OxygenVK"
+    Publisher="CN=A6407AEF-CE6D-469E-AE2F-8F7237F6D602"
+    Version="0.1.2.0" />
 
-  <mp:PhoneIdentity PhoneProductId="266fdc49-1a1f-42e0-a1b0-f9b46cfb6241" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="1a1affc1-207f-4191-8425-7b6c48ea1f03" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>OxygenVK</DisplayName>

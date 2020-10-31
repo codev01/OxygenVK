@@ -9,8 +9,11 @@ namespace OxygenVK.AppSource.Authorization.Controls
 {
 	public sealed partial class WebAuthControl : UserControl
 	{
-		public delegate void ClosingWebAuthControl();
-		public event ClosingWebAuthControl Closing;
+		public delegate void ClosingWebAuthControlEvent();
+		public delegate void AuthorizationComletedEvent(string token);
+		public event ClosingWebAuthControlEvent Closing;
+		public event AuthorizationComletedEvent OnAuthCompleted;
+
 		private readonly string uri = "https://oauth.vk.com/authorize?client_id=6121396&scope=215989462&redirect_uri=https://oauth.vk.com/blank.html&display=page&response_type=token&revoke=1";
 
 		public WebAuthControl()
@@ -38,7 +41,7 @@ namespace OxygenVK.AppSource.Authorization.Controls
 					await WebView.ClearTemporaryWebDataAsync();
 					Expectation.Opacity = 1;
 					Expectation.Visibility = Windows.UI.Xaml.Visibility.Visible;
-					new Authorize(token);
+					OnAuthCompleted.Invoke(token);
 				}
 			}
 			catch

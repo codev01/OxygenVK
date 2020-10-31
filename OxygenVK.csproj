@@ -17,14 +17,17 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
-    <AppxPackageSigningEnabled>false</AppxPackageSigningEnabled>
-    <GenerateAppInstallerFile>True</GenerateAppInstallerFile>
+    <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>x64</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x86|x64|arm|arm64</AppxBundlePlatforms>
     <AppInstallerUri>P:\AppXPackages</AppInstallerUri>
     <HoursBetweenUpdateChecks>168</HoursBetweenUpdateChecks>
+    <PackageCertificateThumbprint>86D92394ACBBD79CF68C60253B0641DA80CA0C8D</PackageCertificateThumbprint>
+    <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+    <AppxPackageDir>P:\OxygenVK\AppPackages\</AppxPackageDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -148,8 +151,6 @@
       <DependentUpon>WebAuthControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppSource\Authorization\ListUsersEvent.cs" />
-    <Compile Include="AppSource\Parameter.cs" />
-    <Compile Include="AppSource\ParametersNavigate.cs" />
     <Compile Include="AppSource\Views\RootFrameNavigation.cs" />
     <Compile Include="AppSource\Views\Settings\Controls\StylePreviewControl.xaml.cs">
       <DependentUpon>StylePreviewControl.xaml</DependentUpon>
@@ -218,6 +219,7 @@
     <Content Include="AppSource\Assets\Wide310x150Logo.scale-125.png" />
     <Content Include="AppSource\Assets\Wide310x150Logo.scale-150.png" />
     <Content Include="AppSource\Assets\Wide310x150Logo.scale-400.png" />
+    <None Include="Package.StoreAssociation.xml" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="AppSource\Assets\LockScreenLogo.scale-200.png" />
     <Content Include="AppSource\Assets\SplashScreen.scale-200.png" />
@@ -310,6 +312,9 @@
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="AppSource\Strings\ru-RU\Resources.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="OxygenVK_TemporaryKey.pfx" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

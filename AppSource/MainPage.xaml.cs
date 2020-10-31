@@ -8,7 +8,9 @@ using OxygenVK.AppSource.Views.Settings;
 using OxygenVK.AppSource.Views.User;
 using OxygenVK.Authorization;
 
+using VkNet;
 using VkNet.Enums.SafetyEnums;
+using VkNet.Model;
 
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -23,7 +25,8 @@ namespace OxygenVK.AppSource
 {
 	public sealed partial class MainPage : Page
 	{
-		private Parameter Parameter;
+		private long userID = 0;
+		private VkApi Parameter;
 		private bool paneIsOpen;
 		private Enum displayMode;
 		private bool isNVFirstLoaded;
@@ -32,6 +35,7 @@ namespace OxygenVK.AppSource
 		public MainPage()
 		{
 			InitializeComponent();
+			Window.Current.SetTitleBar(AppTitleBar);
 		}
 
 		private void Navigation_Loaded(object sender, RoutedEventArgs e)
@@ -41,18 +45,16 @@ namespace OxygenVK.AppSource
 
 			ListOfAuthorizedUsers.OnListUpdated += ListOfAuthorizedUsers_OnListUpdated;
 
-			Window.Current.SetTitleBar(AppTitleBar);
-
 			LoadNavigationContent();
 			accountsSplitButtonList_Add(ListOfAuthorizedUsers.listOfAuthorizedUsers);
 		}
 
 		private async void LoadNavigationContent()
 		{
-			VkNet.Model.RequestParams.AccountSaveProfileInfoParams profileInfo = await Parameter.VkApi.Account.GetProfileInfoAsync();
+			VkNet.Model.RequestParams.AccountSaveProfileInfoParams profileInfo = await Parameter.Account.GetProfileInfoAsync();
 			firstANDlastNameSplitButton.Text = profileInfo.FirstName + " " + profileInfo.LastName;
 
-			foreach (VkNet.Model.Attachments.Photo photo in await Parameter.VkApi.Photo.GetAsync(new VkNet.Model.RequestParams.PhotoGetParams
+			foreach (VkNet.Model.Attachments.Photo photo in await Parameter.Photo.GetAsync(new VkNet.Model.RequestParams.PhotoGetParams
 			{
 				AlbumId = PhotoAlbumType.Profile,
 				Count = 1
@@ -67,7 +69,7 @@ namespace OxygenVK.AppSource
 
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
-			Parameter = e?.Parameter as Parameter;
+			Parameter = e?.Parameter as VkApi;
 		}
 
 		private async void addAccountsButton_Click(object sender, RoutedEventArgs e)
@@ -95,10 +97,17 @@ namespace OxygenVK.AppSource
 			});
 		}
 
-		private void accountsSplitButtonList_Add(List<AuthorizedUserCardsAttachment> authorizedUserCardsAttachments)
+		private async void accountsSplitButtonList_Add(List<AuthorizedUserCardsAttachment> authorizedUserCardsAttachments)
 		{
 			listAccounts.Visibility = Visibility.Visible;
 			accountsSplitButtonList.Items.Clear();
+			if (userID == 0)
+			{
+				foreach (User item in await Parameter.Users.GetAsync(new long[0]))
+				{
+					userID = item.Id;
+				}
+			}
 
 			if (authorizedUserCardsAttachments.Count != 0)
 			{
@@ -106,7 +115,7 @@ namespace OxygenVK.AppSource
 				{
 					if (Parameter != null)
 					{
-						if (Parameter.UserID != item.UserID)
+						if (userID != item.UserID)
 						{
 							HorizontalUserCard horizontalUserCard = new HorizontalUserCard()
 							{
