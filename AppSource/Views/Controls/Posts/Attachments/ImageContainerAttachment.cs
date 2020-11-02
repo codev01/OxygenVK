@@ -1,6 +1,6 @@
-﻿namespace OxygenVK.AppSource.Views.Controls
+﻿namespace OxygenVK.AppSource.Views.Controls.Posts.Attachments
 {
-	public class ThumbAttachment
+	public class ImageContainerAttachment
 	{
 		public double Width { get; set; }
 
@@ -14,12 +14,12 @@
 
 		public bool LastRow { get; set; }
 
-		internal double getRatio()
+		public double getRatio()
 		{
 			return Width / Height;
 		}
 
-		internal void SetViewSize(double width, double height, bool lastColumn, bool lastRow)
+		public void SetViewSize(double width, double height, bool lastColumn, bool lastRow)
 		{
 			CalcWidth = width;
 			CalcHeight = height;

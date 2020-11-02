@@ -6,7 +6,6 @@ using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 
 using OxygenVK.AppSource;
-using OxygenVK.Authorization;
 
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -35,7 +34,7 @@ namespace OxygenVK
 
 		protected override void OnLaunched(LaunchActivatedEventArgs e)
 		{
-			new WindowGenerator(e, typeof(AuthorizationPage));
+			new WindowGenerator(e, null);
 		}
 
 		private void OnSuspending(object sender, SuspendingEventArgs e)

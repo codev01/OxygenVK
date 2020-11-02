@@ -151,14 +151,18 @@
       <DependentUpon>WebAuthControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppSource\Authorization\ListUsersEvent.cs" />
-    <Compile Include="AppSource\Views\Controls\Posts\ItemMessageUC.xaml.cs">
-      <DependentUpon>ItemMessageUC.xaml</DependentUpon>
+    <Compile Include="AppSource\Views\Controls\PictureBoxControl.xaml.cs">
+      <DependentUpon>PictureBoxControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AppSource\Views\Controls\Posts\ListExtensions2.cs" />
-    <Compile Include="AppSource\Views\Controls\Posts\RectangleLayoutHelper.cs" />
-    <Compile Include="AppSource\Views\Controls\Posts\ThumbAttachment.cs" />
-    <Compile Include="AppSource\Views\Controls\Posts\ThumbnailLayoutManager.cs" />
-    <Compile Include="AppSource\Views\Controls\Posts\ThumbsItem.cs" />
+    <Compile Include="AppSource\Views\Controls\Posts\Attachments\ImageContainerAttachment.cs" />
+    <Compile Include="AppSource\Views\Controls\Posts\Attachments\PostsAttachments.cs" />
+    <Compile Include="AppSource\Views\Controls\Posts\ImageContainer\CanvasContainer.cs" />
+    <Compile Include="AppSource\Views\Controls\Posts\ImageContainer\ListExtensions.cs" />
+    <Compile Include="AppSource\Views\Controls\Posts\ImageContainer\RectangleLayoutHelper.cs" />
+    <Compile Include="AppSource\Views\Controls\Posts\ImageContainer\ThumbnailLayoutManager.cs" />
+    <Compile Include="AppSource\Views\Controls\Posts\ListPostsControl.xaml.cs">
+      <DependentUpon>ListPostsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AppSource\Views\RootFrameNavigation.cs" />
     <Compile Include="AppSource\Views\Settings\Controls\StylePreviewControl.xaml.cs">
       <DependentUpon>StylePreviewControl.xaml</DependentUpon>
@@ -269,7 +273,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AppSource\Views\Controls\Posts\ItemMessageUC.xaml">
+    <Page Include="AppSource\Views\Controls\PictureBoxControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppSource\Views\Controls\Posts\ListPostsControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

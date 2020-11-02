@@ -2,18 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace OxygenVK.AppSource.Views.Controls
+using OxygenVK.AppSource.Views.Controls.Posts.Attachments;
+
+namespace OxygenVK.AppSource.Views.Controls.Posts.ImageContainer
 {
 	public class ThumbnailLayoutManager
 	{
-		public static void ProcessThumbnails(double maxW, double maxH, List<ThumbAttachment> thumbs, double marginBetween)
+		public static void ProcessThumbnails(double maxW, double maxH, List<ImageContainerAttachment> thumbs, double marginBetween)
 		{
 			string str = "";
 			int[] numArray = new int[3];
 			List<double> doubleList1 = new List<double>();
 			int count = thumbs.Count;
 			bool flag = false;
-			foreach (ThumbAttachment thumb in thumbs)
+			foreach (ImageContainerAttachment thumb in thumbs)
 			{
 				double ratio = thumb.getRatio();
 				if (ratio == -1.0)
@@ -23,14 +25,10 @@ namespace OxygenVK.AppSource.Views.Controls
 
 				char orient = ratio > 1.2 ? 'w' : (ratio < 0.8 ? 'n' : 'q');
 				str += orient.ToString();
-				++numArray[ThumbnailLayoutManager.oi(orient)];
+				++numArray[OI(orient)];
 				doubleList1.Add(ratio);
 			}
-			if (flag)
-			{
-				ThumbnailLayoutManager.Log("BAD!");
-			}
-			else
+			if (!flag)
 			{
 				double num1 = doubleList1.Count > 0 ? Enumerable.Sum(doubleList1) / doubleList1.Count : 1.0;
 				double margin = marginBetween;
@@ -156,32 +154,31 @@ namespace OxygenVK.AppSource.Views.Controls
 							doubleList2.Add(Math.Min(1.0, val2));
 						}
 					}
-					Dictionary<string, List<double>> dictionary = new Dictionary<string, List<double>>();
-					int num5;
-					dictionary[string.Concat((num5 = count))] = new List<double>()
-		  {
-			ThumbnailLayoutManager.calculateMultiThumbsHeight(doubleList2, width1, margin)
-		  };
+					Dictionary<string, List<double>> dictionary = new Dictionary<string, List<double>>
+					{
+						[string.Concat((count))] = new List<double>()
+					{
+						CalculateMultiThumbsHeight(doubleList2, width1, margin)
+					}
+					};
 					for (int index = 1; index <= count - 1; ++index)
 					{
-						int num6;
-						dictionary[index.ToString() + "," + (num6 = count - index)] = new List<double>()
-			{
-			  ThumbnailLayoutManager.calculateMultiThumbsHeight(doubleList2.Sublist<double>(0, index), width1, margin),
-			  ThumbnailLayoutManager.calculateMultiThumbsHeight(doubleList2.Sublist<double>(index, doubleList2.Count), width1, margin)
-			};
+						dictionary[index.ToString() + "," + (count - index)] = new List<double>()
+						{
+							CalculateMultiThumbsHeight(doubleList2.Sublist(0, index), width1, margin),
+							CalculateMultiThumbsHeight(doubleList2.Sublist(index, doubleList2.Count), width1, margin)
+						};
 					}
 					for (int index1 = 1; index1 <= count - 2; ++index1)
 					{
 						for (int index2 = 1; index2 <= count - index1 - 1; ++index2)
 						{
-							int num6;
-							dictionary[index1.ToString() + "," + index2 + "," + (num6 = count - index1 - index2)] = new List<double>()
-			  {
-				ThumbnailLayoutManager.calculateMultiThumbsHeight(doubleList2.Sublist<double>(0, index1), width1, margin),
-				ThumbnailLayoutManager.calculateMultiThumbsHeight(doubleList2.Sublist<double>(index1, index1 + index2), width1, margin),
-				ThumbnailLayoutManager.calculateMultiThumbsHeight(doubleList2.Sublist<double>(index1 + index2, doubleList2.Count), width1, margin)
-			  };
+							dictionary[index1.ToString() + "," + index2 + "," + (count - index1 - index2)] = new List<double>()
+							{
+								CalculateMultiThumbsHeight(doubleList2.Sublist(0, index1), width1, margin),
+								CalculateMultiThumbsHeight(doubleList2.Sublist(index1, index1 + index2), width1, margin),
+								CalculateMultiThumbsHeight(doubleList2.Sublist(index1 + index2, doubleList2.Count), width1, margin)
+							};
 						}
 					}
 					string index3 = null;
@@ -210,16 +207,15 @@ namespace OxygenVK.AppSource.Views.Controls
 							num7 = num9;
 						}
 					}
-					List<ThumbAttachment> thumbAttachmentList1 = new List<ThumbAttachment>(thumbs);
+					List<ImageContainerAttachment> thumbAttachmentList1 = new List<ImageContainerAttachment>(thumbs);
 					List<double> doubleList4 = new List<double>(doubleList2);
 					string[] strArray1 = index3.Split(',');
 					List<double> doubleList5 = dictionary[index3];
-					int length = strArray1.Length;
 					int index4 = 0;
 					for (int index1 = 0; index1 < strArray1.Length; ++index1)
 					{
 						int num6 = int.Parse(strArray1[index1]);
-						List<ThumbAttachment> thumbAttachmentList2 = new List<ThumbAttachment>();
+						List<ImageContainerAttachment> thumbAttachmentList2 = new List<ImageContainerAttachment>();
 						for (int index2 = 0; index2 < num6; ++index2)
 						{
 							thumbAttachmentList2.Add(thumbAttachmentList1[0]);
@@ -230,7 +226,7 @@ namespace OxygenVK.AppSource.Views.Controls
 						int num9 = thumbAttachmentList2.Count - 1;
 						for (int index2 = 0; index2 < thumbAttachmentList2.Count; ++index2)
 						{
-							ThumbAttachment thumbAttachment = thumbAttachmentList2[index2];
+							ImageContainerAttachment thumbAttachment = thumbAttachmentList2[index2];
 							double num10 = doubleList4[0];
 							doubleList4.RemoveAt(0);
 							double width2 = num10 * num8;
@@ -244,16 +240,12 @@ namespace OxygenVK.AppSource.Views.Controls
 			}
 		}
 
-		private static double calculateMultiThumbsHeight(List<double> ratios, double width, double margin)
+		private static double CalculateMultiThumbsHeight(List<double> ratios, double width, double margin)
 		{
 			return (width - (ratios.Count - 1) * margin) / Enumerable.Sum(ratios);
 		}
 
-		private static void Log(string p)
-		{
-		}
-
-		private static int oi(char orient)
+		private static int OI(char orient)
 		{
 			if (orient == 110)
 			{

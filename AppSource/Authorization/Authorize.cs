@@ -9,11 +9,14 @@ namespace OxygenVK.AppSource.Authorization
 	{
 		public VkApi VkApi = new VkApi();
 
-		public Authorize(string token, bool re_Authorize = false) => AuthorizeAsync(token, re_Authorize);
+		public Authorize(string token, bool re_Authorize = false)
+		{
+			AuthorizeAsync(token, re_Authorize);
+		}
 
 		private async void AuthorizeAsync(string token, bool re_Authorize)
 		{
-		    await VkApi.AuthorizeAsync(new ApiAuthParams
+			await VkApi.AuthorizeAsync(new ApiAuthParams
 			{
 				AccessToken = token
 			});

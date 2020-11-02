@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+
 using OxygenVK.Authorization;
 
 namespace OxygenVK.AppSource.Authorization

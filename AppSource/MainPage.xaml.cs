@@ -28,7 +28,6 @@ namespace OxygenVK.AppSource
 	public sealed partial class MainPage : Page
 	{
 		private bool IsNavigatedUserPage;
-		private string ItemTag;
 		private long userID = 0;
 		private VkApi Parameter;
 		private bool paneIsOpen;
@@ -50,6 +49,7 @@ namespace OxygenVK.AppSource
 
 		private void Navigation_Loaded(object sender, RoutedEventArgs e)
 		{
+			Navigation.IsPaneOpen = false;
 			isNVFirstLoaded = true;
 			DispatcherTimer.Tick += DispatcherTimer_Tick;
 
@@ -179,16 +179,16 @@ namespace OxygenVK.AppSource
 				IsNavigatedUserPage = false;
 			}
 
-			ElementTheme theme = Navigation.RequestedTheme;
+			ElementTheme theme = RequestedTheme;
 			if (Application.Current.RequestedTheme == ApplicationTheme.Dark)
 			{
-				Navigation.RequestedTheme = ElementTheme.Light;
+				RequestedTheme = ElementTheme.Light;
 			}
 			else
 			{
-				Navigation.RequestedTheme = ElementTheme.Dark;
+				RequestedTheme = ElementTheme.Dark;
 			}
-			Navigation.RequestedTheme = theme;
+			RequestedTheme = theme;
 		}
 
 		private void Navigation_ItemInvoked(MUXC.NavigationView sender, MUXC.NavigationViewItemInvokedEventArgs args)
@@ -197,22 +197,17 @@ namespace OxygenVK.AppSource
 			{
 				UpdateIndicatorForeground(Selection.SelectionNavigationItem);
 			}
-		}
-
-		private void Navigation_SelectionChanged(MUXC.NavigationView sender, MUXC.NavigationViewSelectionChangedEventArgs args)
-		{
-
-			if (args.IsSettingsSelected)
-			{
-				contentFrame.Navigate(typeof(SettingsPage), null, new DrillInNavigationTransitionInfo());
-			}
-			ItemTag = args.SelectedItemContainer.Tag.ToString();
-			switch (ItemTag)
+			switch (args.InvokedItemContainer.Tag.ToString())
 			{
 				case "news":
-					//contentFrame.Navigate(typeof(NewsPage), null, new DrillInNavigationTransitionInfo());
+					contentFrame.Navigate(typeof(SettingsPage), null, new DrillInNavigationTransitionInfo());
 					break;
 				case "test":
+					break;
+
+
+				case "Параметры":
+					contentFrame.Navigate(typeof(SettingsPage), null, new DrillInNavigationTransitionInfo());
 					break;
 			}
 		}
@@ -264,14 +259,16 @@ namespace OxygenVK.AppSource
 			switch (displayMode)
 			{
 				case MUXC.NavigationViewDisplayMode.Minimal:
+
+					accountsSplitButtonContent.Width = 270;
+					accountsSplitButton.Margin = new Thickness(5, 48, -70, 0);
+					accountsSplitButton.Translation = new Vector3(-80, 0, 0);
+
 					if (paneIsOpen)
 					{
 						AppTitleBar.Margin = new Thickness(80, 0, -70, 0);
 						AppNameTextBlock.Visibility = Visibility.Collapsed;
 						AppNameTextBlock.Opacity = 0;
-						accountsSplitButtonContent.Width = 270;
-						accountsSplitButton.Margin = new Thickness(5, 48, -70, 0);
-						accountsSplitButton.Translation = new Vector3(-80, 0, 0);
 					}
 					else
 					{
@@ -282,9 +279,29 @@ namespace OxygenVK.AppSource
 						DispatcherTimer.Start();
 						AppNameTextBlock.Translation = new Vector3(0, 0, 0);
 					}
+
 					break;
 				case MUXC.NavigationViewDisplayMode.Compact:
+
 					AppTitleBar.Margin = new Thickness(40, 0, 0, 0);
+					accountsSplitButtonContent.Width = 230;
+					accountsSplitButton.Margin = new Thickness(5, 0, 10, 0);
+					accountsSplitButton.Translation = new Vector3(0, 0, 0);
+
+					if (paneIsOpen)
+					{
+						AppNameTextBlock.Translation = new Vector3(0, 0, 0);
+					}
+					else
+					{
+						AppNameTextBlock.Translation = new Vector3(20, 0, 0);
+					}
+					break;
+				case MUXC.NavigationViewDisplayMode.Expanded:
+
+					AppTitleBar.Margin = new Thickness(40, 0, 0, 0);
+					AppNameTextBlock.Visibility = Visibility.Visible;
+					AppNameTextBlock.Opacity = 1;
 					accountsSplitButtonContent.Width = 230;
 					accountsSplitButton.Margin = new Thickness(5, 0, 10, 0);
 					accountsSplitButton.Translation = new Vector3(0, 0, 0);
@@ -296,20 +313,7 @@ namespace OxygenVK.AppSource
 					{
 						AppNameTextBlock.Translation = new Vector3(20, 0, 0);
 					}
-					break;
-				case MUXC.NavigationViewDisplayMode.Expanded:
-					AppTitleBar.Margin = new Thickness(40, 0, 0, 0);
-					AppNameTextBlock.Visibility = Visibility.Visible;
-					AppNameTextBlock.Opacity = 1;
-					accountsSplitButtonContent.Width = 230;
-					if (paneIsOpen)
-					{
-						AppNameTextBlock.Translation = new Vector3(0, 0, 0);
-					}
-					else
-					{
-						AppNameTextBlock.Translation = new Vector3(20, 0, 0);
-					}
+
 					break;
 			}
 		}
