@@ -103,6 +103,7 @@
 					<Color x:Key="SystemAccentColorLight2">#FF2F5480</Color>
 					<Color x:Key="SystemAccentColorLight3">#FF1F4474</Color>
 					<Color x:Key="RegionColor">#FF1A1A1A</Color>
+
 					<SolidColorBrush x:Key="RegionBrush" Color="{StaticResource RegionColor}" />
 					<SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="{StaticResource RegionColor}" />
 				</ResourceDictionary>

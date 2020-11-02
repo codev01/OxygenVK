@@ -10,7 +10,7 @@
   <Identity
     Name="40629codev01.OxygenVK"
     Publisher="CN=A6407AEF-CE6D-469E-AE2F-8F7237F6D602"
-    Version="0.1.2.0" />
+    Version="0.1.10.0" />
 
   <mp:PhoneIdentity PhoneProductId="1a1affc1-207f-4191-8425-7b6c48ea1f03" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
@@ -21,7 +21,7 @@
   </Properties>
 
   <Dependencies>
-    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.17134.0" MaxVersionTested="10.0.18362.0" />
   </Dependencies>
 
   <Resources>
@@ -29,7 +29,7 @@
   </Resources>
 
   <Applications>
-    <Application Id="App"
+    <Application Id="OxygenVK"
       Executable="$targetnametoken$.exe"
       EntryPoint="OxygenVK.App">
       <uap:VisualElements

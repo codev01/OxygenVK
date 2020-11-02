@@ -22,18 +22,17 @@
 			DisplayModeChanged="Navigation_DisplayModeChanged"
 			IsBackButtonVisible="Visible"
 			IsBackEnabled="True"
-			IsPaneOpen="False"
 			IsSettingsVisible="True"
 			IsTabStop="False"
 			IsTitleBarAutoPaddingEnabled="False"
 			Loaded="Navigation_Loaded"
 			PaneClosed="Navigation_PaneClosed"
 			PaneClosing="Navigation_PaneClosing"
-			PaneDisplayMode="Auto"
+			PaneDisplayMode="Auto"			
 			PaneOpened="Navigation_PaneOpened"
 			PaneOpening="Navigation_PaneOpening"
 			SelectionChanged="Navigation_SelectionChanged"
-			SelectionFollowsFocus="Enabled">
+			SelectionFollowsFocus="Disabled">
 			<controls:NavigationView.PaneHeader>
 				<controls:SplitButton
 					x:Name="accountsSplitButton"
@@ -120,7 +119,7 @@
 											Margin="0,0,10,0">
 											<SymbolIcon Symbol="Contact" />
 										</Viewbox>
-										<TextBlock VerticalAlignment="Center" Text="Добавить аккаунт" />
+										<TextBlock VerticalAlignment="Center" x:Uid="ML_0003" Text="Добавить аккаунт" />
 									</StackPanel>
 								</Button>
 							</StackPanel>

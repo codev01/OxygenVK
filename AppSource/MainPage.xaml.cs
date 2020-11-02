@@ -12,6 +12,7 @@ using VkNet;
 using VkNet.Enums.SafetyEnums;
 using VkNet.Model;
 
+using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -19,6 +20,7 @@ using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
+using Application = Windows.UI.Xaml.Application;
 using MUXC = Microsoft.UI.Xaml.Controls;
 
 namespace OxygenVK.AppSource
@@ -87,6 +89,8 @@ namespace OxygenVK.AppSource
 		private void accountsSplitButton_Click(MUXC.SplitButton sender, MUXC.SplitButtonClickEventArgs args)
 		{
 			contentFrame.Navigate(typeof(UserPage), null, new DrillInNavigationTransitionInfo());
+
+			UpdateIndicatorForeground(Selection.NavigationUserPage);
 		}
 
 		private void ListOfAuthorizedUsers_OnListUpdated(List<AuthorizedUserCardsAttachment> authorizedUserCardsAttachments)
@@ -152,8 +156,29 @@ namespace OxygenVK.AppSource
 			}
 		}
 
+		private enum Selection { SelectionNavigationItem, NavigationUserPage }
+		private void UpdateIndicatorForeground(Selection selection)
+		{
+			if (selection == Selection.NavigationUserPage)
+			{
+				Application.Current.Resources["NavigationViewSelectionIndicatorForeground"] = Colors.Transparent;
+			}
+			else
+			{
+				Application.Current.Resources["NavigationViewSelectionIndicatorForeground"] = Resources["SystemAccentColor"];
+			}
+
+			ElementTheme theme = Navigation.RequestedTheme;
+				Navigation.RequestedTheme = ElementTheme.Dark;
+				Navigation.RequestedTheme = ElementTheme.Light;
+			
+			Navigation.RequestedTheme = theme;
+		}
+
 		private void Navigation_SelectionChanged(MUXC.NavigationView sender, MUXC.NavigationViewSelectionChangedEventArgs args)
 		{
+			UpdateIndicatorForeground(Selection.SelectionNavigationItem);
+
 			if (args.IsSettingsSelected)
 			{
 				contentFrame.Navigate(typeof(SettingsPage), null, new DrillInNavigationTransitionInfo());

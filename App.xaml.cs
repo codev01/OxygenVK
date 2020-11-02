@@ -10,6 +10,8 @@ using OxygenVK.Authorization;
 
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.Foundation.Metadata;
+using Windows.System.Profile;
 using Windows.UI.Xaml;
 
 namespace OxygenVK
@@ -22,6 +24,13 @@ namespace OxygenVK
 
 			InitializeComponent();
 			Suspending += OnSuspending;
+
+			RequiresPointerMode = ApplicationRequiresPointerMode.WhenRequested;
+
+			if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 6))
+			{
+				FocusVisualKind = AnalyticsInfo.VersionInfo.DeviceFamily == "Xbox" ? FocusVisualKind.Reveal : FocusVisualKind.HighVisibility;
+			}
 		}
 
 		protected override void OnLaunched(LaunchActivatedEventArgs e)

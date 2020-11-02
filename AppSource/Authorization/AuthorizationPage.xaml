@@ -1,4 +1,4 @@
-﻿<Page
+﻿<c:Page
 	x:Class="OxygenVK.Authorization.AuthorizationPage"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -11,26 +11,26 @@
 	Loaded="Page_Loaded"
 	RequestedTheme="Default"
 	mc:Ignorable="d">
-	<Page.Resources>
-		<ResourceDictionary Source="/AppSource/Dictionaries/ApplicationThemeDictionary.xaml" />
-	</Page.Resources>
-	<Grid Background="{ThemeResource SystemControlAcrylicWindowBrush}">
-		<Grid>
-			<Grid
+	<c:Page.Resources>
+		<c:ResourceDictionary Source="/AppSource/Dictionaries/ApplicationThemeDictionary.xaml" />
+	</c:Page.Resources>
+	<c:Grid Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+		<c:Grid>
+			<c:Grid
 				Margin="10,32,10,0"
 				HorizontalAlignment="Center"
 				VerticalAlignment="Center">
-				<Grid.RowDefinitions>
-					<RowDefinition />
-					<RowDefinition Height="auto" />
-				</Grid.RowDefinitions>
+				<c:Grid.RowDefinitions>
+					<c:RowDefinition />
+					<c:RowDefinition Height="auto" />
+				</c:Grid.RowDefinitions>
 				<controls:ProgressRing
 					x:Name="listUpdatedProgress"
 					Width="60"
 					Height="60"
 					Background="{ThemeResource SystemAccentColor}"
 					Visibility="Collapsed" />
-				<Border
+				<c:Border
 					x:Name="borderHintRecentlyLoggedIn"
 					MinWidth="270"
 					Padding="16,10,10,16"
@@ -40,7 +40,7 @@
 					BorderThickness="2"
 					CornerRadius="20"
 					Visibility="Collapsed">
-					<GridView
+					<c:GridView
 						x:Name="listUsersCard_GridView"
 						Grid.Row="0"
 						MinWidth="444"
@@ -49,39 +49,39 @@
 						animations:ReorderGridAnimation.Duration="200"
 						CornerRadius="10"
 						SelectionMode="None">
-						<GridView.Header>
-							<Grid
+						<c:GridView.Header>
+							<c:Grid
 								x:Name="headerListPanel"
 								Margin="0,0,16,0"
 								HorizontalAlignment="Stretch"
 								SizeChanged="headerListPanel_SizeChanged">
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition />
-									<ColumnDefinition Width="auto" />
-								</Grid.ColumnDefinitions>
-								<StackPanel
+								<c:Grid.ColumnDefinitions>
+									<c:ColumnDefinition />
+									<c:ColumnDefinition Width="auto" />
+								</c:Grid.ColumnDefinitions>
+								<c:StackPanel
 									x:Name="hintRecentlyLoggedIn"
 									Grid.Column="0"
 									Width="444"
-									Padding="10,0,10,10"
+									Padding="0,0,10,10"
 									HorizontalAlignment="Left"
 									Orientation="Vertical">
-									<TextBlock
+									<c:TextBlock
 										HorizontalAlignment="Left"
 										Style="{StaticResource SubtitleTextBlockStyle}"
 										TextWrapping="WrapWholeWords">
-										<Bold>
-											Недавно входили на сайт с этого приложения
-										</Bold>
-									</TextBlock>
-									<TextBlock
+										<c:Bold>
+											Чтобы войти снова, нажмите на фотографию или имя.
+										</c:Bold>
+									</c:TextBlock>
+									<c:TextBlock
 										HorizontalAlignment="Left"
 										FontSize="15"
 										Foreground="Gray"
 										TextWrapping="Wrap">
-										Чтобы войти снова, нажмите на фотографию или имя.
-									</TextBlock>
-								</StackPanel>
+										Недавно входили на сайт с этого приложения&quot;
+									</c:TextBlock>
+								</c:StackPanel>
 								<controls:ProgressRing
 									x:Name="listUpdatedProgress2"
 									Grid.Column="1"
@@ -92,35 +92,35 @@
 									Background="{ThemeResource SystemAccentColor}"
 									IsEnabled="True"
 									Visibility="Visible" />
-							</Grid>
-						</GridView.Header>
+							</c:Grid>
+						</c:GridView.Header>
 						<c:GridView.ItemContainerStyle>
-							<Style TargetType="GridViewItem">
-								<Setter Property="Template">
-									<Setter.Value>
-										<ControlTemplate TargetType="GridViewItem">
-											<GridViewItemPresenter PointerOverBackgroundMargin="0" />
-										</ControlTemplate>
-									</Setter.Value>
-								</Setter>
-							</Style>
+							<c:Style TargetType="GridViewItem">
+								<c:Setter Property="Template">
+									<c:Setter.Value>
+										<c:ControlTemplate TargetType="GridViewItem">
+											<c:GridViewItemPresenter PointerOverBackgroundMargin="0" />
+										</c:ControlTemplate>
+									</c:Setter.Value>
+								</c:Setter>
+							</c:Style>
 						</c:GridView.ItemContainerStyle>
-					</GridView>
-				</Border>
-				<Button
+					</c:GridView>
+				</c:Border>
+				<c:Button
 					Name="cardAddButton"
 					Grid.Row="1"
 					Margin="0,10,0,10"
 					HorizontalAlignment="Center"
 					Click="cardAdd_Click"
 					FontSize="16" />
-			</Grid>
-		</Grid>
+			</c:Grid>
+		</c:Grid>
 		<local:WebAuthControl
 			x:Name="webAuthControl"
 			Closing="webAuthControl_Closing"
 			OnAuthCompleted="webAuthControl_OnAuthCompleted"
 			Opacity="0"
 			Visibility="Collapsed" />
-	</Grid>
-</Page>
+	</c:Grid>
+</c:Page>

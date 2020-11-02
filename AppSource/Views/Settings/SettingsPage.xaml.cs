@@ -14,7 +14,6 @@ namespace OxygenVK.AppSource.Views.Settings
 		private void OnThemeRadioButtonChecked(object sender, RoutedEventArgs e)
 		{
 			string selectedTheme = ((RadioButton)sender)?.Tag?.ToString();
-			ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
 
 			if (selectedTheme != null)
 			{

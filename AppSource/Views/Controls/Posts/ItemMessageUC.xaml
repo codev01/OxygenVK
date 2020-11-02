@@ -1,0 +1,16 @@
+﻿<UserControl
+    x:Class="OxygenVK.AppSource.Views.Controls.ItemPostControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:OxygenVK.AppSource.Views.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <StackPanel Margin="0 5" MaxWidth="600" SizeChanged="StackPanel_SizeChanged">
+        <TextBlock Text="{Binding text}" />
+        <local:ThumbsItem Attachments="{Binding attachments}" x:Name="_thumbItem"/>
+        </StackPanel>
+</UserControl>
