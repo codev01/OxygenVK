@@ -28,7 +28,7 @@
 			Loaded="Navigation_Loaded"
 			PaneClosed="Navigation_PaneClosed"
 			PaneClosing="Navigation_PaneClosing"
-			PaneDisplayMode="Auto"			
+			PaneDisplayMode="Auto"
 			PaneOpened="Navigation_PaneOpened"
 			PaneOpening="Navigation_PaneOpening"
 			SelectionChanged="Navigation_SelectionChanged"
@@ -119,7 +119,10 @@
 											Margin="0,0,10,0">
 											<SymbolIcon Symbol="Contact" />
 										</Viewbox>
-										<TextBlock VerticalAlignment="Center" x:Uid="ML_0003" Text="Добавить аккаунт" />
+										<TextBlock
+											x:Uid="ML_0003"
+											VerticalAlignment="Center"
+											Text="Добавить аккаунт" />
 									</StackPanel>
 								</Button>
 							</StackPanel>

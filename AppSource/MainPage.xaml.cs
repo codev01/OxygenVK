@@ -27,12 +27,20 @@ namespace OxygenVK.AppSource
 {
 	public sealed partial class MainPage : Page
 	{
+		private bool IsNavigatedUserPage;
+		private string ItemTag;
 		private long userID = 0;
 		private VkApi Parameter;
 		private bool paneIsOpen;
 		private Enum displayMode;
 		private bool isNVFirstLoaded;
 		private readonly DispatcherTimer DispatcherTimer = new DispatcherTimer();
+
+		private enum Selection
+		{
+			SelectionNavigationItem,
+			NavigationUserPage
+		}
 
 		public MainPage()
 		{
@@ -44,6 +52,8 @@ namespace OxygenVK.AppSource
 		{
 			isNVFirstLoaded = true;
 			DispatcherTimer.Tick += DispatcherTimer_Tick;
+
+			Navigation.ItemInvoked += Navigation_ItemInvoked;
 
 			ListOfAuthorizedUsers.OnListUpdated += ListOfAuthorizedUsers_OnListUpdated;
 
@@ -156,34 +166,48 @@ namespace OxygenVK.AppSource
 			}
 		}
 
-		private enum Selection { SelectionNavigationItem, NavigationUserPage }
 		private void UpdateIndicatorForeground(Selection selection)
 		{
 			if (selection == Selection.NavigationUserPage)
 			{
 				Application.Current.Resources["NavigationViewSelectionIndicatorForeground"] = Colors.Transparent;
+				IsNavigatedUserPage = true;
 			}
 			else
 			{
 				Application.Current.Resources["NavigationViewSelectionIndicatorForeground"] = Resources["SystemAccentColor"];
+				IsNavigatedUserPage = false;
 			}
 
 			ElementTheme theme = Navigation.RequestedTheme;
-				Navigation.RequestedTheme = ElementTheme.Dark;
+			if (Application.Current.RequestedTheme == ApplicationTheme.Dark)
+			{
 				Navigation.RequestedTheme = ElementTheme.Light;
-			
+			}
+			else
+			{
+				Navigation.RequestedTheme = ElementTheme.Dark;
+			}
 			Navigation.RequestedTheme = theme;
+		}
+
+		private void Navigation_ItemInvoked(MUXC.NavigationView sender, MUXC.NavigationViewItemInvokedEventArgs args)
+		{
+			if (IsNavigatedUserPage)
+			{
+				UpdateIndicatorForeground(Selection.SelectionNavigationItem);
+			}
 		}
 
 		private void Navigation_SelectionChanged(MUXC.NavigationView sender, MUXC.NavigationViewSelectionChangedEventArgs args)
 		{
-			UpdateIndicatorForeground(Selection.SelectionNavigationItem);
 
 			if (args.IsSettingsSelected)
 			{
 				contentFrame.Navigate(typeof(SettingsPage), null, new DrillInNavigationTransitionInfo());
 			}
-			switch (args.SelectedItemContainer.Tag.ToString())
+			ItemTag = args.SelectedItemContainer.Tag.ToString();
+			switch (ItemTag)
 			{
 				case "news":
 					//contentFrame.Navigate(typeof(NewsPage), null, new DrillInNavigationTransitionInfo());

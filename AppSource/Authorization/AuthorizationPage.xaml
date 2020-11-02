@@ -63,7 +63,7 @@
 									x:Name="hintRecentlyLoggedIn"
 									Grid.Column="0"
 									Width="444"
-									Padding="0,0,10,10"
+									Padding="10,0,10,10"
 									HorizontalAlignment="Left"
 									Orientation="Vertical">
 									<c:TextBlock
