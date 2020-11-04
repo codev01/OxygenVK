@@ -62,9 +62,89 @@
 									TextWrapping="Wrap" />
 								<Border
 									Height="1"
-									Margin="12"
+									Margin="0,24,0,24"
 									HorizontalAlignment="Stretch"
 									Background="{ThemeResource SystemControlAccentAcrylicWindowAccentMediumHighBrush}" />
+								<StackPanel HorizontalAlignment="Center">
+									<Grid>
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition />
+											<ColumnDefinition />
+										</Grid.ColumnDefinitions>
+										<TextBlock
+											HorizontalAlignment="Right"
+											VerticalAlignment="Center"
+											Foreground="Gray"
+											Text="Дата рождения"
+											TextAlignment="Center"
+											TextWrapping="Wrap" />
+										<TextBlock
+											Grid.Column="1"
+											Margin="10,0,0,0"
+											HorizontalAlignment="Left"
+											VerticalAlignment="Center"
+											Text="11 февраля 2001"
+											TextAlignment="Center"
+											TextWrapping="Wrap" />
+									</Grid>
+									<Border
+										Height="1"
+										Margin="0,6,0,6"
+										HorizontalAlignment="Stretch"
+										Background="{ThemeResource SystemControlAccentAcrylicWindowAccentMediumHighBrush}" />
+									<Grid Margin="0,2,0,0">
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition />
+											<ColumnDefinition />
+										</Grid.ColumnDefinitions>
+										<TextBlock
+											HorizontalAlignment="Right"
+											VerticalAlignment="Center"
+											Foreground="Gray"
+											Text="Семейное положение"
+											TextAlignment="Center"
+											TextWrapping="Wrap" />
+										<TextBlock
+											Grid.Column="1"
+											Margin="10,0,0,0"
+											HorizontalAlignment="Left"
+											VerticalAlignment="Center"
+											Text="не женат"
+											TextAlignment="Center"
+											TextWrapping="Wrap" />
+									</Grid>
+									<Button Margin="0,24,0,0" HorizontalAlignment="Center">
+										<Button.Flyout>
+											<Flyout Placement="Bottom">
+												<Flyout.FlyoutPresenterStyle>
+													<Style TargetType="FlyoutPresenter">
+														<Setter Property="CornerRadius" Value="20" />
+													</Style>
+												</Flyout.FlyoutPresenterStyle>
+												<Flyout.Content>
+													<Grid />
+												</Flyout.Content>
+											</Flyout>
+										</Button.Flyout>
+										<Grid>
+											<Grid.ColumnDefinitions>
+												<ColumnDefinition />
+												<ColumnDefinition Width="Auto" />
+											</Grid.ColumnDefinitions>
+											<TextBlock
+												VerticalAlignment="Center"
+												Text="Показать подробную информацию"
+												TextAlignment="Center"
+												TextWrapping="Wrap" />
+											<FontIcon
+												Grid.Column="1"
+												Margin="12,0,0,0"
+												VerticalAlignment="Center"
+												FontFamily="Segoe MDL2 Assets"
+												Glyph="&#xE011;" />
+										</Grid>
+									</Button>
+								</StackPanel>
 							</StackPanel>
 						</Grid>
 					</StackPanel>
