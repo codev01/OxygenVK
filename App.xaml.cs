@@ -30,6 +30,7 @@ namespace OxygenVK
 			{
 				FocusVisualKind = AnalyticsInfo.VersionInfo.DeviceFamily == "Xbox" ? FocusVisualKind.Reveal : FocusVisualKind.HighVisibility;
 			}
+			Analytics.TrackEvent("Приложение было открыто");
 		}
 
 		protected override void OnLaunched(LaunchActivatedEventArgs e)

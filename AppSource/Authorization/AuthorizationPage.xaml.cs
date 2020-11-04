@@ -126,17 +126,20 @@ namespace OxygenVK.Authorization
 			webAuthControl.Visibility = Visibility.Collapsed;
 		}
 
-		private async void webAuthControl_OnAuthCompleted(string token)
+		private void webAuthControl_OnAuthCompleted(string token)
 		{
 			if (!thePageIsUsedInNavigation)
 			{
-				webAuthControl_Closing();
-				InWhichWindowDialog dialog = new InWhichWindowDialog
+				_ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
 				{
-					Frame = Frame,
-					Token = token
-				};
-				await dialog.ShowAsync();
+					webAuthControl_Closing();
+					InWhichWindowDialog dialog = new InWhichWindowDialog
+					{
+						Frame = Frame,
+						Token = token
+					};
+					await dialog.ShowAsync();
+				});
 			}
 		}
 
