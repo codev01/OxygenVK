@@ -138,7 +138,6 @@
       <DependentUpon>ConnectionErrorDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppSource\Authorization\Authorize.cs" />
-    <Compile Include="AppSource\Authorization\AuthorizedUserCardsAttachment.cs" />
     <Compile Include="AppSource\Authorization\Controls\HorizontalUserCard.xaml.cs">
       <DependentUpon>HorizontalUserCard.xaml</DependentUpon>
     </Compile>
@@ -148,11 +147,16 @@
     <Compile Include="AppSource\Authorization\InWhichWindowDialog.xaml.cs">
       <DependentUpon>InWhichWindowDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AppSource\Authorization\ListOfAuthorizedUsers.cs" />
     <Compile Include="AppSource\Authorization\Controls\WebAuthControl.xaml.cs">
       <DependentUpon>WebAuthControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppSource\Authorization\ListUsersEvent.cs" />
+    <Compile Include="AppSource\Authorization\WorkWithUserData.cs" />
+    <Compile Include="AppSource\LocalFolder\Filenames.cs" />
+    <Compile Include="AppSource\LocalFolder\LocalFile.cs" />
+    <Compile Include="AppSource\LocalFolder\UserIDs.cs" />
+    <Compile Include="AppSource\LocaSettings\Attachments\SettingsAttachments.cs" />
+    <Compile Include="AppSource\LocaSettings\LocalSettings.cs" />
     <Compile Include="AppSource\Views\Controls\PictureBoxControl.xaml.cs">
       <DependentUpon>PictureBoxControl.xaml</DependentUpon>
     </Compile>

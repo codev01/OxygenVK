@@ -15,6 +15,11 @@
 	<Button>
 		<Button.Flyout>
 			<Flyout x:Name="flyout">
+				<Flyout.FlyoutPresenterStyle>
+					<Style TargetType="FlyoutPresenter">
+						<Setter Property="CornerRadius" Value="8" />
+					</Style>
+				</Flyout.FlyoutPresenterStyle>
 				<StackPanel>
 					<TextBlock Margin="0,0,0,12" Text="В каком окне желаете продолжить?" />
 					<StackPanel Orientation="Horizontal">
