@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 
+using OxygenVK.AppSource.Authorization;
 using OxygenVK.AppSource.Authorization.Controls;
+using OxygenVK.AppSource.LocalSettings.Attachments;
 using OxygenVK.AppSource.Views.Settings;
 using OxygenVK.AppSource.Views.User;
 using OxygenVK.Authorization;
@@ -55,10 +57,10 @@ namespace OxygenVK.AppSource
 
 			Navigation.ItemInvoked += Navigation_ItemInvoked;
 
-			ListOfAuthorizedUsers.OnListUpdated += ListOfAuthorizedUsers_OnListUpdated;
+			WorkWithUserData.OnListUpdated += WorkWithUserData_OnListUpdated;
 
 			LoadNavigationContent();
-			accountsSplitButtonList_Add(ListOfAuthorizedUsers.listOfAuthorizedUsers);
+			AccountsSplitButtonList_Add(WorkWithUserData.UserSettingsAttachmentsValues);
 		}
 
 		private async void LoadNavigationContent()
@@ -84,7 +86,7 @@ namespace OxygenVK.AppSource
 			Parameter = e?.Parameter as VkApi;
 		}
 
-		private async void addAccountsButton_Click(object sender, RoutedEventArgs e)
+		private async void AddAccountsButton_Click(object sender, RoutedEventArgs e)
 		{
 			if (WindowGenerator.AuthorizationPageWindowOpened && !AuthorizationPage.ThePageIsUsedInNavigation)
 			{
@@ -96,22 +98,22 @@ namespace OxygenVK.AppSource
 			}
 		}
 
-		private void accountsSplitButton_Click(MUXC.SplitButton sender, MUXC.SplitButtonClickEventArgs args)
+		private void AccountsSplitButton_Click(MUXC.SplitButton sender, MUXC.SplitButtonClickEventArgs args)
 		{
 			contentFrame.Navigate(typeof(UserPage), null, new DrillInNavigationTransitionInfo());
 
 			UpdateIndicatorForeground(Selection.NavigationUserPage);
 		}
 
-		private void ListOfAuthorizedUsers_OnListUpdated(List<AuthorizedUserCardsAttachment> authorizedUserCardsAttachments)
+		private void WorkWithUserData_OnListUpdated(List<UserSettingsAttachmentsValues> userSettingsAttachmentsValues)
 		{
 			_ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
 			{
-				accountsSplitButtonList_Add(authorizedUserCardsAttachments);
+				AccountsSplitButtonList_Add(userSettingsAttachmentsValues);
 			});
 		}
 
-		private async void accountsSplitButtonList_Add(List<AuthorizedUserCardsAttachment> authorizedUserCardsAttachments)
+		private async void AccountsSplitButtonList_Add(List<UserSettingsAttachmentsValues> userSettingsAttachmentsValues)
 		{
 			listAccounts.Visibility = Visibility.Visible;
 			accountsSplitButtonList.Items.Clear();
@@ -123,9 +125,9 @@ namespace OxygenVK.AppSource
 				}
 			}
 
-			if (authorizedUserCardsAttachments.Count != 0)
+			if (userSettingsAttachmentsValues.Count != 0)
 			{
-				foreach (AuthorizedUserCardsAttachment item in authorizedUserCardsAttachments)
+				foreach (UserSettingsAttachmentsValues item in userSettingsAttachmentsValues)
 				{
 					if (Parameter != null)
 					{
@@ -133,20 +135,20 @@ namespace OxygenVK.AppSource
 						{
 							HorizontalUserCard horizontalUserCard = new HorizontalUserCard()
 							{
-								AuthorizedUserCardsAttachment = new AuthorizedUserCardsAttachment()
+								UserSettingsAttachmentsValues = new UserSettingsAttachmentsValues()
 								{
 									UserID = item.UserID,
 									UserName = item.UserName,
 									ScreenName = item.ScreenName,
 									Token = item.Token,
-									AvatarUrl = item.AvatarUrl
+									AvatarURL = item.AvatarURL
 								},
 								Frame = Frame,
 								Margin = new Thickness(-12, 0, -12, 10)
 							};
 							accountsSplitButtonList.Items.Add(horizontalUserCard);
 						}
-						else if (authorizedUserCardsAttachments.Count <= 1)
+						else if (userSettingsAttachmentsValues.Count <= 1)
 						{
 							listAccounts.Visibility = Visibility.Collapsed;
 							accountsSplitButtonList.Items.Clear();

@@ -38,7 +38,7 @@
 					Padding="0"
 					HorizontalAlignment="Stretch"
 					VerticalAlignment="Stretch"
-					Click="accountsSplitButton_Click"
+					Click="AccountsSplitButton_Click"
 					CornerRadius="{ThemeResource ControlCornerRadius}">
 					<controls:SplitButton.OpacityTransition>
 						<ScalarTransition Duration="0:0:0.5" />
@@ -91,6 +91,11 @@
 					</controls:SplitButton.Content>
 					<controls:SplitButton.Flyout>
 						<Flyout x:Name="flyoutListAccount" Placement="Auto">
+							<Flyout.FlyoutPresenterStyle>
+								<Style TargetType="FlyoutPresenter">
+									<Setter Property="CornerRadius" Value="8" />
+								</Style>
+							</Flyout.FlyoutPresenterStyle>
 							<StackPanel Margin="0">
 								<StackPanel x:Name="listAccounts">
 									<Border
@@ -108,7 +113,7 @@
 								<Button
 									x:Name="addAccountsButton"
 									HorizontalAlignment="Right"
-									Click="addAccountsButton_Click"
+									Click="AddAccountsButton_Click"
 									CornerRadius="{ThemeResource ControlCornerRadius}">
 									<StackPanel Orientation="Horizontal">
 										<Viewbox
