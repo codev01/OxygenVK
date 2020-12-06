@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using OxygenVK.AppSource.Authorization;
 using OxygenVK.AppSource.Authorization.Controls;
+using OxygenVK.AppSource.LocalSettings.Attachments;
 
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -25,10 +27,10 @@ namespace OxygenVK.Authorization
 			ThePageIsUsedInNavigation = false;
 			thePageIsUsedInNavigation = false;
 
-			ListOfAuthorizedUsers.OnListStartUpdate += ListOfAuthorizedUsers_OnListStartUpdate;
-			ListOfAuthorizedUsers.OnListUpdated += ListOfAuthorizedUsers_OnListUpdated;
+			WorkWithUserData.OnListStartUpdate += WorkWithUserData_OnListStartUpdate;
+			WorkWithUserData.OnListUpdated += WorkWithUserData_OnListUpdated;
 
-			new ListOfAuthorizedUsers().InitializeList();
+			new WorkWithUserData().UpdateList();
 		}
 
 		private void Frame_Navigating(object sender, NavigatingCancelEventArgs e)
@@ -37,7 +39,7 @@ namespace OxygenVK.Authorization
 			thePageIsUsedInNavigation = true;
 		}
 
-		private void listUsersCard_GridView_Add(List<AuthorizedUserCardsAttachment> authorizedUserCardsAttachments)
+		private void ListUsersCard_GridView_Add(List<UserSettingsAttachmentsValues> authorizedUserCardsAttachments)
 		{
 			cardAddButton.Content = "Войти в другой аккаунт";
 			borderHintRecentlyLoggedIn.Visibility = Visibility.Visible;
@@ -45,17 +47,17 @@ namespace OxygenVK.Authorization
 
 			if (authorizedUserCardsAttachments.Count != 0)
 			{
-				foreach (AuthorizedUserCardsAttachment item in authorizedUserCardsAttachments)
+				foreach (UserSettingsAttachmentsValues item in authorizedUserCardsAttachments)
 				{
 					UserCard userCard = new UserCard
 					{
-						AuthorizedUserCardsAttachment = new AuthorizedUserCardsAttachment
+						UserSettingsAttachmentsValues = new UserSettingsAttachmentsValues
 						{
 							UserID = item.UserID,
 							UserName = item.UserName,
 							ScreenName = item.ScreenName,
 							Token = item.Token,
-							AvatarUrl = item.AvatarUrl,
+							 AvatarURL = item.AvatarURL,
 						},
 						Frame = Frame
 					};
@@ -72,7 +74,7 @@ namespace OxygenVK.Authorization
 			}
 		}
 
-		private void ListOfAuthorizedUsers_OnListStartUpdate()
+		private void WorkWithUserData_OnListStartUpdate()
 		{
 			_ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
 			{
@@ -80,12 +82,12 @@ namespace OxygenVK.Authorization
 			});
 		}
 
-		private void ListOfAuthorizedUsers_OnListUpdated(List<AuthorizedUserCardsAttachment> authorizedUserCardsAttachments)
+		private void WorkWithUserData_OnListUpdated(List<AppSource.LocalSettings.Attachments.UserSettingsAttachmentsValues> authorizedUserCardsAttachments)
 		{
 			_ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
 			{
 				listUpdatedProgress_SetVisibility(Visibility.Collapsed);
-				listUsersCard_GridView_Add(authorizedUserCardsAttachments);
+				ListUsersCard_GridView_Add(authorizedUserCardsAttachments);
 			});
 		}
 
@@ -93,7 +95,7 @@ namespace OxygenVK.Authorization
 		{
 			if (visibility == Visibility.Visible)
 			{
-				if (ListOfAuthorizedUsers.listOfAuthorizedUsers.Count == 0)
+				if (WorkWithUserData.UserSettingsAttachmentsValues.Count == 0)
 				{
 					listUpdatedProgress.Visibility = Visibility.Visible;
 					listUpdatedProgress.IsActive = true;

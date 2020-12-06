@@ -14,7 +14,7 @@
 	<c:Page.Resources>
 		<c:ResourceDictionary Source="/AppSource/Dictionaries/ApplicationThemeDictionary.xaml" />
 	</c:Page.Resources>
-	<c:Grid Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+	<c:Grid Background="{ThemeResource RegionBrush}">
 		<c:Grid>
 			<c:Grid
 				Margin="10,32,10,0"
@@ -36,7 +36,7 @@
 					Padding="16,10,10,16"
 					HorizontalAlignment="Center"
 					VerticalAlignment="Center"
-					BorderBrush="{ThemeResource SystemControlAccentAcrylicWindowAccentMediumHighBrush}"
+					BorderBrush="{ThemeResource SystemControlAcrylicWindowBrush}"
 					BorderThickness="2"
 					CornerRadius="20"
 					Visibility="Collapsed">
@@ -79,7 +79,7 @@
 										FontSize="15"
 										Foreground="Gray"
 										TextWrapping="Wrap">
-										Недавно входили на сайт с этого приложения&quot;
+										Недавно входили на сайт с этого приложения;
 									</c:TextBlock>
 								</c:StackPanel>
 								<controls:ProgressRing

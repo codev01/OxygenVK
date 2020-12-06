@@ -19,7 +19,7 @@
 				<Border
 					Margin="0,0,24,24"
 					Padding="12"
-					BorderBrush="{ThemeResource SystemControlAccentAcrylicWindowAccentMediumHighBrush}"
+					BorderBrush="{ThemeResource SystemControlAcrylicWindowBrush}"
 					BorderThickness="2"
 					CornerRadius="20">
 					<StackPanel>
@@ -64,7 +64,7 @@
 									Height="1"
 									Margin="0,24,0,24"
 									HorizontalAlignment="Stretch"
-									Background="{ThemeResource SystemControlAccentAcrylicWindowAccentMediumHighBrush}" />
+									Background="{ThemeResource SystemControlAcrylicWindowBrush}" />
 								<StackPanel HorizontalAlignment="Center">
 									<Grid>
 										<Grid.ColumnDefinitions>
@@ -91,7 +91,7 @@
 										Height="1"
 										Margin="0,6,0,6"
 										HorizontalAlignment="Stretch"
-										Background="{ThemeResource SystemControlAccentAcrylicWindowAccentMediumHighBrush}" />
+										Background="{ThemeResource SystemControlAcrylicWindowBrush}" />
 									<Grid Margin="0,2,0,0">
 										<Grid.ColumnDefinitions>
 											<ColumnDefinition />
@@ -118,7 +118,7 @@
 											<Flyout Placement="Bottom">
 												<Flyout.FlyoutPresenterStyle>
 													<Style TargetType="FlyoutPresenter">
-														<Setter Property="CornerRadius" Value="20" />
+														<Setter Property="CornerRadius" Value="8" />
 													</Style>
 												</Flyout.FlyoutPresenterStyle>
 												<Flyout.Content>
@@ -247,7 +247,7 @@
 								Height="1"
 								Margin="24,0,24,0"
 								HorizontalAlignment="Stretch"
-								Background="{ThemeResource SystemControlAccentAcrylicWindowAccentMediumHighBrush}" />
+								Background="{ThemeResource SystemControlAcrylicWindowBrush}" />
 						</Grid>
 					</Border>
 				</DataTemplate>

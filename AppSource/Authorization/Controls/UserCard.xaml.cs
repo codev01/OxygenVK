@@ -1,7 +1,7 @@
 ﻿using System;
 
+using OxygenVK.AppSource.LocalSettings.Attachments;
 using OxygenVK.AppSource.Views;
-using OxygenVK.Authorization;
 
 using VkNet;
 
@@ -14,7 +14,7 @@ namespace OxygenVK.AppSource.Authorization.Controls
 	public sealed partial class UserCard : UserControl
 	{
 		public Frame Frame { get; set; }
-		public AuthorizedUserCardsAttachment AuthorizedUserCardsAttachment { get; set; }
+		public UserSettingsAttachmentsValues UserSettingsAttachmentsValues { get; set; }
 
 		public UserCard()
 		{
@@ -23,32 +23,32 @@ namespace OxygenVK.AppSource.Authorization.Controls
 
 		private void UserControl_Loaded(object sender, RoutedEventArgs e)
 		{
-			avatar.ProfilePicture = new BitmapImage(new Uri(AuthorizedUserCardsAttachment.AvatarUrl));
-			userName.Text = AuthorizedUserCardsAttachment.UserName;
+			avatar.ProfilePicture = new BitmapImage(new Uri(UserSettingsAttachmentsValues.AvatarURL));
+			userName.Text = UserSettingsAttachmentsValues.UserName;
 		}
 
 		private void deleteCard_Click(object sender, RoutedEventArgs e)
 		{
-			ListOfAuthorizedUsers listOfAuthorizedUsers = new ListOfAuthorizedUsers();
-			listOfAuthorizedUsers.DeleteUserData(AuthorizedUserCardsAttachment.UserID);
-			listOfAuthorizedUsers.InitializeList();
+			WorkWithUserData workWithUserData = new WorkWithUserData();
+			workWithUserData.DeleteUserData(UserSettingsAttachmentsValues.UserID);
+			workWithUserData.UpdateList();
 		}
 
 		private void screenNameToolTip_Loaded(object sender, RoutedEventArgs e)
 		{
-			if (AuthorizedUserCardsAttachment.ScreenName == "")
+			if (UserSettingsAttachmentsValues.ScreenName == null)
 			{
 				screenNameToolTip.Visibility = Visibility.Collapsed;
 			}
 			else
 			{
-				screenNameToolTip.Content = AuthorizedUserCardsAttachment.ScreenName;
+				screenNameToolTip.Content = UserSettingsAttachmentsValues.ScreenName;
 			}
 		}
 
 		private VkApi GetParameter()
 		{
-			return new Authorize(AuthorizedUserCardsAttachment.Token, true).VkApi;
+			return new Authorize(UserSettingsAttachmentsValues.Token, true).VkApi;
 		}
 
 		private void ThisWindow_Click(object sender, RoutedEventArgs e)

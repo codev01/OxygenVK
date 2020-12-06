@@ -1,5 +1,4 @@
-﻿using OxygenVK.Authorization;
-
+﻿
 using VkNet;
 using VkNet.Model;
 
@@ -23,9 +22,9 @@ namespace OxygenVK.AppSource.Authorization
 
 			if (!re_Authorize)
 			{
-				ListOfAuthorizedUsers listOfAuthorizedUsers = new ListOfAuthorizedUsers();
+				WorkWithUserData workWithUserData = new WorkWithUserData();
 
-				listOfAuthorizedUsers.SetListOfAuthorizedUsersAsync(VkApi);
+				workWithUserData.Virification(VkApi);
 			}
 		}
 	}
