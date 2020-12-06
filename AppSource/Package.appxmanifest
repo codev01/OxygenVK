@@ -10,7 +10,7 @@
   <Identity
     Name="40629codev01.OxygenVK"
     Publisher="CN=A6407AEF-CE6D-469E-AE2F-8F7237F6D602"
-    Version="0.1.17.0" />
+    Version="0.2.1.0" />
 
   <mp:PhoneIdentity PhoneProductId="389011f4-390f-4a97-9ea0-240408d7c268" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
