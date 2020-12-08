@@ -5,10 +5,9 @@
 	xmlns:controls="using:Microsoft.UI.Xaml.Controls"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	mc:Ignorable="d">
 	<Page.OpacityTransition>
-		<ScalarTransition Duration="0:0:0.3" />
+		<ScalarTransition Duration="0:0:0.9" />
 	</Page.OpacityTransition>
 	<Page.Resources>
 		<ResourceDictionary Source="/AppSource/Dictionaries/ApplicationThemeDictionary.xaml" />
@@ -153,25 +152,55 @@
 					</controls:NavigationViewItem.Icon>
 				</controls:NavigationViewItem>
 			</controls:NavigationView.MenuItems>
-
+			
 			<Grid x:Name="NavigationGrid">
-				<Frame
-					x:Name="contentFrame"
-					Margin="0,90,0,0"
-					Background="{ThemeResource RegionBrush}">
-					<Frame.ContentTransitions>
-						<TransitionCollection>
-							<NavigationThemeTransition />
-						</TransitionCollection>
-					</Frame.ContentTransitions>
-				</Frame>
-				<TextBlock
-					x:Name="headerText"
-					Margin="24,40,0,16"
-					VerticalAlignment="Top"
-					FontSize="24"
-					Style="{StaticResource HeaderTextBlockStyle}"
-					Text="Main" />
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition />
+					<ColumnDefinition Width="auto" />
+				</Grid.ColumnDefinitions>
+				<Grid Grid.Column="0">
+					<Frame
+						x:Name="contentFrame"
+						Margin="0,90,0,0"
+						Background="{ThemeResource RegionBrush}">
+						<Frame.ContentTransitions>
+							<TransitionCollection>
+								<NavigationThemeTransition />
+							</TransitionCollection>
+						</Frame.ContentTransitions>
+					</Frame>
+					<TextBlock
+						x:Name="headerText"
+						Margin="24,40,0,16"
+						VerticalAlignment="Top"
+						FontSize="24"
+						Style="{StaticResource HeaderTextBlockStyle}"
+						Text="Main" />
+				</Grid>
+				<SplitView
+					Grid.Column="1"
+					Width="46"
+					DisplayMode="CompactInline"
+					IsPaneOpen="False"
+					PanePlacement="Right">
+					<SplitView.PaneBackground>
+						<AcrylicBrush
+							BackgroundSource="HostBackdrop"
+							FallbackColor="{ThemeResource SystemChromeAltHighColor}"
+							TintColor="{ThemeResource SystemChromeMediumColor}"
+							TintOpacity="0.8" />
+					</SplitView.PaneBackground>
+					<SplitView.Pane>
+						<FontIcon
+							Margin="0,0,14,0"
+							HorizontalAlignment="Right"
+							FontFamily="Segoe MDL2 Assets"
+							Glyph="&#xE00E;" />
+					</SplitView.Pane>
+					<SplitView.Content>
+						<TextBlock Text=" sldifjosdiejhfoisedjfo ldikjfogijder oidfjogihj swerfwrgtf" />
+					</SplitView.Content>
+				</SplitView>
 			</Grid>
 		</controls:NavigationView>
 		<Grid

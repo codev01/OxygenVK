@@ -14,7 +14,14 @@
 	<c:Page.Resources>
 		<c:ResourceDictionary Source="/AppSource/Dictionaries/ApplicationThemeDictionary.xaml" />
 	</c:Page.Resources>
-	<c:Grid Background="{ThemeResource RegionBrush}">
+	<c:Grid>
+		<Grid.Background>
+			<AcrylicBrush
+				BackgroundSource="HostBackdrop"
+				FallbackColor="{ThemeResource SystemChromeAltHighColor}"
+				TintColor="{ThemeResource SystemChromeMediumColor}"
+				TintOpacity="0.8" />
+		</Grid.Background>
 		<c:Grid>
 			<c:Grid
 				Margin="10,32,10,0"
