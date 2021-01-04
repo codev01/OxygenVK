@@ -1,31 +1,24 @@
-﻿
+﻿using System;
+
 using VkNet;
 using VkNet.Model;
 
 namespace OxygenVK.AppSource.Authorization
 {
-	public class Authorize
+	public static class Authorize
 	{
-		public VkApi VkApi = new VkApi();
-
-		public Authorize(string token, bool re_Authorize = false)
+		public static VkApi AuthorizeAsync(string token)
 		{
-			AuthorizeAsync(token, re_Authorize);
-		}
-
-		private async void AuthorizeAsync(string token, bool re_Authorize)
-		{
-			await VkApi.AuthorizeAsync(new ApiAuthParams
+			VkApi vkApi = new VkApi();
+			vkApi.Authorize(new ApiAuthParams
 			{
 				AccessToken = token
 			});
-
-			if (!re_Authorize)
+			if (vkApi.Token == null)
 			{
-				WorkWithUserData workWithUserData = new WorkWithUserData();
-
-				workWithUserData.Virification(VkApi);
-			}
+				throw new Exception("class Authorize | Токен пуст");
+			} 
+			return vkApi;
 		}
 	}
 }

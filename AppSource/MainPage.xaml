@@ -2,118 +2,62 @@
 	x:Class="OxygenVK.AppSource.MainPage"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:Custom="using:System.Numerics"
 	xmlns:controls="using:Microsoft.UI.Xaml.Controls"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d">
-	<Page.OpacityTransition>
-		<ScalarTransition Duration="0:0:0.9" />
-	</Page.OpacityTransition>
 	<Page.Resources>
 		<ResourceDictionary Source="/AppSource/Dictionaries/ApplicationThemeDictionary.xaml" />
 	</Page.Resources>
+	<Page.OpacityTransition>
+		<ScalarTransition Duration="0:0:0.9" />
+	</Page.OpacityTransition>
 	<Grid>
 		<controls:NavigationView
 			x:Name="Navigation"
 			AlwaysShowHeader="True"
 			Background="{ThemeResource RegionBrush}"
 			DisplayModeChanged="Navigation_DisplayModeChanged"
+			Header="Main"
 			IsBackButtonVisible="Visible"
 			IsBackEnabled="True"
 			IsSettingsVisible="True"
 			IsTabStop="False"
 			IsTitleBarAutoPaddingEnabled="False"
+			IsPaneOpen="False"
 			Loaded="Navigation_Loaded"
-			PaneClosed="Navigation_PaneClosed"
 			PaneClosing="Navigation_PaneClosing"
 			PaneDisplayMode="Auto"
-			PaneOpened="Navigation_PaneOpened"
 			PaneOpening="Navigation_PaneOpening"
 			SelectionFollowsFocus="Disabled">
 			<controls:NavigationView.PaneHeader>
 				<controls:SplitButton
 					x:Name="accountsSplitButton"
-					Margin="5,0,10,0"
+					Margin="5,0,5,0"
 					Padding="0"
 					HorizontalAlignment="Stretch"
 					VerticalAlignment="Stretch"
-					Click="AccountsSplitButton_Click"
 					CornerRadius="{ThemeResource ControlCornerRadius}">
 					<controls:SplitButton.OpacityTransition>
-						<ScalarTransition Duration="0:0:0.5" />
+						<ScalarTransition Duration="0:0:0.6" />
 					</controls:SplitButton.OpacityTransition>
-					<controls:SplitButton.Content>
-						<Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-							<Grid.OpacityTransition>
-								<ScalarTransition Duration="0:0:0.9" />
-							</Grid.OpacityTransition>
-							<controls:ProgressBar
-								x:Name="accountsSplitButtonProgressBar"
-								Margin="30,0,30,0"
-								HorizontalAlignment="Stretch"
-								Background="Transparent"
-								Foreground="{ThemeResource SystemAccentColor}"
-								IsIndeterminate="True"
-								ShowError="False"
-								ShowPaused="False" />
-							<Grid
-								x:Name="accountsSplitButtonContent"
-								Width="230"
-								Height="38"
-								Margin="5,5,0,5"
-								Opacity="0"
-								Visibility="Visible">
-								<Grid.OpacityTransition>
-									<ScalarTransition Duration="0:0:0.9" />
-								</Grid.OpacityTransition>
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="38" />
-									<ColumnDefinition />
-								</Grid.ColumnDefinitions>
-								<PersonPicture
-									x:Name="personPictureSplitButton"
-									Grid.Column="0"
-									Height="38" />
-								<ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
-									<TextBlock
-										x:Name="firstANDlastNameSplitButton"
-										HorizontalAlignment="Center"
-										VerticalAlignment="Center"
-										FontSize="15"
-										HorizontalTextAlignment="Center"
-										Text="Rashid Hasanov"
-										TextAlignment="Center"
-										TextWrapping="WrapWholeWords" />
-								</ScrollViewer>
-							</Grid>
-						</Grid>
-					</controls:SplitButton.Content>
 					<controls:SplitButton.Flyout>
 						<Flyout x:Name="flyoutListAccount" Placement="Auto">
 							<Flyout.FlyoutPresenterStyle>
 								<Style TargetType="FlyoutPresenter">
-									<Setter Property="CornerRadius" Value="8" />
+									<Setter Property="CornerRadius" Value="10" />
 								</Style>
 							</Flyout.FlyoutPresenterStyle>
 							<StackPanel Margin="0">
 								<StackPanel x:Name="listAccounts">
-									<Border
-										Height="0.5"
-										Margin="20,0,20,10"
-										HorizontalAlignment="Stretch"
-										Background="Gray" />
 									<ListView x:Name="accountsSplitButtonList" SelectionMode="None" />
-									<Border
-										Height="0.5"
-										Margin="20,0,20,10"
-										HorizontalAlignment="Stretch"
-										Background="Gray" />
 								</StackPanel>
 								<Button
 									x:Name="addAccountsButton"
 									HorizontalAlignment="Right"
-									Click="AddAccountsButton_Click"
-									CornerRadius="{ThemeResource ControlCornerRadius}">
+									CornerRadius="{ThemeResource ControlCornerRadius}"
+									Tapped="AddAccountsButton_Tapped">
 									<StackPanel Orientation="Horizontal">
 										<Viewbox
 											Width="13"
@@ -130,6 +74,56 @@
 							</StackPanel>
 						</Flyout>
 					</controls:SplitButton.Flyout>
+					<controls:SplitButton.Content>
+						<Grid
+							HorizontalAlignment="Center"
+							VerticalAlignment="Center"
+							Tapped="AccountsSplitButton_Tapped">
+							<Grid.OpacityTransition>
+								<ScalarTransition Duration="0:0:0.9" />
+							</Grid.OpacityTransition>
+							<controls:ProgressBar
+								x:Name="accountsSplitButtonProgressBar"
+								Margin="30,0,30,0"
+								HorizontalAlignment="Stretch"
+								Background="Transparent"
+								CornerRadius="2"
+								Foreground="{ThemeResource SystemAccentColor}"
+								IsIndeterminate="True"
+								ShowError="False"
+								ShowPaused="False" />
+							<Grid
+								x:Name="accountsSplitButtonContent"
+								Width="230"
+								Height="50"
+								Margin="5,5,0,5"
+								Opacity="0"
+								Visibility="Visible">
+								<Grid.OpacityTransition>
+									<ScalarTransition Duration="0:0:0.9" />
+								</Grid.OpacityTransition>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="50" />
+									<ColumnDefinition />
+								</Grid.ColumnDefinitions>
+								<PersonPicture
+									x:Name="personPictureSplitButton"
+									Grid.Column="0"
+									Height="50" />
+								<ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
+									<TextBlock
+										x:Name="firstANDlastNameSplitButton"
+										HorizontalAlignment="Center"
+										VerticalAlignment="Center"
+										FontSize="15"
+										HorizontalTextAlignment="Center"
+										Text="Rashid Hasanov"
+										TextAlignment="Center"
+										TextWrapping="WrapWholeWords" />
+								</ScrollViewer>
+							</Grid>
+						</Grid>
+					</controls:SplitButton.Content>
 				</controls:SplitButton>
 			</controls:NavigationView.PaneHeader>
 
@@ -152,16 +146,16 @@
 					</controls:NavigationViewItem.Icon>
 				</controls:NavigationViewItem>
 			</controls:NavigationView.MenuItems>
-			
-			<Grid x:Name="NavigationGrid">
+
+			<Grid>
 				<Grid.ColumnDefinitions>
-					<ColumnDefinition />
+					<ColumnDefinition Width="*" />
 					<ColumnDefinition Width="auto" />
 				</Grid.ColumnDefinitions>
 				<Grid Grid.Column="0">
 					<Frame
 						x:Name="contentFrame"
-						Margin="0,90,0,0"
+						Grid.Column="0"
 						Background="{ThemeResource RegionBrush}">
 						<Frame.ContentTransitions>
 							<TransitionCollection>
@@ -169,38 +163,8 @@
 							</TransitionCollection>
 						</Frame.ContentTransitions>
 					</Frame>
-					<TextBlock
-						x:Name="headerText"
-						Margin="24,40,0,16"
-						VerticalAlignment="Top"
-						FontSize="24"
-						Style="{StaticResource HeaderTextBlockStyle}"
-						Text="Main" />
 				</Grid>
-				<SplitView
-					Grid.Column="1"
-					Width="46"
-					DisplayMode="CompactInline"
-					IsPaneOpen="False"
-					PanePlacement="Right">
-					<SplitView.PaneBackground>
-						<AcrylicBrush
-							BackgroundSource="HostBackdrop"
-							FallbackColor="{ThemeResource SystemChromeAltHighColor}"
-							TintColor="{ThemeResource SystemChromeMediumColor}"
-							TintOpacity="0.8" />
-					</SplitView.PaneBackground>
-					<SplitView.Pane>
-						<FontIcon
-							Margin="0,0,14,0"
-							HorizontalAlignment="Right"
-							FontFamily="Segoe MDL2 Assets"
-							Glyph="&#xE00E;" />
-					</SplitView.Pane>
-					<SplitView.Content>
-						<TextBlock Text=" sldifjosdiejhfoisedjfo ldikjfogijder oidfjogihj swerfwrgtf" />
-					</SplitView.Content>
-				</SplitView>
+				<Border Grid.Column="1" Width="0" />
 			</Grid>
 		</controls:NavigationView>
 		<Grid
@@ -210,25 +174,16 @@
 			HorizontalAlignment="Stretch"
 			VerticalAlignment="Top"
 			Background="Transparent">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition x:Name="LeftPaddingColumn" Width="0" />
-				<ColumnDefinition />
-				<ColumnDefinition x:Name="RightPaddingColumn" Width="0" />
-			</Grid.ColumnDefinitions>
-
 			<TextBlock
 				x:Name="AppNameTextBlock"
-				Grid.Column="1"
-				Margin="5,0,0,0"
-				HorizontalAlignment="Left"
+				Margin="5,-10,150,0"
+				HorizontalAlignment="Center"
 				VerticalAlignment="Center"
+				Opacity="0"
 				Style="{StaticResource CaptionTextBlockStyle}"
 				Text="OxygenVK">
-				<TextBlock.TranslationTransition>
-					<Vector3Transition />
-				</TextBlock.TranslationTransition>
 				<TextBlock.OpacityTransition>
-					<ScalarTransition Duration="0:0:0.5" />
+					<ScalarTransition Duration="0:0:0.3" />
 				</TextBlock.OpacityTransition>
 			</TextBlock>
 		</Grid>

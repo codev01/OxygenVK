@@ -1,15 +1,28 @@
-﻿using Windows.UI.Xaml;
+﻿
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace OxygenVK.AppSource.Views.Settings
 {
 	public sealed partial class SettingsPage : Page
 	{
+		private Parameter Parameter;
+
 		public SettingsPage()
 		{
 			InitializeComponent();
-			NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
+			NavigationCacheMode = NavigationCacheMode.Enabled;
 		}
+
+		protected override void OnNavigatedTo(NavigationEventArgs e)
+		{
+			Parameter = e?.Parameter as Parameter;
+			ThemeHelper.RootTheme = App.GetEnum<ElementTheme>(Parameter.ApplicationSettings.ElementTheme.ToString());
+			ElementSoundPlayer.State = Parameter.ApplicationSettings.ElementSoundPlayerState;
+			ElementSoundPlayer.SpatialAudioMode = Parameter.ApplicationSettings.ElementSpatialAudioMode;
+		}
+
 		private void OnThemeRadioButtonChecked(object sender, RoutedEventArgs e)
 		{
 			string selectedTheme = ((RadioButton)sender)?.Tag?.ToString();
@@ -17,10 +30,11 @@ namespace OxygenVK.AppSource.Views.Settings
 			if (selectedTheme != null)
 			{
 				ThemeHelper.RootTheme = App.GetEnum<ElementTheme>(selectedTheme);
+				Parameter.ApplicationSettings.ElementTheme = ThemeHelper.RootTheme;
 			}
 		}
 
-		private void soundToggle_Toggled(object sender, RoutedEventArgs e)
+		private void SoundToggle_Toggled(object sender, RoutedEventArgs e)
 		{
 			if (soundToggle.IsOn == true)
 			{
@@ -35,21 +49,25 @@ namespace OxygenVK.AppSource.Views.Settings
 				ElementSoundPlayer.State = ElementSoundPlayerState.Off;
 				ElementSoundPlayer.SpatialAudioMode = ElementSpatialAudioMode.Off;
 			}
+			Parameter.ApplicationSettings.ElementSoundPlayerState = ElementSoundPlayer.State;
+			Parameter.ApplicationSettings.ElementSpatialAudioMode = ElementSoundPlayer.SpatialAudioMode;
 		}
 
-		private void spatialSoundBox_Checked(object sender, RoutedEventArgs e)
+		private void SpatialSoundBox_Checked(object sender, RoutedEventArgs e)
 		{
 			if (soundToggle.IsOn == true)
 			{
 				ElementSoundPlayer.SpatialAudioMode = ElementSpatialAudioMode.On;
+				Parameter.ApplicationSettings.ElementSpatialAudioMode = ElementSoundPlayer.SpatialAudioMode;
 			}
 		}
 
-		private void spatialSoundBox_Unchecked(object sender, RoutedEventArgs e)
+		private void SpatialSoundBox_Unchecked(object sender, RoutedEventArgs e)
 		{
 			if (soundToggle.IsOn == true)
 			{
 				ElementSoundPlayer.SpatialAudioMode = ElementSpatialAudioMode.Off;
+				Parameter.ApplicationSettings.ElementSpatialAudioMode = ElementSoundPlayer.SpatialAudioMode;
 			}
 		}
 	}

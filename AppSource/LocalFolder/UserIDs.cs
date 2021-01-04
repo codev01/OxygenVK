@@ -28,7 +28,6 @@ namespace OxygenVK.AppSource.LocalFolder
 				}
 				catch (Exception)
 				{
-
 					throw;
 				}
 			}
@@ -46,7 +45,6 @@ namespace OxygenVK.AppSource.LocalFolder
 
 		public void Add(long id)
 		{
-			Delete(id);
 			XDocument.Root.Add(new XElement(User, id));
 			Save();
 		}
@@ -58,6 +56,7 @@ namespace OxygenVK.AppSource.LocalFolder
 				if (item.Value == id.ToString())
 				{
 					item.Remove();
+					break;
 				}
 			}
 			Save();

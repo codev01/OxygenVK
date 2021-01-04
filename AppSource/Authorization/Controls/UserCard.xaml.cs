@@ -1,9 +1,6 @@
 ﻿using System;
 
 using OxygenVK.AppSource.LocalSettings.Attachments;
-using OxygenVK.AppSource.Views;
-
-using VkNet;
 
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -14,7 +11,9 @@ namespace OxygenVK.AppSource.Authorization.Controls
 	public sealed partial class UserCard : UserControl
 	{
 		public Frame Frame { get; set; }
-		public UserSettingsAttachmentsValues UserSettingsAttachmentsValues { get; set; }
+		public SettingsAttachments SettingsAttachments { get; set; }
+
+		private CardControlHelper CardControlHelper;
 
 		public UserCard()
 		{
@@ -23,42 +22,44 @@ namespace OxygenVK.AppSource.Authorization.Controls
 
 		private void UserControl_Loaded(object sender, RoutedEventArgs e)
 		{
-			avatar.ProfilePicture = new BitmapImage(new Uri(UserSettingsAttachmentsValues.AvatarURL));
-			userName.Text = UserSettingsAttachmentsValues.UserName;
+			BitmapImage bitmapImage = new BitmapImage(new Uri(SettingsAttachments.UserDataAttachments.AvatarURL));
+			if (SettingsAttachments.UserDataAttachments.AvatarURL != null)
+			{
+				bitmapImage.DecodePixelHeight = 100;
+				bitmapImage.DecodePixelWidth = 100;
+
+				avatar.ProfilePicture = bitmapImage;
+			}
+			userName.Text = SettingsAttachments.UserDataAttachments.UserName;
+
+			CardControlHelper = new CardControlHelper(Frame, SettingsAttachments);
 		}
 
-		private void deleteCard_Click(object sender, RoutedEventArgs e)
+		private void DeleteCard_Click(object sender, RoutedEventArgs e)
 		{
-			WorkWithUserData workWithUserData = new WorkWithUserData();
-			workWithUserData.DeleteUserData(UserSettingsAttachmentsValues.UserID);
-			workWithUserData.UpdateList();
+			CardControlHelper.DeleteCard_Click();
 		}
 
-		private void screenNameToolTip_Loaded(object sender, RoutedEventArgs e)
+		private void ScreenNameToolTip_Loaded(object sender, RoutedEventArgs e)
 		{
-			if (UserSettingsAttachmentsValues.ScreenName == null)
+			if (SettingsAttachments.UserDataAttachments.ScreenName == null)
 			{
 				screenNameToolTip.Visibility = Visibility.Collapsed;
 			}
 			else
 			{
-				screenNameToolTip.Content = UserSettingsAttachmentsValues.ScreenName;
+				screenNameToolTip.Content = SettingsAttachments.UserDataAttachments.ScreenName;
 			}
-		}
-
-		private VkApi GetParameter()
-		{
-			return new Authorize(UserSettingsAttachmentsValues.Token, true).VkApi;
 		}
 
 		private void ThisWindow_Click(object sender, RoutedEventArgs e)
 		{
-			new RootFrameNavigation(Frame, typeof(MainPage), GetParameter());
+			CardControlHelper.ThisWindow_Click();
 		}
 
 		private void NewWindow_Click(object sender, RoutedEventArgs e)
 		{
-			new WindowGenerator(GetParameter(), typeof(MainPage));
+			CardControlHelper.NewWindow_Click();
 		}
 	}
 }

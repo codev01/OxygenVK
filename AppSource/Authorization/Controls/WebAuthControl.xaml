@@ -34,8 +34,8 @@
 						x:Name="wv"
 						Width="655"
 						c:ScrollViewer.VerticalScrollMode="Disabled"
-						NavigationCompleted="wv_NavigationCompleted"
-						NavigationFailed="wv_NavigationFailed"
+						NavigationCompleted="Wv_NavigationCompleted"
+						NavigationFailed="Wv_NavigationFailed"
 						ScrollViewer.VerticalScrollBarVisibility="Disabled" />
 					<Grid
 						x:Name="Expectation"

@@ -5,9 +5,9 @@
 	xmlns:controls="using:Windows.UI.Xaml.Controls"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	Loaded="UserControl_Loaded"
 	d:DesignHeight="300"
 	d:DesignWidth="400"
-	Loaded="UserControl_Loaded"
 	mc:Ignorable="d">
 	<UserControl.Resources>
 		<ResourceDictionary Source="/AppSource/Dictionaries/ApplicationThemeDictionary.xaml" />
@@ -40,32 +40,42 @@
 			</Flyout>
 		</Button.Flyout>
 		<controls:ToolTipService.ToolTip>
-			<controls:ToolTip Name="screenNameToolTip" Loaded="screenNameToolTip_Loaded" />
+			<controls:ToolTip Name="screenNameToolTip" Loaded="ScreenNameToolTip_Loaded" />
 		</controls:ToolTipService.ToolTip>
-		<Grid>
-			<Border Name="card" Width="200">
-				<controls:StackPanel>
-					<controls:Button
-						x:Name="deleteCard"
-						Width="26"
-						Height="26"
-						Padding="0"
-						HorizontalAlignment="Right"
-						Click="deleteCard_Click">
-						<FontIcon
-							FontFamily="Segoe MDL2 Assets"
-							FontSize="10"
-							Glyph="&#xE106;" />
-					</controls:Button>
-					<PersonPicture Name="avatar" />
-					<TextBlock
-						x:Name="userName"
-						Margin="0,50,0,25"
-						HorizontalAlignment="Center"
-						FontSize="17"
-						TextWrapping="WrapWholeWords" />
-				</controls:StackPanel>
-			</Border>
+		<Grid x:Name="CardGrid" Width="200">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="26" />
+				<RowDefinition Height="100" />
+				<RowDefinition Height="100" />
+			</Grid.RowDefinitions>
+
+			<controls:Button
+				x:Name="deleteCard"
+				Grid.Row="0"
+				Width="26"
+				Height="26"
+				Padding="0"
+				HorizontalAlignment="Right"
+				Click="DeleteCard_Click">
+				<FontIcon
+					FontFamily="Segoe MDL2 Assets"
+					FontSize="10"
+					Glyph="&#xE106;" />
+			</controls:Button>
+			<PersonPicture Name="avatar" Grid.Row="1" />
+			<ScrollViewer
+				Grid.Row="2"
+				Margin="0,10,0,0"
+				HorizontalAlignment="Stretch"
+				VerticalScrollBarVisibility="Auto">
+				<TextBlock
+					x:Name="userName"
+					HorizontalAlignment="Center"
+					VerticalAlignment="Center"
+					FontSize="17"
+					TextAlignment="Center"
+					TextWrapping="WrapWholeWords" />
+			</ScrollViewer>
 		</Grid>
 	</Button>
 </UserControl>

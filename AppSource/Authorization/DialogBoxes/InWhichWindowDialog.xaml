@@ -1,0 +1,87 @@
+﻿<ContentDialog
+	x:Class="OxygenVK.Authorization.DialogBoxes.InWhichWindowDialog"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	Title="Авторизация прошла успешно!"
+	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+	CornerRadius="10"
+	Loaded="ContentDialog_Loaded"
+	KeyUp="ContentDialog_KeyUp"
+	mc:Ignorable="d">
+	<ContentDialog.Resources>
+		<ResourceDictionary Source="/AppSource/Dictionaries/ApplicationThemeDictionary.xaml" />
+	</ContentDialog.Resources>
+	<StackPanel>
+		<CheckBox
+			x:Name="isSave"
+			Content="Запомнить логин и пароль"
+			IsChecked="True" />
+		<StackPanel Margin="30,0,0,0">
+			<RadioButton
+				x:Name="saveIsPass"
+				VerticalAlignment="Top"
+				IsEnabled="{Binding ElementName=isSave, Path=IsChecked}"
+				Unchecked="SaveIsPass_Unchecked">
+				<StackPanel>
+					<PasswordBox
+						x:Name="pass1"
+						IsEnabled="{Binding ElementName=saveIsPass, Path=IsChecked}"
+						PlaceholderText="Новый ПИН-код" />
+					<PasswordBox
+						x:Name="pass2"
+						Margin="0,5,0,0"
+						IsEnabled="{Binding ElementName=saveIsPass, Path=IsChecked}"
+						PlaceholderText="Повторите ПИН-код" />
+				</StackPanel>
+			</RadioButton>
+			<RadioButton
+				x:Name="saveNotPass"
+				Grid.Row="1"
+				Margin="0,10,0,0"
+				VerticalAlignment="Center"
+				Content="Не использовать ПИН-код для повторного входа"
+				IsEnabled="{Binding ElementName=isSave, Path=IsChecked}" />
+		</StackPanel>
+		<TextBlock x:Name="warningCaps" Visibility="Collapsed">
+			<Bold Foreground="#f0ad4e">
+				Caps Lock
+			</Bold>
+			включен</TextBlock>
+		<TextBlock
+			x:Name="warningFields"
+			HorizontalAlignment="Left"
+			Foreground="#f0ad4e"
+			Visibility="Collapsed" />
+		<TextBlock
+			Margin="0,10,0,4"
+			VerticalAlignment="Center"
+			FontSize="16"
+			Text="В каком окне желаете продолжить?" />
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+			<Button
+				x:Name="primaryButton"
+				Grid.Column="0"
+				Margin="0,0,4,0"
+				HorizontalAlignment="Stretch"
+				Background="{ThemeResource SystemAccentColor}"
+				Content="В этом"
+				CornerRadius="{ThemeResource ControlCornerRadius}"
+				Tapped="PrimaryButton_Tapped" />
+			<Button
+				Name="secondaryButton"
+				Grid.Column="1"
+				Margin="4,0,0,0"
+				HorizontalAlignment="Stretch"
+				Content="В новом"
+				CornerRadius="{ThemeResource ControlCornerRadius}"
+				Tapped="SecondaryButton_Tapped" />
+		</Grid>
+	</StackPanel>
+</ContentDialog>

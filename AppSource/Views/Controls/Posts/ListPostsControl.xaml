@@ -201,7 +201,7 @@
 									Margin="12,0,0,4"
 									HorizontalAlignment="Left"
 									Content="Показать полностью..." />
-								<local:CanvasContainer x:Name="imageContainer" Attachments="{Binding attachments}" />
+								<local:CanvasContainer x:Name="imageContainer" Attachments="{Binding Attachments}" />
 							</StackPanel>
 
 							<RelativePanel Grid.Row="2">

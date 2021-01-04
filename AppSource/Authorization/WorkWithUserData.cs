@@ -4,10 +4,13 @@ using System.Threading.Tasks;
 
 using OxygenVK.AppSource.LocalFolder;
 using OxygenVK.AppSource.LocalSettings.Attachments;
+using OxygenVK.AppSource.LocaSettings.Attachments;
 
 using VkNet;
 using VkNet.Enums.SafetyEnums;
 using VkNet.Model;
+using VkNet.Model.Attachments;
+using VkNet.Model.RequestParams;
 
 using static OxygenVK.AppSource.Authorization.ListUsersEvent;
 
@@ -18,7 +21,7 @@ namespace OxygenVK.AppSource.Authorization
 		public static event ListStartUpdate OnListStartUpdate;
 		public static event ListUpdated OnListUpdated;
 
-		public static List<UserSettingsAttachmentsValues> UserSettingsAttachmentsValues = new List<UserSettingsAttachmentsValues>();
+		public static List<SettingsAttachments> SettingsAttachments = new List<SettingsAttachments>();
 
 		private readonly UserIDs UserIDs;
 		private long UserID = 0;
@@ -36,18 +39,19 @@ namespace OxygenVK.AppSource.Authorization
 			GetUsersData();
 		}
 
-		public async void Virification(VkApi vkApi)
+		public async void ReceivingDataAndSave(VkApi VkApi, string pinCode = null)
 		{
 			OnListStartUpdate.Invoke();
 
-			foreach (User item in await vkApi.Users.GetAsync(new long[0]))
+			foreach (User item in await VkApi.Users.GetAsync(new long[0]))
 			{
 				UserID = item.Id;
 			}
+
 			DeleteUserData(UserID);
 
 			string photoURL = null;
-			foreach (VkNet.Model.Attachments.Photo photo in await vkApi.Photo.GetAsync(new VkNet.Model.RequestParams.PhotoGetParams
+			foreach (Photo photo in await VkApi.Photo.GetAsync(new PhotoGetParams
 			{
 				AlbumId = PhotoAlbumType.Profile,
 				Count = 1
@@ -55,37 +59,40 @@ namespace OxygenVK.AppSource.Authorization
 			{
 				photoURL = photo.Sizes.Last().Url.AbsoluteUri;
 			}
-			VkNet.Model.RequestParams.AccountSaveProfileInfoParams profileInfo = await vkApi.Account.GetProfileInfoAsync();
+			AccountSaveProfileInfoParams profileInfo = await VkApi.Account.GetProfileInfoAsync();
 
-			Add(profileInfo.FirstName + " " + profileInfo.LastName, photoURL, vkApi.Token, UserID, profileInfo.ScreenName);
+			Add(new SettingsAttachments
+			{
+				ApplicationSettings = new ApplicationSettingsAttachments(),
+				UserDataAttachments = new UserDataAttachments
+				{
+					IsPasswordProtected = pinCode != null ? true : false,
+					Token = pinCode != null ? Crypto.EncryptStringAES(VkApi.Token, pinCode) : VkApi.Token,
+					UserID = UserID,
+					AvatarURL = photoURL,
+					ScreenName = profileInfo.ScreenName,
+					UserName = profileInfo.FirstName + " " + profileInfo.LastName
+				}
+			});
 		}
 
-		private void Add(string userName, string photoURL, string token, long userID, string screenName)
+		private void Add(SettingsAttachments settingsAttachments)
 		{
-			UserIDs.Add(userID);
-			LocalSettings.LocalSettings.AddUserContainerSettings(
-				userID.ToString(),
-				new UserSettingsAttachmentsValues
-				{
-					UserName = userName,
-					AvatarURL = photoURL,
-					Token = token,
-					UserID = userID,
-					ScreenName = screenName
-				});
+			UserIDs.Add(UserID);
+			LocalSettings.LocalSettings.AddUserSettingsContainer(UserID.ToString(), settingsAttachments);
 			GetUsersData();
 		}
 
 		private void GetUsersData()
 		{
-			UserSettingsAttachmentsValues.Clear();
+			SettingsAttachments.Clear();
 
 			foreach (long item in UserIDs.GetUserIDs())
 			{
-				UserSettingsAttachmentsValues.Add(LocalSettings.LocalSettings.GetUserContainerSettings(item.ToString()));
+				SettingsAttachments.Add(LocalSettings.LocalSettings.GetSettingsFromUserContainer(item.ToString()));
 			}
 
-			OnListUpdated.Invoke(UserSettingsAttachmentsValues);
+			OnListUpdated.Invoke(SettingsAttachments);
 		}
 
 		public void DeleteUserData(long userID)
@@ -98,7 +105,6 @@ namespace OxygenVK.AppSource.Authorization
 					LocalSettings.LocalSettings.DeleteUserContainerSettings(userID.ToString());
 				}
 			}
-			
 		}
 	}
 }

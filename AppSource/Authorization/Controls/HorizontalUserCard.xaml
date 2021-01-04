@@ -15,6 +15,11 @@
 	<Button Padding="0">
 		<Button.Flyout>
 			<Flyout x:Name="flyout">
+				<Flyout.FlyoutPresenterStyle>
+					<Style TargetType="FlyoutPresenter">
+						<Setter Property="CornerRadius" Value="8" />
+					</Style>
+				</Flyout.FlyoutPresenterStyle>
 				<StackPanel>
 					<TextBlock Margin="0,0,0,12" Text="В каком окне желаете продолжить?" />
 					<StackPanel Orientation="Horizontal">
@@ -35,23 +40,23 @@
 			</Flyout>
 		</Button.Flyout>
 		<controls:ToolTipService.ToolTip>
-			<controls:ToolTip Name="screenNameToolTip" Loaded="screenNameToolTip_Loaded" />
+			<controls:ToolTip Name="screenNameToolTip" Loaded="ScreenNameToolTip_Loaded" />
 		</controls:ToolTipService.ToolTip>
 		<Grid>
 			<Border
 				Name="card"
 				Width="270"
-				Height="50">
+				Height="60">
 				<Grid>
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="50" />
+						<ColumnDefinition Width="55" />
 						<ColumnDefinition />
 						<ColumnDefinition Width="45" />
 					</Grid.ColumnDefinitions>
 					<PersonPicture
 						Name="avatar"
 						Grid.Column="0"
-						Height="45"
+						Height="50"
 						Margin="5,0,0,0" />
 					<ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
 						<TextBlock
@@ -71,7 +76,7 @@
 						Margin="0,0,10,0"
 						Padding="0"
 						HorizontalAlignment="Right"
-						Click="deleteCard_Click">
+						Click="DeleteCard_Click">
 						<FontIcon
 							FontFamily="Segoe MDL2 Assets"
 							FontSize="10"

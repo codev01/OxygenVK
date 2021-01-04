@@ -2,6 +2,7 @@
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <LangVersion>preview</LangVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProjectGuid>{016D3D02-826E-41C3-9961-9DC9CC3B9BAE}</ProjectGuid>
@@ -31,6 +32,7 @@
     <PackageCertificateKeyFile />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <LangVersion>preview</LangVersion>
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
@@ -42,6 +44,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <LangVersion>preview</LangVersion>
     <OutputPath>bin\x86\Release\</OutputPath>
     <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
     <Optimize>true</Optimize>
@@ -55,6 +58,7 @@
     <EnableGatekeeperAnalysis>true</EnableGatekeeperAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <LangVersion>preview</LangVersion>
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\ARM\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
@@ -66,6 +70,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <LangVersion>preview</LangVersion>
     <OutputPath>bin\ARM\Release\</OutputPath>
     <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
     <Optimize>true</Optimize>
@@ -78,6 +83,7 @@
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM64'">
+    <LangVersion>preview</LangVersion>
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\ARM64\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
@@ -90,6 +96,7 @@
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM64'">
+    <LangVersion>preview</LangVersion>
     <OutputPath>bin\ARM64\Release\</OutputPath>
     <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
     <Optimize>true</Optimize>
@@ -102,6 +109,7 @@
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <LangVersion>preview</LangVersion>
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x64\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
@@ -113,6 +121,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <LangVersion>preview</LangVersion>
     <OutputPath>bin\x64\Release\</OutputPath>
     <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
     <Optimize>true</Optimize>
@@ -125,6 +134,7 @@
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
   <PropertyGroup>
+    <LangVersion>preview</LangVersion>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
@@ -134,28 +144,40 @@
     <Compile Include="AppSource\Authorization\AuthorizationPage.xaml.cs">
       <DependentUpon>AuthorizationPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AppSource\Authorization\ConnectionErrorDialog.xaml.cs">
-      <DependentUpon>ConnectionErrorDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="AppSource\Authorization\Authorize.cs" />
+    <Compile Include="AppSource\Authorization\Controls\CardControlHelper.cs" />
     <Compile Include="AppSource\Authorization\Controls\HorizontalUserCard.xaml.cs">
       <DependentUpon>HorizontalUserCard.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AppSource\Authorization\Controls\CardAttachmetsHelper.cs" />
+    <Compile Include="AppSource\Authorization\DialogBoxes\ConnectionErrorDialog.xaml.cs">
+      <DependentUpon>ConnectionErrorDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppSource\Authorization\Authorize.cs" />
     <Compile Include="AppSource\Authorization\Controls\UserCard.xaml.cs">
       <DependentUpon>UserCard.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AppSource\Authorization\InWhichWindowDialog.xaml.cs">
+    <Compile Include="AppSource\Authorization\Crypto.cs" />
+    <Compile Include="AppSource\Authorization\DialogBoxes\InWhichWindowDialog.xaml.cs">
       <DependentUpon>InWhichWindowDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppSource\Authorization\Controls\WebAuthControl.xaml.cs">
       <DependentUpon>WebAuthControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppSource\Authorization\DialogBoxes\VerificationDialog.xaml.cs">
+      <DependentUpon>VerificationDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppSource\Authorization\ListUsersEvent.cs" />
     <Compile Include="AppSource\Authorization\WorkWithUserData.cs" />
     <Compile Include="AppSource\LocalFolder\Filenames.cs" />
     <Compile Include="AppSource\LocalFolder\LocalFile.cs" />
     <Compile Include="AppSource\LocalFolder\UserIDs.cs" />
+    <Compile Include="AppSource\LocaSettings\Attachments\ApplicationSettingsAttachmentNames.cs" />
+    <Compile Include="AppSource\LocaSettings\Attachments\UserDataAttachmentNames.cs" />
+    <Compile Include="AppSource\Parameter.cs" />
+    <Compile Include="AppSource\Views\Settings\ApplicationSettingsAttachments.cs" />
+    <Compile Include="AppSource\LocaSettings\Attachments\CompositeValueNames.cs" />
     <Compile Include="AppSource\LocaSettings\Attachments\SettingsAttachments.cs" />
+    <Compile Include="AppSource\LocaSettings\Attachments\UserDataAttachments.cs" />
     <Compile Include="AppSource\LocaSettings\LocalSettings.cs" />
     <Compile Include="AppSource\Views\Controls\PictureBoxControl.xaml.cs">
       <DependentUpon>PictureBoxControl.xaml</DependentUpon>
@@ -184,6 +206,7 @@
     <Compile Include="AppSource\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AppSource\WindowNamesHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -237,6 +260,9 @@
     <Content Include="AppSource\Assets\Wide310x150Logo.scale-125.png" />
     <Content Include="AppSource\Assets\Wide310x150Logo.scale-150.png" />
     <Content Include="AppSource\Assets\Wide310x150Logo.scale-400.png" />
+    <None Include="..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </None>
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="AppSource\Assets\SplashScreen.scale-200.png" />
@@ -254,25 +280,29 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AppSource\Authorization\ConnectionErrorDialog.xaml">
+    <Page Include="AppSource\Authorization\Controls\HorizontalUserCard.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="AppSource\Authorization\Controls\HorizontalUserCard.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="AppSource\Authorization\DialogBoxes\ConnectionErrorDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="AppSource\Authorization\Controls\UserCard.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="AppSource\Authorization\InWhichWindowDialog.xaml">
+    <Page Include="AppSource\Authorization\DialogBoxes\InWhichWindowDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="AppSource\Authorization\Controls\WebAuthControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppSource\Authorization\DialogBoxes\VerificationDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AppSource\Dictionaries\ApplicationThemeDictionary.xaml">
       <SubType>Designer</SubType>

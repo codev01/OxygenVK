@@ -17,7 +17,7 @@ namespace OxygenVK.AppSource.Views.Controls.Posts.ImageContainer
 			bool flag = false;
 			foreach (ImageContainerAttachment thumb in thumbs)
 			{
-				double ratio = thumb.getRatio();
+				double ratio = thumb.GetRatio();
 				if (ratio == -1.0)
 				{
 					flag = true;

@@ -17,8 +17,6 @@ namespace OxygenVK.AppSource
 {
 	public class WindowGenerator
 	{
-		public static int AuthorizationPageWindowID = 0;
-		public static bool AuthorizationPageWindowOpened;
 
 		private int newWindowID = 0;
 
@@ -28,7 +26,7 @@ namespace OxygenVK.AppSource
 			{
 				LaunchActivatedEventArgs e = parameter as LaunchActivatedEventArgs;
 
-				if (!(Window.Current.Content is Frame frame))
+				if (Window.Current.Content is not Frame frame)
 				{
 					frame = InitializationFrame();
 
@@ -95,23 +93,24 @@ namespace OxygenVK.AppSource
 		private void WindowActivate()
 		{
 			Window.Current.Activate();
+			SystemNavigationManagerPreview.GetForCurrentView().CloseRequested += WindowGeneratorAuthorizationPage_CloseRequested;
 		}
 
 		private void DefinePage(Frame frame)
 		{
+			ApplicationView applicationView = ApplicationView.GetForCurrentView();
 			if (frame.SourcePageType.Name == "AuthorizationPage")
 			{
-				AuthorizationPageWindowID = ApplicationView.GetForCurrentView().Id;
-				AuthorizationPageWindowOpened = true;
-				SystemNavigationManagerPreview.GetForCurrentView().CloseRequested += WindowGeneratorAuthorizationPage_CloseRequested;
+				WindowNamesHelper.AuthorizationPageWindowID = applicationView.Id;
+				WindowNamesHelper.AuthorizationPageWindowOpened = true;
 			}
-
-			newWindowID = ApplicationView.GetForCurrentView().Id;
+			newWindowID = applicationView.Id;
 		}
 
 		private void WindowGeneratorAuthorizationPage_CloseRequested(object sender, SystemNavigationCloseRequestedPreviewEventArgs e)
 		{
-			AuthorizationPageWindowOpened = false;
+			new WindowNamesHelper(ApplicationView.GetForCurrentView().Title).RemoveNameWindow();
+			WindowNamesHelper.AuthorizationPageWindowOpened = false;
 		}
 
 		private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)

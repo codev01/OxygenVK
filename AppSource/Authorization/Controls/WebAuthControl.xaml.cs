@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-using OxygenVK.Authorization;
+using OxygenVK.Authorization.DialogBoxes;
 
 using Windows.UI.Xaml.Controls;
 
@@ -21,7 +21,7 @@ namespace OxygenVK.AppSource.Authorization.Controls
 			InitializeComponent();
 		}
 
-		private async void wv_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
+		private async void Wv_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
 		{
 			Expectation.Opacity = 0;
 			Expectation.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
@@ -30,8 +30,7 @@ namespace OxygenVK.AppSource.Authorization.Controls
 				string token = wv.Source.Fragment.
 					Substring(1).Split(new[] { "&" }, StringSplitOptions.RemoveEmptyEntries).
 					Select(p => p.Split('=')).
-					FirstOrDefault(p => p.Length == 2 && p[0] == "access_token")?[1] ??
-					throw new Exception("Access token not found");
+					FirstOrDefault(p => p.Length == 2 && p[0] == "access_token")?[1];
 
 				if (token != "")
 				{
@@ -63,7 +62,7 @@ namespace OxygenVK.AppSource.Authorization.Controls
 			wv.Visibility = Windows.UI.Xaml.Visibility.Visible;
 		}
 
-		public void wv_Navigate()
+		public void Wv_Navigate()
 		{
 			Expectation.Opacity = 1;
 			Expectation.Visibility = Windows.UI.Xaml.Visibility.Visible;
@@ -76,14 +75,14 @@ namespace OxygenVK.AppSource.Authorization.Controls
 			Closing?.Invoke();
 		}
 
-		private async void wv_NavigationFailed(object sender, WebViewNavigationFailedEventArgs e)
+		private async void Wv_NavigationFailed(object sender, WebViewNavigationFailedEventArgs e)
 		{
 			AuthFailedDialog dialog = new AuthFailedDialog();
 			ContentDialogResult result = await dialog.ShowAsync();
 
 			if (result == ContentDialogResult.Primary)
 			{
-				wv_Navigate();
+				Wv_Navigate();
 			}
 		}
 	}

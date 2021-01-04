@@ -26,7 +26,7 @@ namespace VK.Controls
 				}
 
 				postsAttachments.Name = "Rashid";
-				postsAttachments.attachments = containerAttachments;
+				postsAttachments.Attachments = containerAttachments;
 				lv.Items.Add(postsAttachments);
 			}
 		}

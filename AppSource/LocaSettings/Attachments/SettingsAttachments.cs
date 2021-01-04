@@ -1,20 +1,10 @@
-﻿namespace OxygenVK.AppSource.LocalSettings.Attachments
-{
-	public class UserSettingsAttachments
-	{
-		public static string UserName { get; } = "UserName";
-		public static string UserID { get; } = "UserID";
-		public static string Token { get; } = "Token";
-		public static string AvatarURL { get; } = "AvatarURL";
-		public static string ScreenName { get; } = "ScreenName";
-	}
+﻿using OxygenVK.AppSource.LocaSettings.Attachments;
 
-	public class UserSettingsAttachmentsValues
+namespace OxygenVK.AppSource.LocalSettings.Attachments
+{
+	public class SettingsAttachments
 	{
-		public string UserName { get; set; }
-		public long UserID { get; set; }
-		public string Token { get; set; }
-		public string AvatarURL { get; set; }
-		public string ScreenName { get; set; }
+		public UserDataAttachments UserDataAttachments { get; set; }
+		public ApplicationSettingsAttachments ApplicationSettings { get; set; }
 	}
 }

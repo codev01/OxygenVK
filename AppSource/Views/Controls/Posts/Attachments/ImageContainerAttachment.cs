@@ -14,7 +14,7 @@
 
 		public bool LastRow { get; set; }
 
-		public double getRatio()
+		public double GetRatio()
 		{
 			return Width / Height;
 		}

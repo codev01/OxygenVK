@@ -1,0 +1,54 @@
+﻿<ContentDialog
+	x:Class="OxygenVK.AppSource.Authorization.DialogBoxes.VerificationDialog"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+	CornerRadius="10"
+	mc:Ignorable="d">
+	<ContentDialog.Title>
+		<TextBlock>
+			Чтобы продолжить, введите<LineBreak />
+			ПИН-код</TextBlock>
+	</ContentDialog.Title>
+	<ContentDialog.Resources>
+		<ResourceDictionary Source="/AppSource/Dictionaries/ApplicationThemeDictionary.xaml" />
+	</ContentDialog.Resources>
+	<StackPanel>
+		<PasswordBox
+			x:Name="Pass"
+			MinWidth="71"
+			HorizontalAlignment="Left"
+			PlaceholderText="Поле нужно заполнить..."
+			TabIndex="1" />
+		<TextBlock
+			x:Name="InvalidPass"
+			VerticalAlignment="Center"
+			Foreground="#f0ad4e"
+			Visibility="Collapsed" />
+		<Grid Margin="0,18,0,0">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+			<Button
+				x:Name="primaryButton"
+				Grid.Column="0"
+				Margin="0,0,4,0"
+				HorizontalAlignment="Stretch"
+				Background="{ThemeResource SystemAccentColor}"
+				Click="PrimaryButton_Click"
+				Content="Продолжить"
+				CornerRadius="{ThemeResource ControlCornerRadius}" />
+			<Button
+				Name="secondaryButton"
+				Grid.Column="1"
+				Margin="4,0,0,0"
+				HorizontalAlignment="Stretch"
+				Click="SecondaryButton_Click"
+				Content="Закрыть"
+				CornerRadius="{ThemeResource ControlCornerRadius}" />
+		</Grid>
+	</StackPanel>
+</ContentDialog>

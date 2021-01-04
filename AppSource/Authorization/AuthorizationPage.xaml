@@ -61,7 +61,7 @@
 								x:Name="headerListPanel"
 								Margin="0,0,16,0"
 								HorizontalAlignment="Stretch"
-								SizeChanged="headerListPanel_SizeChanged">
+								SizeChanged="HeaderListPanel_SizeChanged">
 								<c:Grid.ColumnDefinitions>
 									<c:ColumnDefinition />
 									<c:ColumnDefinition Width="auto" />
@@ -86,7 +86,7 @@
 										FontSize="15"
 										Foreground="Gray"
 										TextWrapping="Wrap">
-										Недавно входили на сайт с этого приложения;
+										Недавно входили на сайт с этого приложения
 									</c:TextBlock>
 								</c:StackPanel>
 								<controls:ProgressRing
@@ -119,14 +119,13 @@
 					Grid.Row="1"
 					Margin="0,10,0,10"
 					HorizontalAlignment="Center"
-					Click="cardAdd_Click"
+					Click="CardAdd_Click"
 					FontSize="16" />
 			</c:Grid>
 		</c:Grid>
 		<local:WebAuthControl
 			x:Name="webAuthControl"
-			Closing="webAuthControl_Closing"
-			OnAuthCompleted="webAuthControl_OnAuthCompleted"
+			Closing="WebAuthControl_Closing"
 			Opacity="0"
 			Visibility="Collapsed" />
 	</c:Grid>
