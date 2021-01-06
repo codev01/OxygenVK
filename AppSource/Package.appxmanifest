@@ -41,6 +41,8 @@
         <uap:DefaultTile Wide310x150Logo="AppSource\Assets\Wide310x150Logo.png" Square71x71Logo="AppSource\Assets\SmallTile.png" Square310x310Logo="AppSource\Assets\LargeTile.png">
         </uap:DefaultTile >
         <uap:SplashScreen Image="AppSource\Assets\SplashScreen.png"  BackgroundColor="#4E729A"/>
+        <uap:InitialRotationPreference>
+          <uap:Rotation Preference="landscape"/></uap:InitialRotationPreference>
       </uap:VisualElements>
     </Application>
   </Applications>

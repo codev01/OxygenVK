@@ -1,7 +1,6 @@
 ﻿using System;
 
 using OxygenVK.AppSource.LocalSettings.Attachments;
-using OxygenVK.AppSource.LocaSettings.Attachments;
 
 using Windows.Storage;
 using Windows.UI.Xaml;

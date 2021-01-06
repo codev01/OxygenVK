@@ -4,16 +4,16 @@ using System.Collections.Generic;
 using OxygenVK.AppSource;
 using OxygenVK.AppSource.Authorization;
 using OxygenVK.AppSource.Authorization.Controls;
+using OxygenVK.AppSource.Authorization.DialogBoxes;
 using OxygenVK.AppSource.LocalSettings.Attachments;
 using OxygenVK.AppSource.Views.Settings;
-using OxygenVK.Authorization.DialogBoxes;
 
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace OxygenVK.Authorization
+namespace OxygenVK.AppSource.Authorization
 {
 	public partial class AuthorizationPage : Page
 	{

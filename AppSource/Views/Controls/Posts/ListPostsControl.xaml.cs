@@ -4,7 +4,7 @@ using OxygenVK.AppSource.Views.Controls.Posts.Attachments;
 
 using Windows.UI.Xaml.Controls;
 
-namespace VK.Controls
+namespace OxygenVK.AppSource.Views.Controls.Posts
 {
 	public sealed partial class ListPostsControl : UserControl
 	{

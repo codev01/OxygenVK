@@ -1,6 +1,6 @@
 ﻿using Windows.UI.Xaml.Controls;
 
-namespace OxygenVK.Authorization.DialogBoxes
+namespace OxygenVK.AppSource.Authorization.DialogBoxes
 {
 	public sealed partial class AuthFailedDialog : ContentDialog
 	{

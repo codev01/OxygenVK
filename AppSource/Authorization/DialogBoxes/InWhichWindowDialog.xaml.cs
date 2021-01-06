@@ -1,6 +1,6 @@
 ﻿using OxygenVK.AppSource;
 using OxygenVK.AppSource.Authorization;
-using OxygenVK.AppSource.LocaSettings.Attachments;
+using OxygenVK.AppSource.LocalSettings.Attachments;
 using OxygenVK.AppSource.Views;
 using OxygenVK.AppSource.Views.Settings;
 
@@ -12,7 +12,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 
-namespace OxygenVK.Authorization.DialogBoxes
+namespace OxygenVK.AppSource.Authorization.DialogBoxes
 {
 	public sealed partial class InWhichWindowDialog : ContentDialog
 	{

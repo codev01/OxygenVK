@@ -1,6 +1,6 @@
 ﻿using Windows.UI.Xaml;
 
-namespace OxygenVK.AppSource.LocaSettings.Attachments
+namespace OxygenVK.AppSource.LocalSettings.Attachments
 {
 	public class ApplicationSettingsAttachments
 	{

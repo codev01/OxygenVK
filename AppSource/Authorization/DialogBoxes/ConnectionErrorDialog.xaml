@@ -1,5 +1,5 @@
 ﻿<ContentDialog
-	x:Class="OxygenVK.Authorization.DialogBoxes.AuthFailedDialog"
+	x:Class="OxygenVK.AppSource.Authorization.DialogBoxes.AuthFailedDialog"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	Title="Ошибка подключения..."

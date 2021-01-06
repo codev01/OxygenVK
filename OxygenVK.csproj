@@ -119,6 +119,10 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
+    <Optimize>true</Optimize>
+    <EnableGatekeeperAnalysis>true</EnableGatekeeperAnalysis>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <LangVersion>preview</LangVersion>
@@ -174,7 +178,7 @@
     <Compile Include="AppSource\LocaSettings\Attachments\ApplicationSettingsAttachmentNames.cs" />
     <Compile Include="AppSource\LocaSettings\Attachments\UserDataAttachmentNames.cs" />
     <Compile Include="AppSource\Parameter.cs" />
-    <Compile Include="AppSource\Views\Settings\ApplicationSettingsAttachments.cs" />
+    <Compile Include="AppSource\LocaSettings\Attachments\ApplicationSettingsAttachments.cs" />
     <Compile Include="AppSource\LocaSettings\Attachments\CompositeValueNames.cs" />
     <Compile Include="AppSource\LocaSettings\Attachments\SettingsAttachments.cs" />
     <Compile Include="AppSource\LocaSettings\Attachments\UserDataAttachments.cs" />

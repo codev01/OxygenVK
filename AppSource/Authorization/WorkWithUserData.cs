@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 using OxygenVK.AppSource.LocalFolder;
 using OxygenVK.AppSource.LocalSettings.Attachments;
-using OxygenVK.AppSource.LocaSettings.Attachments;
+using OxygenVK.AppSource.LocalSettings.Attachments;
 
 using VkNet;
 using VkNet.Enums.SafetyEnums;

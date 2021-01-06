@@ -7,11 +7,10 @@ using System.Timers;
 using OxygenVK.AppSource.Authorization;
 using OxygenVK.AppSource.Authorization.Controls;
 using OxygenVK.AppSource.LocalSettings.Attachments;
-using OxygenVK.AppSource.LocaSettings.Attachments;
+using OxygenVK.AppSource.LocalSettings.Attachments;
 using OxygenVK.AppSource.Views;
 using OxygenVK.AppSource.Views.Settings;
 using OxygenVK.AppSource.Views.User;
-using OxygenVK.Authorization;
 
 using VkNet.Enums.SafetyEnums;
 using VkNet.Model;

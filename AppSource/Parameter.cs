@@ -1,4 +1,4 @@
-﻿using OxygenVK.AppSource.LocaSettings.Attachments;
+﻿using OxygenVK.AppSource.LocalSettings.Attachments;
 
 using VkNet;
 

@@ -1,7 +1,7 @@
 ﻿using System;
 
 using OxygenVK.AppSource.Views;
-using OxygenVK.Authorization;
+using OxygenVK.AppSource.Authorization;
 
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;

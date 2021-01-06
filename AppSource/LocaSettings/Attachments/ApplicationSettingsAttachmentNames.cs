@@ -1,4 +1,4 @@
-﻿namespace OxygenVK.AppSource.LocaSettings.Attachments
+﻿namespace OxygenVK.AppSource.LocalSettings.Attachments
 {
 	public class ApplicationSettingsAttachmentNames
 	{

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-using OxygenVK.Authorization.DialogBoxes;
+using OxygenVK.AppSource.Authorization.DialogBoxes;
 
 using Windows.UI.Xaml.Controls;
 
