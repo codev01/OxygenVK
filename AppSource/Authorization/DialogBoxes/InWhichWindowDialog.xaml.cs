@@ -1,6 +1,4 @@
-﻿using OxygenVK.AppSource;
-using OxygenVK.AppSource.Authorization;
-using OxygenVK.AppSource.LocalSettings.Attachments;
+﻿using OxygenVK.AppSource.LocalSettings.Attachments;
 using OxygenVK.AppSource.Views;
 using OxygenVK.AppSource.Views.Settings;
 

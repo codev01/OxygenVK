@@ -1,5 +1,4 @@
 ﻿using OxygenVK.AppSource.LocalSettings.Attachments;
-using OxygenVK.AppSource.LocalSettings.Attachments;
 using OxygenVK.AppSource.Views.Settings;
 
 using Windows.UI.Xaml;
