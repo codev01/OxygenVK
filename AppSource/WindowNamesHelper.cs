@@ -5,9 +5,6 @@ namespace OxygenVK.AppSource
 {
 	public class WindowNamesHelper
 	{
-		public static int AuthorizationPageWindowID = 0;
-		public static bool AuthorizationPageWindowOpened;
-
 		private readonly string NewWindowName;
 		private static List<WindowName> WindowNames { get; set; } = new List<WindowName>();
 

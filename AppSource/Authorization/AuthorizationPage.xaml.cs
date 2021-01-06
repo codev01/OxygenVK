@@ -17,8 +17,8 @@ namespace OxygenVK.AppSource.Authorization
 {
 	public partial class AuthorizationPage : Page
 	{
-		public static bool ThePageIsUsedInNavigation;
-		private bool thePageIsUsedInNavigation;
+		public static bool IsThePageIsUsedInNavigation = false;
+
 		private Parameter Parameter;
 
 		public AuthorizationPage()
@@ -29,14 +29,19 @@ namespace OxygenVK.AppSource.Authorization
 		private void Page_Loaded(object sender, RoutedEventArgs e)
 		{
 			ApplicationView.GetForCurrentView().Title = "Окно авторизации";
+			IsThePageIsUsedInNavigation = true;
+
 			Frame.Navigating += Frame_Navigating;
-			ThePageIsUsedInNavigation = false;
-			thePageIsUsedInNavigation = false;
 
 			WorkWithUserData.OnListStartUpdate += WorkWithUserData_OnListStartUpdate;
 			WorkWithUserData.OnListUpdated += WorkWithUserData_OnListUpdated;
 
 			new WorkWithUserData().UpdateList();
+		}
+
+		private void Frame_Navigating(object sender, NavigatingCancelEventArgs e)
+		{
+			IsThePageIsUsedInNavigation = false;
 		}
 
 		protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -48,12 +53,6 @@ namespace OxygenVK.AppSource.Authorization
 				ElementSoundPlayer.State = Parameter.ApplicationSettings.ElementSoundPlayerState;
 				ElementSoundPlayer.SpatialAudioMode = Parameter.ApplicationSettings.ElementSpatialAudioMode;
 			}
-		}
-
-		private void Frame_Navigating(object sender, NavigatingCancelEventArgs e)
-		{
-			ThePageIsUsedInNavigation = true;
-			thePageIsUsedInNavigation = true;
 		}
 
 		private void ListUsersCard_GridView_Add(List<SettingsAttachments> authorizedUserCardsAttachments)
@@ -137,7 +136,7 @@ namespace OxygenVK.AppSource.Authorization
 
 		private async void WebAuthControl_OnAuthCompleted(string token)
 		{
-			if (!thePageIsUsedInNavigation)
+			if (IsThePageIsUsedInNavigation)
 			{
 				await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
 				{

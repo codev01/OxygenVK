@@ -7,7 +7,6 @@ using System.Timers;
 using OxygenVK.AppSource.Authorization;
 using OxygenVK.AppSource.Authorization.Controls;
 using OxygenVK.AppSource.LocalSettings.Attachments;
-using OxygenVK.AppSource.LocalSettings.Attachments;
 using OxygenVK.AppSource.Views;
 using OxygenVK.AppSource.Views.Settings;
 using OxygenVK.AppSource.Views.User;
@@ -111,9 +110,9 @@ namespace OxygenVK.AppSource
 
 		private async void AddAccountsButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
 		{
-			if (WindowNamesHelper.AuthorizationPageWindowOpened && !AuthorizationPage.ThePageIsUsedInNavigation)
+			if (WindowGenerator.AuthorizationPageWindowOpened && AuthorizationPage.IsThePageIsUsedInNavigation)
 			{
-				await ApplicationViewSwitcher.SwitchAsync(WindowNamesHelper.AuthorizationPageWindowID);
+				await ApplicationViewSwitcher.SwitchAsync(WindowGenerator.AuthorizationPageWindowID);
 			}
 			else
 			{
