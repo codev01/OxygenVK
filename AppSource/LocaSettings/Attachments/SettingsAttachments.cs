@@ -1,6 +1,4 @@
-﻿using OxygenVK.AppSource.LocalSettings.Attachments;
-
-namespace OxygenVK.AppSource.LocalSettings.Attachments
+﻿namespace OxygenVK.AppSource.LocalSettings.Attachments
 {
 	public class SettingsAttachments
 	{

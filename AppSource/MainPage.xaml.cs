@@ -198,12 +198,7 @@ namespace OxygenVK.AppSource
 		{
 			return new Parameter
 			{
-				ApplicationSettings = new ApplicationSettingsAttachments
-				{
-					ElementTheme = ThemeHelper.RootTheme,
-					ElementSoundPlayerState = ElementSoundPlayer.State,
-					ElementSpatialAudioMode = ElementSoundPlayer.SpatialAudioMode
-				},
+				ApplicationSettings = Parameter.ApplicationSettings,
 				VkApi = Parameter.VkApi
 			};
 		}

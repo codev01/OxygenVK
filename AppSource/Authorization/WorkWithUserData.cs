@@ -78,7 +78,7 @@ namespace OxygenVK.AppSource.Authorization
 		private void Add(SettingsAttachments settingsAttachments)
 		{
 			UserIDs.Add(UserID);
-			LocalSettings.LocalSettings.AddUserSettingsContainer(UserID.ToString(), settingsAttachments);
+			LocalSettings.LocalSettings.AddUserSettingsContainer(UserID, settingsAttachments);
 			GetUsersData();
 		}
 
@@ -88,7 +88,8 @@ namespace OxygenVK.AppSource.Authorization
 
 			foreach (long item in UserIDs.GetUserIDs())
 			{
-				SettingsAttachments.Add(LocalSettings.LocalSettings.GetSettingsFromUserContainer(item.ToString()));
+				ApplicationSettingsAttachments.UserID = item;
+				SettingsAttachments.Add(LocalSettings.LocalSettings.GetUserSettingsContainer(item));
 			}
 
 			OnListUpdated.Invoke(SettingsAttachments);
@@ -101,7 +102,7 @@ namespace OxygenVK.AppSource.Authorization
 				if (item == userID)
 				{
 					UserIDs.Delete(userID);
-					LocalSettings.LocalSettings.DeleteUserContainerSettings(userID.ToString());
+					LocalSettings.LocalSettings.DeleteUserContainerSettings(userID);
 				}
 			}
 		}

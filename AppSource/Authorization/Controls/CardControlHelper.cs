@@ -37,7 +37,7 @@ namespace OxygenVK.AppSource.Authorization.Controls
 			VkApi vkApi = Authorize.AuthorizeAsync(Token);
 			return new Parameter
 			{
-				ApplicationSettings = LocalSettings.LocalSettings.GetSettingsFromUserContainer(GetUserID().ToString()).ApplicationSettings,
+				ApplicationSettings = LocalSettings.LocalSettings.GetUserSettingsContainer(GetUserID()).ApplicationSettings,
 				VkApi = vkApi
 			};
 

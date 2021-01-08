@@ -1,4 +1,5 @@
-﻿
+﻿using OxygenVK.AppSource.LocalSettings.Attachments;
+
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -8,6 +9,7 @@ namespace OxygenVK.AppSource.Views.Settings
 	public sealed partial class SettingsPage : Page
 	{
 		private Parameter Parameter;
+		private long UserID = 0;
 
 		public SettingsPage()
 		{
@@ -15,12 +17,54 @@ namespace OxygenVK.AppSource.Views.Settings
 			NavigationCacheMode = NavigationCacheMode.Enabled;
 		}
 
-		protected override void OnNavigatedTo(NavigationEventArgs e)
+		protected override async void OnNavigatedTo(NavigationEventArgs e)
 		{
 			Parameter = e?.Parameter as Parameter;
-			ThemeHelper.RootTheme = App.GetEnum<ElementTheme>(Parameter.ApplicationSettings.ElementTheme.ToString());
-			ElementSoundPlayer.State = Parameter.ApplicationSettings.ElementSoundPlayerState;
-			ElementSoundPlayer.SpatialAudioMode = Parameter.ApplicationSettings.ElementSpatialAudioMode;
+			Parameter.ApplicationSettings.IsSet = true;
+			if (UserID == 0)
+			{
+				foreach (VkNet.Model.User item in await Parameter.VkApi.Users.GetAsync(new long[0]))
+				{
+					ApplicationSettingsAttachments.UserID = item.Id;
+				}
+			}
+
+			switch (Parameter.ApplicationSettings.ElementTheme)
+			{
+				case ElementTheme.Light:
+					ThemeTag1.IsChecked = true;
+					break;
+				case ElementTheme.Dark:
+					ThemeTag2.IsChecked = true;
+					break;
+				case ElementTheme.Default:
+					ThemeTag3.IsChecked = true;
+					break;
+			}
+
+			switch (Parameter.ApplicationSettings.ElementSoundPlayerState)
+			{
+				case ElementSoundPlayerState.Off:
+					soundToggle.IsOn = false;
+					break;
+				case ElementSoundPlayerState.On:
+					soundToggle.IsOn = true;
+					break;
+			}
+
+			switch (Parameter.ApplicationSettings.ElementSpatialAudioMode)
+			{
+				case ElementSpatialAudioMode.Off:
+					spatialSoundBox.IsChecked = false;
+					break;
+				case ElementSpatialAudioMode.On:
+					spatialSoundBox.IsChecked = true;
+					break;
+			}
+
+			//ThemeHelper.RootTheme = App.GetEnum<ElementTheme>(Parameter.ApplicationSettings.ElementTheme.ToString());
+			//ElementSoundPlayer.State = Parameter.ApplicationSettings.ElementSoundPlayerState;
+			//ElementSoundPlayer.SpatialAudioMode = Parameter.ApplicationSettings.ElementSpatialAudioMode;
 		}
 
 		private void OnThemeRadioButtonChecked(object sender, RoutedEventArgs e)

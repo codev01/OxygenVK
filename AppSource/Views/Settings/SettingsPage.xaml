@@ -20,14 +20,17 @@
 					Text="Тема" />
 				<StackPanel x:Name="ThemePanel" Margin="0,10,0,0">
 					<RadioButton
+						x:Name="ThemeTag1"
 						Checked="OnThemeRadioButtonChecked"
 						Content="Светлая"
 						Tag="Light" />
 					<RadioButton
+						x:Name="ThemeTag2"
 						Checked="OnThemeRadioButtonChecked"
 						Content="Тёмная"
 						Tag="Dark" />
 					<RadioButton
+						x:Name="ThemeTag3"
 						Checked="OnThemeRadioButtonChecked"
 						Content="Использовать системные настройки"
 						Tag="Default" />

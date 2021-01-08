@@ -175,8 +175,6 @@
     <Compile Include="AppSource\LocalFolder\Filenames.cs" />
     <Compile Include="AppSource\LocalFolder\LocalFile.cs" />
     <Compile Include="AppSource\LocalFolder\UserIDs.cs" />
-    <Compile Include="AppSource\LocaSettings\Attachments\ApplicationSettingsAttachmentNames.cs" />
-    <Compile Include="AppSource\LocaSettings\Attachments\UserDataAttachmentNames.cs" />
     <Compile Include="AppSource\Parameter.cs" />
     <Compile Include="AppSource\LocaSettings\Attachments\ApplicationSettingsAttachments.cs" />
     <Compile Include="AppSource\LocaSettings\Attachments\CompositeValueNames.cs" />
