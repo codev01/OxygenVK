@@ -172,27 +172,41 @@
     </Compile>
     <Compile Include="AppSource\Authorization\ListUsersEvent.cs" />
     <Compile Include="AppSource\Authorization\WorkWithUserData.cs" />
+    <Compile Include="AppSource\Controls\CustomButton.xaml.cs">
+      <DependentUpon>CustomButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppSource\Controls\CustomImage.xaml.cs">
+      <DependentUpon>CustomImage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppSource\Extensions\ImageExtension.cs" />
     <Compile Include="AppSource\LocalFolder\Filenames.cs" />
     <Compile Include="AppSource\LocalFolder\LocalFile.cs" />
     <Compile Include="AppSource\LocalFolder\UserIDs.cs" />
+    <Compile Include="AppSource\NavigationItems.cs" />
     <Compile Include="AppSource\Parameter.cs" />
-    <Compile Include="AppSource\LocaSettings\Attachments\ApplicationSettingsAttachments.cs" />
+    <Compile Include="AppSource\LocaSettings\Attachments\ApplicationSettings.cs" />
     <Compile Include="AppSource\LocaSettings\Attachments\CompositeValueNames.cs" />
-    <Compile Include="AppSource\LocaSettings\Attachments\SettingsAttachments.cs" />
-    <Compile Include="AppSource\LocaSettings\Attachments\UserDataAttachments.cs" />
+    <Compile Include="AppSource\LocaSettings\Attachments\Settings.cs" />
+    <Compile Include="AppSource\LocaSettings\Attachments\UserData.cs" />
     <Compile Include="AppSource\LocaSettings\LocalSettings.cs" />
+    <Compile Include="AppSource\TabViewWindowingSamplePage.xaml.cs">
+      <DependentUpon>TabViewWindowingSamplePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AppSource\Views\Controls\PictureBoxControl.xaml.cs">
       <DependentUpon>PictureBoxControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AppSource\Views\Controls\Posts\Attachments\ImageContainerAttachment.cs" />
-    <Compile Include="AppSource\Views\Controls\Posts\Attachments\PostsAttachments.cs" />
-    <Compile Include="AppSource\Views\Controls\Posts\ImageContainer\CanvasContainer.cs" />
+    <Compile Include="AppSource\Views\Controls\Posts\ImageContainer\ContainerElement.cs" />
+    <Compile Include="AppSource\Views\Controls\Posts\ContentPresener.xaml.cs">
+      <DependentUpon>ContentPresener.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppSource\Views\Controls\Posts\ImageContainer\ImageContainer.cs" />
     <Compile Include="AppSource\Views\Controls\Posts\ImageContainer\ListExtensions.cs" />
     <Compile Include="AppSource\Views\Controls\Posts\ImageContainer\RectangleLayoutHelper.cs" />
-    <Compile Include="AppSource\Views\Controls\Posts\ImageContainer\ThumbnailLayoutManager.cs" />
+    <Compile Include="AppSource\Views\Controls\Posts\ImageContainer\LayoutManager.cs" />
     <Compile Include="AppSource\Views\Controls\Posts\ListPostsControl.xaml.cs">
       <DependentUpon>ListPostsControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AppSource\Views\Controls\Posts\Post.cs" />
     <Compile Include="AppSource\Views\RootFrameNavigation.cs" />
     <Compile Include="AppSource\Views\Settings\Controls\StylePreviewControl.xaml.cs">
       <DependentUpon>StylePreviewControl.xaml</DependentUpon>
@@ -209,6 +223,9 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppSource\WindowNamesHelper.cs" />
+    <Compile Include="MyTabContentControl.xaml.cs">
+      <DependentUpon>MyTabContentControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -265,6 +282,7 @@
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>
     </None>
+    <None Include="Graph.dgml" />
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="AppSource\Assets\SplashScreen.scale-200.png" />
@@ -306,11 +324,31 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AppSource\Dictionaries\ApplicationThemeDictionary.xaml">
+    <Page Include="AppSource\Controls\CustomButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="AppSource\Controls\CustomImage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppSource\Dictionaries\ApplicationTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppSource\Dictionaries\CustomTabView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppSource\TabViewWindowingSamplePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="AppSource\Views\Controls\PictureBoxControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppSource\Views\Controls\Posts\ContentPresener.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -333,6 +371,10 @@
     <Page Include="AppSource\Views\User\UserPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MyTabContentControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

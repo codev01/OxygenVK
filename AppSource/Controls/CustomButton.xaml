@@ -1,0 +1,69 @@
+﻿<UserControl
+	x:Class="OxygenVK.AppSource.Controls.CustomButton"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	x:Name="CustomButtonControl"
+	d:DesignHeight="300"
+	d:DesignWidth="400"
+	mc:Ignorable="d">
+	<Border
+		x:Name="RootBorder"
+		HorizontalAlignment="Stretch"
+		VerticalAlignment="Stretch"
+		Background="{Binding ElementName=CustomButtonControl, Path=Background}"
+		PointerEntered="RootBorder_PointerEntered"
+		PointerExited="RootBorder_PointerExited"
+		PointerPressed="RootBorder_PointerPressed"
+		PointerReleased="RootBorder_PointerReleased">
+		<Border x:Name="OverlayBorder">
+			<ContentPresenter
+				x:Name="ContentPresenter"
+				HorizontalAlignment="Stretch"
+				VerticalAlignment="Stretch"
+				Content="{x:Bind BorderContent}" />
+		</Border>
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup x:Name="CommonStates">
+				<VisualState x:Name="Normal">
+					<Storyboard>
+						<PointerUpThemeAnimation Storyboard.TargetName="RootBorder" />
+					</Storyboard>
+				</VisualState>
+				<VisualState x:Name="PointerOver">
+					<VisualState.Setters>
+						<Setter Target="OverlayBorder.(Border.Background)" Value="{ThemeResource SystemControlHighlightListMediumBrush}" />
+					</VisualState.Setters>
+					<Storyboard>
+						<PointerUpThemeAnimation Storyboard.TargetName="RootBorder" />
+					</Storyboard>
+				</VisualState>
+				<VisualState x:Name="Pressed">
+					<VisualState.Setters>
+						<Setter Target="OverlayBorder.(Border.Background)" Value="{ThemeResource SystemControlBackgroundBaseMediumBrush}" />
+					</VisualState.Setters>
+					<Storyboard>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+							<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPressed}" />
+						</ObjectAnimationUsingKeyFrames>
+						<PointerDownThemeAnimation Storyboard.TargetName="RootBorder" />
+					</Storyboard>
+				</VisualState>
+				<VisualState x:Name="Disabled">
+					<VisualState.Setters>
+						<Setter Target="OverlayBorder.(Border.Background)" Value="{ThemeResource SystemControlDisabledChromeDisabledLowBrush}" />
+					</VisualState.Setters>
+					<Storyboard>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+							<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushDisabled}" />
+						</ObjectAnimationUsingKeyFrames>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+							<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundDisabled}" />
+						</ObjectAnimationUsingKeyFrames>
+					</Storyboard>
+				</VisualState>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
+	</Border>
+</UserControl>

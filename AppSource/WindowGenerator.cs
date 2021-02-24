@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 
 using OxygenVK.AppSource.Authorization;
 using OxygenVK.AppSource.Views;
@@ -24,23 +25,23 @@ namespace OxygenVK.AppSource
 
 		public WindowGenerator(object parameter, Type type)
 		{
-			if (parameter is LaunchActivatedEventArgs)
+			if(parameter is LaunchActivatedEventArgs)
 			{
 				LaunchActivatedEventArgs e = parameter as LaunchActivatedEventArgs;
 
-				if (Window.Current.Content is not Frame frame)
+				if(Window.Current.Content is not Frame frame)
 				{
 					frame = InitializationFrame();
 
-					if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
+					if(e.PreviousExecutionState == ApplicationExecutionState.Terminated)
 					{
 						//TODO: Загрузить состояние из ранее приостановленного приложения
 					}
 				}
 
-				if (e.PrelaunchActivated == false)
+				if(e.PrelaunchActivated == false)
 				{
-					if (frame.Content == null)
+					if(frame.Content == null)
 					{
 						new RootFrameNavigation(frame, typeof(AuthorizationPage), e.Arguments);
 					}
@@ -59,7 +60,7 @@ namespace OxygenVK.AppSource
 		private async void CreateNewWindow(object parameter, Type type)
 		{
 			CoreApplicationView newView = CoreApplication.CreateNewView();
-			await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+			await newView.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
 			{
 				Frame frame = InitializationFrame();
 
@@ -68,8 +69,8 @@ namespace OxygenVK.AppSource
 				Appearance();
 				WindowActivate();
 				DefinePage(frame);
+				_ = ApplicationViewSwitcher.TryShowAsStandaloneAsync(newWindowID, ViewSizePreference.Default);
 			});
-			await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newWindowID, ViewSizePreference.Default);
 		}
 
 		private Frame InitializationFrame()
@@ -101,7 +102,7 @@ namespace OxygenVK.AppSource
 		private void DefinePage(Frame frame)
 		{
 			ApplicationView applicationView = ApplicationView.GetForCurrentView();
-			if (frame.SourcePageType.Name == "AuthorizationPage")
+			if(frame.SourcePageType.Name == "AuthorizationPage")
 			{
 				AuthorizationPageWindowID = applicationView.Id;
 				AuthorizationPageWindowOpened = true;
@@ -115,9 +116,6 @@ namespace OxygenVK.AppSource
 			AuthorizationPageWindowOpened = false;
 		}
 
-		private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
-		{
-			throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
-		}
+		private void OnNavigationFailed(object sender, NavigationFailedEventArgs e) => throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
 	}
 }

@@ -12,7 +12,7 @@
 	RequestedTheme="Default"
 	mc:Ignorable="d">
 	<c:Page.Resources>
-		<c:ResourceDictionary Source="/AppSource/Dictionaries/ApplicationThemeDictionary.xaml" />
+		<c:ResourceDictionary Source="/AppSource/Dictionaries/ApplicationTheme.xaml" />
 	</c:Page.Resources>
 	<c:Grid>
 		<Grid.Background>

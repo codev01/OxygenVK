@@ -1,34 +1,45 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
-using OxygenVK.AppSource.Views.Controls.Posts.Attachments;
+using OxygenVK.AppSource.Views.Controls.Posts.ImageContainer;
 
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace OxygenVK.AppSource.Views.Controls.Posts
 {
 	public sealed partial class ListPostsControl : UserControl
 	{
-		public ListPostsControl()
-		{
-			InitializeComponent();
-		}
+		public ListPostsControl() => InitializeComponent();
 
-		private void UserControl_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+		private void UserControl_Loaded(object sender, RoutedEventArgs e)
 		{
-			for (int i = 0; i < 10; i++)
+			for(int i = 0; i < 1000; i++)
 			{
-				PostsAttachments postsAttachments = new PostsAttachments();
-				List<ImageContainerAttachment> containerAttachments = new List<ImageContainerAttachment>();
+				Post post = new Post();
+				List<ContainerElement> containerElements = new List<ContainerElement>();
 
-				for (int j = 0; j < i + 2; j++)
+				for(int j = 0; j < 10; j++)
 				{
-					containerAttachments.Add(new ImageContainerAttachment { Height = 100, Width = 160 });
+					containerElements.Add(new ContainerElement
+					{
+						Height = 100,
+						Width = 160
+					});
 				}
 
-				postsAttachments.Name = "Rashid";
-				postsAttachments.Attachments = containerAttachments;
-				lv.Items.Add(postsAttachments);
+				post.OwnerName = "Rashid";
+				post.Attachments = containerElements;
+
+				lv.Items.Add(post);
 			}
+		}
+
+		private void RootGridHead_SizeChanged(object sender, Windows.UI.Xaml.SizeChangedEventArgs e)
+		{
+			AnimationSize.To = e.NewSize.Height + 30;
+			StoryboardAnimation.Begin();
 		}
 	}
 }

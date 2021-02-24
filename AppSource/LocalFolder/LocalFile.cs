@@ -24,9 +24,9 @@ namespace OxygenVK.AppSource.LocalFolder
 		/// <param name="text"> Текст для записи в файл </param>
 		public async void Write(string text)
 		{
-			StorageFile storageFile = await LocalFolder.CreateFileAsync(FileName,CreationCollisionOption.OpenIfExists);
+			StorageFile storageFile = await LocalFolder.CreateFileAsync(FileName, CreationCollisionOption.OpenIfExists);
 
-			using (FileStream fstream = new FileStream(storageFile.Path, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite))
+			using(FileStream fstream = new FileStream(storageFile.Path, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite))
 			{
 				fstream.SetLength(0);
 				byte[] array = Encoding.Default.GetBytes(text);
@@ -42,14 +42,14 @@ namespace OxygenVK.AppSource.LocalFolder
 		/// </returns>
 		public async Task<string> Read()
 		{
-			StorageFile storageFile = await LocalFolder.CreateFileAsync(FileName,CreationCollisionOption.OpenIfExists);
-			
-			using (FileStream fstream = File.OpenRead(storageFile.Path))
+			StorageFile storageFile = await LocalFolder.CreateFileAsync(FileName, CreationCollisionOption.OpenIfExists);
+
+			using(FileStream fstream = File.OpenRead(storageFile.Path))
 			{
 				byte[] array = new byte[fstream.Length];
 				await fstream.ReadAsync(array, 0, array.Length);
 
-				return  Encoding.Default.GetString(array);
+				return Encoding.Default.GetString(array);
 			}
 		}
 	}

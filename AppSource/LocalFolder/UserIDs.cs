@@ -16,7 +16,7 @@ namespace OxygenVK.AppSource.LocalFolder
 			LocalFile = new LocalFile(Filenames.UserIDs);
 			string fileContent = LocalFile.Read().Result;
 
-			if (fileContent == null || fileContent == "")
+			if(fileContent == null || fileContent == string.Empty)
 			{
 				XDocument = new XDocument(new XElement(Users));
 			}
@@ -26,7 +26,7 @@ namespace OxygenVK.AppSource.LocalFolder
 				{
 					XDocument = XDocument.Parse(fileContent);
 				}
-				catch (Exception)
+				catch(Exception)
 				{
 					throw;
 				}
@@ -36,7 +36,7 @@ namespace OxygenVK.AppSource.LocalFolder
 		public List<long> GetUserIDs()
 		{
 			List<long> list = new List<long>();
-			foreach (XElement item in XDocument.Root.Elements(User))
+			foreach(XElement item in XDocument.Root.Elements(User))
 			{
 				list.Add(Convert.ToInt64(item.Value));
 			}
@@ -51,9 +51,9 @@ namespace OxygenVK.AppSource.LocalFolder
 
 		public void Delete(long id)
 		{
-			foreach (XElement item in XDocument.Root.Elements(User))
+			foreach(XElement item in XDocument.Root.Elements(User))
 			{
-				if (item.Value == id.ToString())
+				if(item.Value == id.ToString())
 				{
 					item.Remove();
 					break;
@@ -62,9 +62,6 @@ namespace OxygenVK.AppSource.LocalFolder
 			Save();
 		}
 
-		private void Save()
-		{
-			LocalFile.Write(XDocument.ToString());
-		}
+		private void Save() => LocalFile.Write(XDocument.ToString());
 	}
 }

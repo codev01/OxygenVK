@@ -5,10 +5,9 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:my="using:OxygenVK.AppSource.Views.Settings.Controls"
-	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	mc:Ignorable="d">
 	<Page.Resources>
-		<ResourceDictionary Source="/AppSource/Dictionaries/ApplicationThemeDictionary.xaml" />
+		<ResourceDictionary Source="/AppSource/Dictionaries/ApplicationTheme.xaml" />
 	</Page.Resources>
 	<ScrollViewer>
 		<StackPanel Margin="24,0,24,0">

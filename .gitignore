@@ -355,3 +355,4 @@ MigrationBackup/
 ################################
 
 .tmp.drivedownload/
+/Graph.dgml

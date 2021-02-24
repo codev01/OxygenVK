@@ -1,7 +1,9 @@
-﻿using System;
+﻿
+using System;
 
 using OxygenVK.AppSource.Authorization.DialogBoxes;
-using OxygenVK.AppSource.LocalSettings.Attachments;
+using OxygenVK.AppSource.LocaSettings;
+using OxygenVK.AppSource.LocaSettings.Attachments;
 using OxygenVK.AppSource.Views;
 
 using VkNet;
@@ -14,18 +16,18 @@ namespace OxygenVK.AppSource.Authorization.Controls
 	public class CardControlHelper
 	{
 		private readonly Frame Frame;
-		private readonly SettingsAttachments SettingsAttachments;
+		private readonly Settings SettingsAttachments;
 
 		private string Token;
 
-		public CardControlHelper(Frame frame, SettingsAttachments settingsAttachments)
+		public CardControlHelper(Frame frame, Settings settingsAttachments)
 		{
 			Frame = frame;
 			SettingsAttachments = settingsAttachments;
 			Token = settingsAttachments.UserDataAttachments.Token;
 		}
 
-	    public void DeleteCard_Click()
+		public void DeleteCard_Click()
 		{
 			WorkWithUserData workWithUserData = new WorkWithUserData();
 			workWithUserData.DeleteUserData(SettingsAttachments.UserDataAttachments.UserID);
@@ -37,13 +39,13 @@ namespace OxygenVK.AppSource.Authorization.Controls
 			VkApi vkApi = Authorize.AuthorizeAsync(Token);
 			return new Parameter
 			{
-				ApplicationSettings = LocalSettings.LocalSettings.GetUserSettingsContainer(GetUserID()).ApplicationSettings,
+				ApplicationSettings = LocalSettings.GetUserSettingsContainer(GetUserID()).ApplicationSettings,
 				VkApi = vkApi
 			};
 
 			long GetUserID()
 			{
-				foreach (User item in vkApi.Users.Get(new long[0]))
+				foreach(User item in vkApi.Users.Get(new long[0]))
 				{
 					return item.Id;
 				}
@@ -53,7 +55,7 @@ namespace OxygenVK.AppSource.Authorization.Controls
 
 		public void ThisWindow_Click()
 		{
-			if (SettingsAttachments.UserDataAttachments.IsPasswordProtected)
+			if(SettingsAttachments.UserDataAttachments.IsPasswordProtected)
 			{
 				WhichWindow = InWhichWindow.This;
 				Verification();
@@ -66,7 +68,7 @@ namespace OxygenVK.AppSource.Authorization.Controls
 
 		public void NewWindow_Click()
 		{
-			if (SettingsAttachments.UserDataAttachments.IsPasswordProtected)
+			if(SettingsAttachments.UserDataAttachments.IsPasswordProtected)
 			{
 				WhichWindow = InWhichWindow.New;
 				Verification();
@@ -77,15 +79,9 @@ namespace OxygenVK.AppSource.Authorization.Controls
 			}
 		}
 
-		private void NextThis()
-		{
-			new RootFrameNavigation(Frame, typeof(MainPage), GetParameter());
-		}
+		private void NextThis() => new RootFrameNavigation(Frame, typeof(MainPage), GetParameter());
 
-		private void NextNew()
-		{
-			new WindowGenerator(GetParameter(), typeof(MainPage));
-		}
+		private void NextNew() => new WindowGenerator(GetParameter(), typeof(MainPage));
 
 		private InWhichWindow WhichWindow;
 		private enum InWhichWindow
@@ -106,14 +102,14 @@ namespace OxygenVK.AppSource.Authorization.Controls
 
 		private void VerificationDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
 		{
-			if (SettingsAttachments.UserDataAttachments.Token != VerificationDialog.DecryptionToken)
+			if(SettingsAttachments.UserDataAttachments.Token != VerificationDialog.DecryptionToken)
 			{
 				Token = VerificationDialog.DecryptionToken;
-				if (WhichWindow == InWhichWindow.This)
+				if(WhichWindow == InWhichWindow.This)
 				{
 					NextThis();
 				}
-				if (WhichWindow == InWhichWindow.New)
+				if(WhichWindow == InWhichWindow.New)
 				{
 					NextNew();
 				}

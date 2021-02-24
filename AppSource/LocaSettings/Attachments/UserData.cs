@@ -1,6 +1,6 @@
-﻿namespace OxygenVK.AppSource.LocalSettings.Attachments
+﻿namespace OxygenVK.AppSource.LocaSettings.Attachments
 {
-	public class UserDataAttachments
+	public class UserData
 	{
 		public enum UserDataIndex
 		{

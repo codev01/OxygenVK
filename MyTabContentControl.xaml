@@ -1,0 +1,22 @@
+﻿<UserControl
+	x:Class="OxygenVK.AppSource.TabViewPages.MyTabContentControl"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="using:AppUIBasics.TabViewPages"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	d:DesignHeight="300"
+	d:DesignWidth="400"
+	mc:Ignorable="d">
+
+	<StackPanel Padding="12">
+		<TextBlock Style="{ThemeResource TitleTextBlockStyle}" Text="{Binding}" />
+		<TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Text="Drag the Tab outside of the window to spawn a new window." />
+		<TextBlock Style="{ThemeResource BodyTextBlockStyle}" Text="Notice that the state of the Tab is maintained in the new window. For example, if you toggle the ToggleSwitch ON, it will remain ON in the new window." />
+		<ToggleSwitch
+			x:Name="ControlToggle"
+			Margin="0,8"
+			Header="Turn on ProgressRing" />
+		<ProgressRing HorizontalAlignment="Left" IsActive="{x:Bind ControlToggle.IsOn, Mode=OneWay}" />
+	</StackPanel>
+</UserControl>

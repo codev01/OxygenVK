@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Linq;
 
 using OxygenVK.AppSource.Authorization.DialogBoxes;
@@ -16,10 +17,7 @@ namespace OxygenVK.AppSource.Authorization.Controls
 
 		private readonly string uri = "https://oauth.vk.com/authorize?client_id=6121396&scope=215989462&redirect_uri=https://oauth.vk.com/blank.html&display=page&response_type=token&revoke=1";
 
-		public WebAuthControl()
-		{
-			InitializeComponent();
-		}
+		public WebAuthControl() => InitializeComponent();
 
 		private async void Wv_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
 		{
@@ -32,7 +30,7 @@ namespace OxygenVK.AppSource.Authorization.Controls
 					Select(p => p.Split('=')).
 					FirstOrDefault(p => p.Length == 2 && p[0] == "access_token")?[1];
 
-				if (token != "")
+				if(token != string.Empty)
 				{
 					wv.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
 					Expectation.Opacity = 1;
@@ -48,7 +46,7 @@ namespace OxygenVK.AppSource.Authorization.Controls
 				try
 				{
 					string[] error = args.Uri.Fragment.Split(new char[] { '#', '=' });
-					if (error[1] == "error")
+					if(error[1] == "error")
 					{
 						wv.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
 						Expectation.Opacity = 1;
@@ -70,17 +68,14 @@ namespace OxygenVK.AppSource.Authorization.Controls
 			wv.Navigate(new Uri(uri));
 		}
 
-		private void Rectangle_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-		{
-			Closing?.Invoke();
-		}
+		private void Rectangle_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) => Closing?.Invoke();
 
 		private async void Wv_NavigationFailed(object sender, WebViewNavigationFailedEventArgs e)
 		{
 			AuthFailedDialog dialog = new AuthFailedDialog();
 			ContentDialogResult result = await dialog.ShowAsync();
 
-			if (result == ContentDialogResult.Primary)
+			if(result == ContentDialogResult.Primary)
 			{
 				Wv_Navigate();
 			}

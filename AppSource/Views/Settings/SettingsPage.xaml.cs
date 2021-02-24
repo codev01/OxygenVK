@@ -1,4 +1,4 @@
-﻿using OxygenVK.AppSource.LocalSettings.Attachments;
+﻿using OxygenVK.AppSource.LocaSettings.Attachments;
 
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -9,7 +9,7 @@ namespace OxygenVK.AppSource.Views.Settings
 	public sealed partial class SettingsPage : Page
 	{
 		private Parameter Parameter;
-		private long UserID = 0;
+		private readonly long UserID = 0;
 
 		public SettingsPage()
 		{
@@ -21,15 +21,15 @@ namespace OxygenVK.AppSource.Views.Settings
 		{
 			Parameter = e?.Parameter as Parameter;
 			Parameter.ApplicationSettings.IsSet = true;
-			if (UserID == 0)
+			if(UserID == 0)
 			{
-				foreach (VkNet.Model.User item in await Parameter.VkApi.Users.GetAsync(new long[0]))
+				foreach(VkNet.Model.User item in await Parameter.VkApi.Users.GetAsync(new long[0]))
 				{
-					ApplicationSettingsAttachments.UserID = item.Id;
+					ApplicationSettings.UserID = item.Id;
 				}
 			}
 
-			switch (Parameter.ApplicationSettings.ElementTheme)
+			switch(Parameter.ApplicationSettings.ElementTheme)
 			{
 				case ElementTheme.Light:
 					ThemeTag1.IsChecked = true;
@@ -42,7 +42,7 @@ namespace OxygenVK.AppSource.Views.Settings
 					break;
 			}
 
-			switch (Parameter.ApplicationSettings.ElementSoundPlayerState)
+			switch(Parameter.ApplicationSettings.ElementSoundPlayerState)
 			{
 				case ElementSoundPlayerState.Off:
 					soundToggle.IsOn = false;
@@ -52,7 +52,7 @@ namespace OxygenVK.AppSource.Views.Settings
 					break;
 			}
 
-			switch (Parameter.ApplicationSettings.ElementSpatialAudioMode)
+			switch(Parameter.ApplicationSettings.ElementSpatialAudioMode)
 			{
 				case ElementSpatialAudioMode.Off:
 					spatialSoundBox.IsChecked = false;
@@ -71,7 +71,7 @@ namespace OxygenVK.AppSource.Views.Settings
 		{
 			string selectedTheme = ((RadioButton)sender)?.Tag?.ToString();
 
-			if (selectedTheme != null)
+			if(selectedTheme != null)
 			{
 				ThemeHelper.RootTheme = App.GetEnum<ElementTheme>(selectedTheme);
 				Parameter.ApplicationSettings.ElementTheme = ThemeHelper.RootTheme;
@@ -80,7 +80,7 @@ namespace OxygenVK.AppSource.Views.Settings
 
 		private void SoundToggle_Toggled(object sender, RoutedEventArgs e)
 		{
-			if (soundToggle.IsOn == true)
+			if(soundToggle.IsOn == true)
 			{
 				spatialSoundBox.IsEnabled = true;
 				ElementSoundPlayer.State = ElementSoundPlayerState.On;
@@ -99,7 +99,7 @@ namespace OxygenVK.AppSource.Views.Settings
 
 		private void SpatialSoundBox_Checked(object sender, RoutedEventArgs e)
 		{
-			if (soundToggle.IsOn == true)
+			if(soundToggle.IsOn == true)
 			{
 				ElementSoundPlayer.SpatialAudioMode = ElementSpatialAudioMode.On;
 				Parameter.ApplicationSettings.ElementSpatialAudioMode = ElementSoundPlayer.SpatialAudioMode;
@@ -108,7 +108,7 @@ namespace OxygenVK.AppSource.Views.Settings
 
 		private void SpatialSoundBox_Unchecked(object sender, RoutedEventArgs e)
 		{
-			if (soundToggle.IsOn == true)
+			if(soundToggle.IsOn == true)
 			{
 				ElementSoundPlayer.SpatialAudioMode = ElementSpatialAudioMode.Off;
 				Parameter.ApplicationSettings.ElementSpatialAudioMode = ElementSoundPlayer.SpatialAudioMode;

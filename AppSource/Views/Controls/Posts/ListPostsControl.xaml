@@ -3,263 +3,188 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	xmlns:local="using:OxygenVK.AppSource.Views.Controls.Posts.ImageContainer"
-	xmlns:local1="using:OxygenVK.AppSource.Views.Controls"
+	xmlns:local="using:OxygenVK.AppSource.Views.Controls"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	d:DesignHeight="300"
-	d:DesignWidth="400"
+	xmlns:my="using:OxygenVK.AppSource.Views.Controls.Posts"
 	Loaded="UserControl_Loaded"
 	mc:Ignorable="d">
-	<UserControl.Resources>
-		<ResourceDictionary Source="/AppSource/Dictionaries/ApplicationThemeDictionary.xaml" />
-	</UserControl.Resources>
-	<Grid>
-		<ListView Name="lv" SelectionMode="None">
-			<ListView.Header>
-				<Border
-					Margin="0,0,24,24"
-					Padding="12"
-					BorderBrush="{ThemeResource SystemControlAcrylicWindowBrush}"
-					BorderThickness="2"
-					CornerRadius="20">
-					<StackPanel>
-						<Grid>
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="200" />
-								<ColumnDefinition />
-							</Grid.ColumnDefinitions>
-							<StackPanel>
-								<local1:PictureBoxControl Height="200" />
-								<StackPanel
-									Margin="0,4,0,0"
-									HorizontalAlignment="Center"
-									Orientation="Horizontal">
-									<Button Margin="0,0,2,0" Content="Редактировать" />
-									<Button>
-										<SymbolIcon Symbol="More" />
-									</Button>
-								</StackPanel>
-							</StackPanel>
-							<StackPanel Grid.Column="1" Margin="12,0,0,0">
-								<Grid HorizontalAlignment="Stretch" VerticalAlignment="Top">
-									<TextBlock
-										Grid.Column="0"
-										Margin="0,12,0,4"
-										Style="{StaticResource SubtitleTextBlockStyle}">
-										<Bold>Rashid Hasanov</Bold>
-									</TextBlock>
-									<TextBlock
-										Grid.Column="1"
-										Margin="0,-6,0,0"
-										HorizontalAlignment="Right"
-										VerticalAlignment="Top"
-										Foreground="Gray"
-										Text="online" />
-								</Grid>
-								<TextBlock
-									Foreground="Gray"
-									Text="● ━━━───── 13:10 ⇋◁ ❚❚ ▷⟳"
-									TextWrapping="Wrap" />
-								<Border
-									Height="1"
-									Margin="0,24,0,24"
-									HorizontalAlignment="Stretch"
-									Background="{ThemeResource SystemControlAcrylicWindowBrush}" />
-								<StackPanel HorizontalAlignment="Center">
-									<Grid>
-										<Grid.ColumnDefinitions>
-											<ColumnDefinition />
-											<ColumnDefinition />
-										</Grid.ColumnDefinitions>
-										<TextBlock
-											HorizontalAlignment="Right"
-											VerticalAlignment="Center"
-											Foreground="Gray"
-											Text="Дата рождения"
-											TextAlignment="Center"
-											TextWrapping="Wrap" />
-										<TextBlock
-											Grid.Column="1"
-											Margin="10,0,0,0"
-											HorizontalAlignment="Left"
-											VerticalAlignment="Center"
-											Text="11 февраля 2001"
-											TextAlignment="Center"
-											TextWrapping="Wrap" />
-									</Grid>
-									<Border
-										Height="1"
-										Margin="0,6,0,6"
-										HorizontalAlignment="Stretch"
-										Background="{ThemeResource SystemControlAcrylicWindowBrush}" />
-									<Grid Margin="0,2,0,0">
-										<Grid.ColumnDefinitions>
-											<ColumnDefinition />
-											<ColumnDefinition />
-										</Grid.ColumnDefinitions>
-										<TextBlock
-											HorizontalAlignment="Right"
-											VerticalAlignment="Center"
-											Foreground="Gray"
-											Text="Семейное положение"
-											TextAlignment="Center"
-											TextWrapping="Wrap" />
-										<TextBlock
-											Grid.Column="1"
-											Margin="10,0,0,0"
-											HorizontalAlignment="Left"
-											VerticalAlignment="Center"
-											Text="не женат"
-											TextAlignment="Center"
-											TextWrapping="Wrap" />
-									</Grid>
-									<Button Margin="0,24,0,0" HorizontalAlignment="Center">
-										<Button.Flyout>
-											<Flyout Placement="Bottom">
-												<Flyout.FlyoutPresenterStyle>
-													<Style TargetType="FlyoutPresenter">
-														<Setter Property="CornerRadius" Value="8" />
-													</Style>
-												</Flyout.FlyoutPresenterStyle>
-												<Flyout.Content>
-													<Grid />
-												</Flyout.Content>
-											</Flyout>
-										</Button.Flyout>
-										<Grid>
-											<Grid.ColumnDefinitions>
-												<ColumnDefinition />
-												<ColumnDefinition Width="Auto" />
-											</Grid.ColumnDefinitions>
-											<TextBlock
-												VerticalAlignment="Center"
-												Text="Показать подробную информацию"
-												TextAlignment="Center"
-												TextWrapping="Wrap" />
-											<FontIcon
-												Grid.Column="1"
-												Margin="12,0,0,0"
-												VerticalAlignment="Center"
-												FontFamily="Segoe MDL2 Assets"
-												Glyph="&#xE011;" />
-										</Grid>
-									</Button>
-								</StackPanel>
-							</StackPanel>
-						</Grid>
+	<ListView
+		Name="lv"
+		Margin="0,0,0,0"
+		SelectionMode="None">
+		<ListView.Resources>
+			<Storyboard x:Name="StoryboardAnimation">
+				<DoubleAnimation
+					x:Name="AnimationSize"
+					AutoReverse="True"
+					BeginTime="0:0:0.1"
+					EnableDependentAnimation="True"
+					RepeatBehavior="Forever"
+					Storyboard.TargetName="HeaderBorder"
+					Storyboard.TargetProperty="Height"
+					From="{Binding ElementName=HeaderBorder, Path=Height}"
+					Duration="0:0:1">
+					<DoubleAnimation.EasingFunction>
+						<SineEase EasingMode="EaseOut" />
+					</DoubleAnimation.EasingFunction>
+				</DoubleAnimation>
+			</Storyboard>
+		</ListView.Resources>
+		<ListView.Header>
+			<Border
+				x:Name="HeaderBorder"
+				Margin="0,0,24,24"
+				Padding="12"
+				VerticalAlignment="Top"
+				BorderBrush="{ThemeResource SystemControlAcrylicWindowBrush}"
+				BorderThickness="2"
+				CornerRadius="20">
+				<Border.Resources>
+					<ResourceDictionary Source="/AppSource/Dictionaries/ApplicationTheme.xaml" />
+				</Border.Resources>
+				<Grid VerticalAlignment="Top" SizeChanged="RootGridHead_SizeChanged">
+					<Grid.RowDefinitions>
+						<RowDefinition x:Name="HeadUserInfoRow" Height="auto" />
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="200" />
+						<ColumnDefinition />
+					</Grid.ColumnDefinitions>
+					<StackPanel x:Name="AvatarPlace">
+						<local:PictureBoxControl Height="200" />
+						<StackPanel
+							Margin="0,4,0,0"
+							HorizontalAlignment="Center"
+							Orientation="Horizontal">
+							<Button Margin="0,0,2,0" Content="Редактировать" />
+							<Button>
+								<SymbolIcon Symbol="More" />
+							</Button>
+						</StackPanel>
 					</StackPanel>
-				</Border>
-			</ListView.Header>
-			<ListView.ItemTemplate>
-				<DataTemplate>
-					<Border>
-						<Grid>
-							<Grid.RowDefinitions>
-								<RowDefinition Height="50" />
-								<RowDefinition Height="Auto" />
-								<RowDefinition Height="50" />
-								<RowDefinition Height="12" />
-							</Grid.RowDefinitions>
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="*" />
-							</Grid.ColumnDefinitions>
-							<RelativePanel Grid.Row="0">
-								<PersonPicture x:Name="headPicture" Height="50" />
-								<StackPanel
-									Margin="12,0,0,0"
-									Orientation="Vertical"
-									RelativePanel.AlignVerticalCenterWith="headPicture"
-									RelativePanel.RightOf="headPicture">
-									<TextBlock
-										FontSize="17"
-										Style="{StaticResource BaseTextBlockStyle}"
-										Text="{Binding Name}" />
-									<TextBlock Foreground="Gray" Text="1 янв в 13:10" />
-								</StackPanel>
-								<Button
-									Width="50"
-									Height="50"
-									Background="Transparent"
-									BorderThickness="0"
-									CornerRadius="{ThemeResource ControlCornerRadius}"
-									RelativePanel.AlignRightWithPanel="True">
-									<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE011;" />
-								</Button>
-							</RelativePanel>
-							<StackPanel Grid.Row="1" Margin="0,8,0,8">
+					<StackPanel Grid.Column="1" Margin="12,0,0,0">
+						<Grid HorizontalAlignment="Stretch" VerticalAlignment="Top">
+							<TextBlock
+								Grid.Column="0"
+								Margin="0,12,0,4"
+								Style="{StaticResource SubtitleTextBlockStyle}">
+								<Bold>Rashid Hasanov</Bold>
+							</TextBlock>
+							<TextBlock
+								Grid.Column="1"
+								Margin="0,-6,0,0"
+								HorizontalAlignment="Right"
+								VerticalAlignment="Top"
+								Foreground="Gray"
+								Text="online" />
+						</Grid>
+						<TextBlock
+							Foreground="Gray"
+							Text="● ━━━───── 13:10 ⇋◁ ❚❚ ▷⟳"
+							TextWrapping="Wrap" />
+						<Border
+							Height="1"
+							Margin="0,24,0,24"
+							HorizontalAlignment="Stretch"
+							Background="{ThemeResource SystemControlAcrylicWindowBrush}" />
+						<StackPanel HorizontalAlignment="Center">
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition />
+									<ColumnDefinition />
+								</Grid.ColumnDefinitions>
 								<TextBlock
-									Margin="12,0,10,0"
-									FontSize="16"
-									IsTextSelectionEnabled="True"
-									MaxLines="7"
-									TextWrapping="Wrap">
-									Если вaм пoвeзлo и вы мoжeтe нaблюдaть нoчaми звeзднoe нeбo, тo вы мoжeтe увидeть мeтeoритный дoждь, кoтoрый будeт дo кoнцa aпрeля, a oжидaeмый пик сeгoдня и зaвтрa (22.04 - 23.04).<LineBreak />
-									Кaждый гoд в aпрeлe Зeмля прoхoдит сквoзь шлeйф пыли, кoтoрый oстaвляeт пoслe сeбя кoмeтa Тэтчeр. Прoхoдя чeрeз aтмoсфeру Зeмли, мeтeoры сгoрaют и oстaвляют длинныe вспышки.
-									Присылaйтe свoи фoтoгрaфии, eсли зaфиксируeтe чтo-тo стрaннoe</TextBlock>
-
-								<HyperlinkButton
-									Margin="12,0,0,4"
+									HorizontalAlignment="Right"
+									VerticalAlignment="Center"
+									Foreground="Gray"
+									Text="Дата рождения"
+									TextAlignment="Center"
+									TextWrapping="Wrap" />
+								<TextBlock
+									Grid.Column="1"
+									Margin="10,0,0,0"
 									HorizontalAlignment="Left"
-									Content="Показать полностью..." />
-								<local:CanvasContainer x:Name="imageContainer" Attachments="{Binding Attachments}" />
-							</StackPanel>
-
-							<RelativePanel Grid.Row="2">
-								<StackPanel Orientation="Horizontal">
-									<Button
-										Width="50"
-										Height="50"
-										Background="Transparent"
-										CornerRadius="{ThemeResource ControlCornerRadius}">
-										<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE00B;" />
-									</Button>
-									<Button
-										Width="50"
-										Height="50"
-										Background="Transparent"
-										CornerRadius="{ThemeResource ControlCornerRadius}">
-										<SymbolIcon Symbol="Message" />
-									</Button>
-									<Button
-										Width="50"
-										Height="50"
-										Background="Transparent"
-										CornerRadius="{ThemeResource ControlCornerRadius}">
-										<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72D;" />
-									</Button>
-								</StackPanel>
-								<StackPanel
-									Orientation="Horizontal"
-									RelativePanel.AlignRightWithPanel="True"
-									RelativePanel.AlignVerticalCenterWithPanel="True">
-									<SymbolIcon
-										Width="40"
-										Foreground="Gray"
-										Symbol="View" />
-									<TextBlock
-										Margin="0,0,12,0"
-										Foreground="Gray"
-										Text="2.8K" />
-								</StackPanel>
-							</RelativePanel>
+									VerticalAlignment="Center"
+									Text="11 февраля 2001"
+									TextAlignment="Center"
+									TextWrapping="Wrap" />
+							</Grid>
 							<Border
-								Grid.Row="3"
 								Height="1"
-								Margin="24,0,24,0"
+								Margin="0,6,0,6"
 								HorizontalAlignment="Stretch"
 								Background="{ThemeResource SystemControlAcrylicWindowBrush}" />
-						</Grid>
-					</Border>
-				</DataTemplate>
-			</ListView.ItemTemplate>
+							<Grid Margin="0,2,0,0">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition />
+									<ColumnDefinition />
+								</Grid.ColumnDefinitions>
+								<TextBlock
+									HorizontalAlignment="Right"
+									VerticalAlignment="Center"
+									Foreground="Gray"
+									Text="Семейное положение"
+									TextAlignment="Center"
+									TextWrapping="Wrap" />
+								<TextBlock
+									Grid.Column="1"
+									Margin="10,0,0,0"
+									HorizontalAlignment="Left"
+									VerticalAlignment="Center"
+									Text="не женат"
+									TextAlignment="Center"
+									TextWrapping="Wrap" />
+							</Grid>
+							<Button Margin="0,24,0,0" HorizontalAlignment="Center">
+								<Button.Flyout>
+									<Flyout Placement="Bottom">
+										<Flyout.FlyoutPresenterStyle>
+											<Style TargetType="FlyoutPresenter">
+												<Setter Property="CornerRadius" Value="8" />
+											</Style>
+										</Flyout.FlyoutPresenterStyle>
+										<Flyout.Content>
+											<Grid />
+										</Flyout.Content>
+									</Flyout>
+								</Button.Flyout>
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition />
+										<ColumnDefinition Width="Auto" />
+									</Grid.ColumnDefinitions>
+									<TextBlock
+										VerticalAlignment="Center"
+										Text="Показать подробную информацию"
+										TextAlignment="Center"
+										TextWrapping="Wrap" />
+									<FontIcon
+										Grid.Column="1"
+										Margin="12,0,0,0"
+										VerticalAlignment="Center"
+										FontFamily="Segoe MDL2 Assets"
+										Glyph="&#xE011;" />
+								</Grid>
+							</Button>
+						</StackPanel>
+					</StackPanel>
+				</Grid>
+			</Border>
+		</ListView.Header>
 
-			<ListView.ItemContainerStyle>
-				<Style TargetType="ListViewItem">
-					<Setter Property="HorizontalContentAlignment" Value="Stretch" />
-					<Setter Property="Padding" Value="0" />
-					<Setter Property="Margin" Value="0,0,24,24" />
-				</Style>
-			</ListView.ItemContainerStyle>
-		</ListView>
-	</Grid>
+		<ListView.ItemTemplate>
+			<DataTemplate>
+				<my:ContentPresener />
+			</DataTemplate>
+		</ListView.ItemTemplate>
+
+		<ListView.ItemContainerStyle>
+			<Style TargetType="ListViewItem">
+				<Setter Property="Background" Value="{ThemeResource RegionBrush}" />
+				<Setter Property="HorizontalContentAlignment" Value="Stretch" />
+				<Setter Property="Padding" Value="0" />
+				<Setter Property="Margin" Value="0" />
+			</Style>
+		</ListView.ItemContainerStyle>
+	</ListView>
 </UserControl>

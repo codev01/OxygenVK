@@ -19,12 +19,6 @@ namespace OxygenVK.AppSource.Views
 		/// <param name="parameter">
 		/// Параметры, которые должны передаться указанной странице
 		/// </param>
-		public RootFrameNavigation(Frame frame, Type type, object parameter)
-		{
-			frame.Navigate(type, parameter, new SlideNavigationTransitionInfo()
-			{ 
-				Effect = SlideNavigationTransitionEffect.FromRight
-			});
-		}
+		public RootFrameNavigation(Frame frame, Type type, object parameter) => frame.Navigate(type, parameter, new DrillInNavigationTransitionInfo());
 	}
 }

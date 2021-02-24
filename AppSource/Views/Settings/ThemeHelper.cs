@@ -16,9 +16,9 @@ namespace OxygenVK.AppSource.Views.Settings
 		{
 			get
 			{
-				if (Window.Current.Content is FrameworkElement rootElement)
+				if(Window.Current.Content is FrameworkElement rootElement)
 				{
-					if (rootElement.RequestedTheme != ElementTheme.Default)
+					if(rootElement.RequestedTheme != ElementTheme.Default)
 					{
 						return rootElement.RequestedTheme;
 					}
@@ -32,7 +32,7 @@ namespace OxygenVK.AppSource.Views.Settings
 		{
 			get
 			{
-				if (Window.Current.Content is FrameworkElement rootElement)
+				if(Window.Current.Content is FrameworkElement rootElement)
 				{
 					return rootElement.RequestedTheme;
 				}
@@ -41,7 +41,7 @@ namespace OxygenVK.AppSource.Views.Settings
 			}
 			set
 			{
-				if (Window.Current.Content is FrameworkElement rootElement)
+				if(Window.Current.Content is FrameworkElement rootElement)
 				{
 					rootElement.RequestedTheme = value;
 				}
@@ -56,7 +56,7 @@ namespace OxygenVK.AppSource.Views.Settings
 			CurrentApplicationWindow = Window.Current;
 			string savedTheme = ApplicationData.Current.LocalSettings.Values[SelectedAppThemeKey]?.ToString();
 
-			if (savedTheme != null)
+			if(savedTheme != null)
 			{
 				RootTheme = App.GetEnum<ElementTheme>(savedTheme);
 			}
@@ -67,7 +67,7 @@ namespace OxygenVK.AppSource.Views.Settings
 
 		private static async void UiSettings_ColorValuesChanged(UISettings sender, object args)
 		{
-			if (CurrentApplicationWindow != null)
+			if(CurrentApplicationWindow != null)
 			{
 				await CurrentApplicationWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
 						 {
@@ -78,7 +78,7 @@ namespace OxygenVK.AppSource.Views.Settings
 
 		public static bool IsDarkTheme()
 		{
-			if (RootTheme == ElementTheme.Default)
+			if(RootTheme == ElementTheme.Default)
 			{
 				return Application.Current.RequestedTheme == ApplicationTheme.Dark;
 			}
@@ -89,7 +89,7 @@ namespace OxygenVK.AppSource.Views.Settings
 		{
 			ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
 
-			if (IsDarkTheme())
+			if(IsDarkTheme())
 			{
 				titleBar.ButtonForegroundColor = Colors.White;
 			}

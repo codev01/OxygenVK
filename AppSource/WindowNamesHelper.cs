@@ -15,27 +15,24 @@ namespace OxygenVK.AppSource
 			public int NumberOfActiveWindows { get; set; } = 0;
 		}
 
-		public WindowNamesHelper(string newWindowName)
-		{
-			NewWindowName = newWindowName;
-		}
+		public WindowNamesHelper(string newWindowName) => NewWindowName = newWindowName;
 
 		public void RemoveNameWindow()
 		{
-			for (int i = 0; i < WindowNames.Count; i++)
+			for(int i = 0; i < WindowNames.Count; i++)
 			{
 				int indexOf = NewWindowName.IndexOf(".");
-				if (indexOf != -1)
+				if(indexOf != -1)
 				{
-					if (--WindowNames[i].NumberOfActiveWindows == 0)
+					if(--WindowNames[i].NumberOfActiveWindows == 0)
 					{
 						WindowNames.Remove(WindowNames[i]);
 						continue;
 					}
 
-					if (WindowNames[i].Index == Convert.ToInt32(NewWindowName.Substring(0, indexOf)))
+					if(WindowNames[i].Index == Convert.ToInt32(NewWindowName.Substring(0, indexOf)))
 					{
-						if (--WindowNames[i].Index == 0)
+						if(--WindowNames[i].Index == 0)
 						{
 							WindowNames.Remove(WindowNames[i]);
 						}
@@ -46,11 +43,11 @@ namespace OxygenVK.AppSource
 
 		public string GetNameWindow()
 		{
-			if (WindowNames.Count != 0)
+			if(WindowNames.Count != 0)
 			{
-				foreach (WindowName item in WindowNames)
+				foreach(WindowName item in WindowNames)
 				{
-					if (item.Name == NewWindowName)
+					if(item.Name == NewWindowName)
 					{
 						item.NumberOfActiveWindows++;
 						return NewWindowName.Insert(0, ++item.Index + ". ");

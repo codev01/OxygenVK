@@ -19,17 +19,17 @@ namespace OxygenVK.AppSource.Authorization.DialogBoxes
 
 		private void PrimaryButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
 		{
-			if (Pass.Password.Length == 0)
+			if(Pass.Password.Length == 0)
 			{
 				InvalidPass.Text = "Чтобы продолжить, нужно заполнить \nполе";
 				InvalidPass.Visibility = Windows.UI.Xaml.Visibility.Visible;
 			}
-			else if (Pass.Password.Length > 0 && Pass.Password.Length < 4)
+			else if(Pass.Password.Length > 0 && Pass.Password.Length < 4)
 			{
 				InvalidPass.Text = "ПИН-код должен содержать не менее 4 \nсимволов";
 				InvalidPass.Visibility = Windows.UI.Xaml.Visibility.Visible;
 			}
-			else if (Pass.Password.Length >= 4)
+			else if(Pass.Password.Length >= 4)
 			{
 				try
 				{
@@ -44,9 +44,6 @@ namespace OxygenVK.AppSource.Authorization.DialogBoxes
 			}
 		}
 
-		private void SecondaryButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-		{
-			Hide();
-		}
+		private void SecondaryButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) => Hide();
 	}
 }

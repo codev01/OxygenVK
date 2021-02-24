@@ -14,10 +14,10 @@ namespace OxygenVK.AppSource.Authorization
 			{
 				AccessToken = token
 			});
-			if (vkApi.Token == null)
+			if(vkApi.Token == null)
 			{
 				throw new Exception("class Authorize | Токен пуст");
-			} 
+			}
 			return vkApi;
 		}
 	}

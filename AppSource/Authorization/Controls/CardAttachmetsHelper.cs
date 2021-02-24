@@ -1,4 +1,4 @@
-﻿using OxygenVK.AppSource.LocalSettings.Attachments;
+﻿using OxygenVK.AppSource.LocaSettings.Attachments;
 using OxygenVK.AppSource.Views.Settings;
 
 using Windows.UI.Xaml;
@@ -9,52 +9,43 @@ namespace OxygenVK.AppSource.Authorization.Controls
 	public class CardAttachmetsHelper
 	{
 		private readonly Frame Frame;
-		private readonly SettingsAttachments Item;
+		private readonly Settings Item;
 
-		public CardAttachmetsHelper(Frame frame, SettingsAttachments item)
+		public CardAttachmetsHelper(Frame frame, Settings item)
 		{
 			Item = item;
 			Frame = frame;
 		}
 
-		public UserCard AddNewUserCard()
+		public UserCard AddNewUserCard() => new UserCard()
 		{
-			return new UserCard()
-			{
-				SettingsAttachments = GetSettingsAttachments(),
-				Frame = Frame
-			};
-		}
+			SettingsAttachments = GetSettingsAttachments(),
+			Frame = Frame
+		};
 
-		public HorizontalUserCard AddNewHorizontalUserCard()
+		public HorizontalUserCard AddNewHorizontalUserCard() => new HorizontalUserCard()
 		{
-			return new HorizontalUserCard()
-			{
-				SettingsAttachments = GetSettingsAttachments(),
-				Frame = Frame
-			};
-		}
+			SettingsAttachments = GetSettingsAttachments(),
+			Frame = Frame
+		};
 
-		private SettingsAttachments GetSettingsAttachments()
+		private Settings GetSettingsAttachments() => new Settings()
 		{
-			return new SettingsAttachments()
+			UserDataAttachments = new UserData
 			{
-				UserDataAttachments = new UserDataAttachments
-				{
-					IsPasswordProtected = Item.UserDataAttachments.IsPasswordProtected,
-					UserID = Item.UserDataAttachments.UserID,
-					UserName = Item.UserDataAttachments.UserName,
-					ScreenName = Item.UserDataAttachments.ScreenName,
-					Token = Item.UserDataAttachments.Token,
-					AvatarURL = Item.UserDataAttachments.AvatarURL
-				},
-				ApplicationSettings = new ApplicationSettingsAttachments
-				{
-					ElementTheme = ThemeHelper.RootTheme,
-					ElementSoundPlayerState = ElementSoundPlayer.State,
-					ElementSpatialAudioMode = ElementSoundPlayer.SpatialAudioMode
-				}
-			};
-		}
+				IsPasswordProtected = Item.UserDataAttachments.IsPasswordProtected,
+				UserID = Item.UserDataAttachments.UserID,
+				UserName = Item.UserDataAttachments.UserName,
+				ScreenName = Item.UserDataAttachments.ScreenName,
+				Token = Item.UserDataAttachments.Token,
+				AvatarURL = Item.UserDataAttachments.AvatarURL
+			},
+			ApplicationSettings = new ApplicationSettings
+			{
+				ElementTheme = ThemeHelper.RootTheme,
+				ElementSoundPlayerState = ElementSoundPlayer.State,
+				ElementSpatialAudioMode = ElementSoundPlayer.SpatialAudioMode
+			}
+		};
 	}
 }

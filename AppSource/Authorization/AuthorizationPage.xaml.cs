@@ -1,9 +1,10 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 
 using OxygenVK.AppSource.Authorization.Controls;
 using OxygenVK.AppSource.Authorization.DialogBoxes;
-using OxygenVK.AppSource.LocalSettings.Attachments;
+using OxygenVK.AppSource.LocaSettings.Attachments;
 using OxygenVK.AppSource.Views.Settings;
 
 using Windows.UI.ViewManagement;
@@ -19,10 +20,7 @@ namespace OxygenVK.AppSource.Authorization
 
 		private Parameter Parameter;
 
-		public AuthorizationPage()
-		{
-			InitializeComponent();
-		}
+		public AuthorizationPage() => InitializeComponent();
 
 		private void Page_Loaded(object sender, RoutedEventArgs e)
 		{
@@ -37,15 +35,12 @@ namespace OxygenVK.AppSource.Authorization
 			new WorkWithUserData().UpdateList();
 		}
 
-		private void Frame_Navigating(object sender, NavigatingCancelEventArgs e)
-		{
-			IsThePageIsUsedInNavigation = false;
-		}
+		private void Frame_Navigating(object sender, NavigatingCancelEventArgs e) => IsThePageIsUsedInNavigation = false;
 
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
 			Parameter = e?.Parameter as Parameter;
-			if (e.Parameter as string != "")
+			if(e.Parameter as string != string.Empty)
 			{
 				ThemeHelper.RootTheme = App.GetEnum<ElementTheme>(Parameter.ApplicationSettings.ElementTheme.ToString());
 				ElementSoundPlayer.State = Parameter.ApplicationSettings.ElementSoundPlayerState;
@@ -53,15 +48,15 @@ namespace OxygenVK.AppSource.Authorization
 			}
 		}
 
-		private void ListUsersCard_GridView_Add(List<SettingsAttachments> authorizedUserCardsAttachments)
+		private void ListUsersCard_GridView_Add(List<Settings> authorizedUserCardsAttachments)
 		{
 			cardAddButton.Content = "Войти в другой аккаунт";
 			borderHintRecentlyLoggedIn.Visibility = Visibility.Visible;
 			listUsersCard_GridView.Items.Clear();
 
-			if (authorizedUserCardsAttachments.Count != 0)
+			if(authorizedUserCardsAttachments.Count != 0)
 			{
-				foreach (SettingsAttachments item in authorizedUserCardsAttachments)
+				foreach(Settings item in authorizedUserCardsAttachments)
 				{
 					listUsersCard_GridView.Items.Add(new CardAttachmetsHelper(Frame, item).AddNewUserCard());
 				}
@@ -76,28 +71,22 @@ namespace OxygenVK.AppSource.Authorization
 			}
 		}
 
-		private async void WorkWithUserData_OnListStartUpdate()
-		{
-			await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-			{
-				ListUpdatedProgress_SetVisibility(Visibility.Visible);
-			});
-		}
+		private async void WorkWithUserData_OnListStartUpdate() => await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+																   {
+																	   ListUpdatedProgress_SetVisibility(Visibility.Visible);
+																   });
 
-		private async void WorkWithUserData_OnListUpdated(List<SettingsAttachments> authorizedUserCardsAttachments)
-		{
-			await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-			{
-				ListUpdatedProgress_SetVisibility(Visibility.Collapsed);
-				ListUsersCard_GridView_Add(authorizedUserCardsAttachments);
-			});
-		}
+		private async void WorkWithUserData_OnListUpdated(List<Settings> authorizedUserCardsAttachments) => await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+																													   {
+																														   ListUpdatedProgress_SetVisibility(Visibility.Collapsed);
+																														   ListUsersCard_GridView_Add(authorizedUserCardsAttachments);
+																													   });
 
 		private void ListUpdatedProgress_SetVisibility(Visibility visibility)
 		{
-			if (visibility == Visibility.Visible)
+			if(visibility == Visibility.Visible)
 			{
-				if (WorkWithUserData.SettingsAttachments.Count == 0)
+				if(WorkWithUserData.SettingsAttachments.Count == 0)
 				{
 					listUpdatedProgress.Visibility = Visibility.Visible;
 					listUpdatedProgress.IsActive = true;
@@ -108,7 +97,7 @@ namespace OxygenVK.AppSource.Authorization
 					listUpdatedProgress2.IsActive = true;
 				}
 			}
-			if (visibility == Visibility.Collapsed)
+			if(visibility == Visibility.Collapsed)
 			{
 				listUpdatedProgress.Visibility = Visibility.Collapsed;
 				listUpdatedProgress2.Visibility = Visibility.Collapsed;
@@ -134,7 +123,7 @@ namespace OxygenVK.AppSource.Authorization
 
 		private async void WebAuthControl_OnAuthCompleted(string token)
 		{
-			if (IsThePageIsUsedInNavigation)
+			if(IsThePageIsUsedInNavigation)
 			{
 				await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
 				{
@@ -152,7 +141,7 @@ namespace OxygenVK.AppSource.Authorization
 
 		private void HeaderListPanel_SizeChanged(object sender, SizeChangedEventArgs e)
 		{
-			if (e.NewSize.Width < 655)
+			if(e.NewSize.Width < 655)
 			{
 				hintRecentlyLoggedIn.Width = 444 - 48;
 			}

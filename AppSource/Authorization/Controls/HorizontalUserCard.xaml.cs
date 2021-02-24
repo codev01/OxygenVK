@@ -1,6 +1,7 @@
-﻿using System;
+﻿using OxygenVK.AppSource.LocaSettings.Attachments;
 
-using OxygenVK.AppSource.LocalSettings.Attachments;
+using System;
+
 
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -11,7 +12,7 @@ namespace OxygenVK.AppSource.Authorization.Controls
 	public sealed partial class HorizontalUserCard : UserControl
 	{
 		public Frame Frame { get; set; }
-		public SettingsAttachments SettingsAttachments { get; set; }
+		public Settings SettingsAttachments { get; set; }
 
 		private CardControlHelper CardControlHelper;
 
@@ -23,7 +24,7 @@ namespace OxygenVK.AppSource.Authorization.Controls
 
 		private void UserControl_Loaded(object sender, RoutedEventArgs e)
 		{
-			if (SettingsAttachments.UserDataAttachments.AvatarURL != null)
+			if(SettingsAttachments.UserDataAttachments.AvatarURL != null)
 			{
 				BitmapImage bitmapImage = new BitmapImage(new Uri(SettingsAttachments.UserDataAttachments.AvatarURL))
 				{
@@ -37,14 +38,11 @@ namespace OxygenVK.AppSource.Authorization.Controls
 			CardControlHelper = new CardControlHelper(Frame, SettingsAttachments);
 		}
 
-		private void DeleteCard_Click(object sender, RoutedEventArgs e)
-		{
-			CardControlHelper.DeleteCard_Click();
-		}
+		private void DeleteCard_Click(object sender, RoutedEventArgs e) => CardControlHelper.DeleteCard_Click();
 
 		private void ScreenNameToolTip_Loaded(object sender, RoutedEventArgs e)
 		{
-			if (SettingsAttachments.UserDataAttachments.ScreenName == null)
+			if(SettingsAttachments.UserDataAttachments.ScreenName == "")
 			{
 				screenNameToolTip.Visibility = Visibility.Collapsed;
 			}
@@ -54,14 +52,8 @@ namespace OxygenVK.AppSource.Authorization.Controls
 			}
 		}
 
-		private void ThisWindow_Click(object sender, RoutedEventArgs e)
-		{
-			CardControlHelper.ThisWindow_Click();
-		}
+		private void ThisWindow_Click(object sender, RoutedEventArgs e) => CardControlHelper.ThisWindow_Click();
 
-		private void NewWindow_Click(object sender, RoutedEventArgs e)
-		{
-			CardControlHelper.NewWindow_Click();
-		}
+		private void NewWindow_Click(object sender, RoutedEventArgs e) => CardControlHelper.NewWindow_Click();
 	}
 }

@@ -10,7 +10,7 @@
 	Loaded="UserControl_Loaded"
 	mc:Ignorable="d">
 	<UserControl.Resources>
-		<ResourceDictionary Source="/AppSource/Dictionaries/ApplicationThemeDictionary.xaml" />
+		<ResourceDictionary Source="/AppSource/Dictionaries/ApplicationTheme.xaml" />
 	</UserControl.Resources>
 	<Button Padding="0">
 		<Button.Flyout>

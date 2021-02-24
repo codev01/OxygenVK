@@ -1,4 +1,4 @@
-﻿namespace OxygenVK.AppSource.LocalSettings.Attachments
+﻿namespace OxygenVK.AppSource.LocaSettings.Attachments
 {
 	public class CompositeValueNames
 	{

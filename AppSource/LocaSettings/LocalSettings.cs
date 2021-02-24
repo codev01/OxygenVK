@@ -1,11 +1,12 @@
-﻿using System;
+﻿using OxygenVK.AppSource.LocaSettings.Attachments;
 
-using OxygenVK.AppSource.LocalSettings.Attachments;
+using System;
+
 
 using Windows.Storage;
 using Windows.UI.Xaml;
 
-namespace OxygenVK.AppSource.LocalSettings
+namespace OxygenVK.AppSource.LocaSettings
 {
 	public class LocalSettings
 	{
@@ -27,27 +28,27 @@ namespace OxygenVK.AppSource.LocalSettings
 		/// <param name="settingsAttachments">
 		/// Вложения для сохранения
 		/// </param>
-		public static void AddUserSettingsContainer(long containerName, SettingsAttachments settingsAttachments)
+		public static void AddUserSettingsContainer(long containerName, Settings settingsAttachments)
 		{
 			string strContainerName = containerName.ToString();
 
-			UserDataAttachments uda = settingsAttachments.UserDataAttachments;
-			ApplicationSettingsAttachments asa = settingsAttachments.ApplicationSettings;
-			
+			UserData uda = settingsAttachments.UserDataAttachments;
+			ApplicationSettings asa = settingsAttachments.ApplicationSettings;
+
 			localSettings.CreateContainer(strContainerName, ApplicationDataCreateDisposition.Always);
 
 			ApplicationDataCompositeValue settingsComposite = new ApplicationDataCompositeValue();
 
-			SetSettingCell(UserDataAttachments.UserDataIndex.IsPasswordProtected, containerName, uda.IsPasswordProtected, SettingsCategory.UserData, settingsComposite);
-			SetSettingCell(UserDataAttachments.UserDataIndex.UserID, containerName, uda.UserID, SettingsCategory.UserData, settingsComposite);
-			SetSettingCell(UserDataAttachments.UserDataIndex.UserName, containerName, uda.UserName, SettingsCategory.UserData, settingsComposite);
-			SetSettingCell(UserDataAttachments.UserDataIndex.Token, containerName, uda.Token, SettingsCategory.UserData, settingsComposite);
-			SetSettingCell(UserDataAttachments.UserDataIndex.AvatarURL, containerName, uda.AvatarURL, SettingsCategory.UserData, settingsComposite);
-			SetSettingCell(UserDataAttachments.UserDataIndex.ScreenName, containerName, uda.ScreenName, SettingsCategory.UserData, settingsComposite);
+			SetSettingCell(UserData.UserDataIndex.IsPasswordProtected, containerName, uda.IsPasswordProtected, SettingsCategory.UserData, settingsComposite);
+			SetSettingCell(UserData.UserDataIndex.UserID, containerName, uda.UserID, SettingsCategory.UserData, settingsComposite);
+			SetSettingCell(UserData.UserDataIndex.UserName, containerName, uda.UserName, SettingsCategory.UserData, settingsComposite);
+			SetSettingCell(UserData.UserDataIndex.Token, containerName, uda.Token, SettingsCategory.UserData, settingsComposite);
+			SetSettingCell(UserData.UserDataIndex.AvatarURL, containerName, uda.AvatarURL, SettingsCategory.UserData, settingsComposite);
+			SetSettingCell(UserData.UserDataIndex.ScreenName, containerName, uda.ScreenName, SettingsCategory.UserData, settingsComposite);
 
-			SetSettingCell(ApplicationSettingsAttachments.ApplicationSettingsIndex.ElementTheme, containerName, asa.ElementTheme, SettingsCategory.ApplicationSettings, settingsComposite);
-			SetSettingCell(ApplicationSettingsAttachments.ApplicationSettingsIndex.ElementSoundPlayerState, containerName, asa.ElementSoundPlayerState, SettingsCategory.ApplicationSettings, settingsComposite);
-			SetSettingCell(ApplicationSettingsAttachments.ApplicationSettingsIndex.ElementSpatialAudioMode, containerName, asa.ElementSpatialAudioMode, SettingsCategory.ApplicationSettings, settingsComposite);
+			SetSettingCell(ApplicationSettings.ApplicationSettingsIndex.ElementTheme, containerName, asa.ElementTheme, SettingsCategory.ApplicationSettings, settingsComposite);
+			SetSettingCell(ApplicationSettings.ApplicationSettingsIndex.ElementSoundPlayerState, containerName, asa.ElementSoundPlayerState, SettingsCategory.ApplicationSettings, settingsComposite);
+			SetSettingCell(ApplicationSettings.ApplicationSettingsIndex.ElementSpatialAudioMode, containerName, asa.ElementSpatialAudioMode, SettingsCategory.ApplicationSettings, settingsComposite);
 		}
 
 		/// <param name="containerName">
@@ -56,35 +57,35 @@ namespace OxygenVK.AppSource.LocalSettings
 		/// <returns>
 		/// Все сохранённые данные пользователя
 		/// </returns>
-		public static SettingsAttachments GetUserSettingsContainer(long containerName)
+		public static Settings GetUserSettingsContainer(long containerName)
 		{
 			string strContainerName = containerName.ToString();
-			
+
 			ApplicationDataCompositeValue userDataValue;
 			ApplicationDataCompositeValue applicationSettingsValue;
 
-			if (localSettings.Containers.ContainsKey(strContainerName))
+			if(localSettings.Containers.ContainsKey(strContainerName))
 			{
 				userDataValue = (ApplicationDataCompositeValue)localSettings.Containers[strContainerName].Values[compositeValueNames.TheNameOfTheCompoundUserDataAttachment];
 				applicationSettingsValue = (ApplicationDataCompositeValue)localSettings.Containers[strContainerName].Values[compositeValueNames.TheNameOfTheCompoundValueOfTheApplicationSettings];
 
-				if (userDataValue != null && applicationSettingsValue != null)
+				if(userDataValue != null && applicationSettingsValue != null)
 				{
-					UserDataAttachments userDataAttachments = new UserDataAttachments();
-					ApplicationSettingsAttachments applicationSettingsAttachments = new ApplicationSettingsAttachments();
-					userDataAttachments.IsPasswordProtected = GetSettingCell<bool>(UserDataAttachments.UserDataIndex.IsPasswordProtected, userDataValue);
-					userDataAttachments.UserID = GetSettingCell<long>(UserDataAttachments.UserDataIndex.UserID, userDataValue);
-					userDataAttachments.UserName = GetSettingCell<string>(UserDataAttachments.UserDataIndex.UserName, userDataValue);
-					userDataAttachments.Token = GetSettingCell<string>(UserDataAttachments.UserDataIndex.Token, userDataValue);
-					userDataAttachments.AvatarURL = GetSettingCell<string>(UserDataAttachments.UserDataIndex.AvatarURL, userDataValue);
-					userDataAttachments.ScreenName = GetSettingCell<string>(UserDataAttachments.UserDataIndex.ScreenName, userDataValue);
+					UserData userDataAttachments = new UserData();
+					ApplicationSettings applicationSettingsAttachments = new ApplicationSettings();
+					userDataAttachments.IsPasswordProtected = GetSettingCell<bool>(UserData.UserDataIndex.IsPasswordProtected, userDataValue);
+					userDataAttachments.UserID = GetSettingCell<long>(UserData.UserDataIndex.UserID, userDataValue);
+					userDataAttachments.UserName = GetSettingCell<string>(UserData.UserDataIndex.UserName, userDataValue);
+					userDataAttachments.Token = GetSettingCell<string>(UserData.UserDataIndex.Token, userDataValue);
+					userDataAttachments.AvatarURL = GetSettingCell<string>(UserData.UserDataIndex.AvatarURL, userDataValue);
+					userDataAttachments.ScreenName = GetSettingCell<string>(UserData.UserDataIndex.ScreenName, userDataValue);
 
 					applicationSettingsAttachments.ApplicationDataCompositeValue = applicationSettingsValue;
-					applicationSettingsAttachments.ElementTheme = GetSettingCell<ElementTheme>(ApplicationSettingsAttachments.ApplicationSettingsIndex.ElementTheme, applicationSettingsValue);
-					applicationSettingsAttachments.ElementSoundPlayerState = GetSettingCell<ElementSoundPlayerState>(ApplicationSettingsAttachments.ApplicationSettingsIndex.ElementSoundPlayerState, applicationSettingsValue);
-					applicationSettingsAttachments.ElementSpatialAudioMode = GetSettingCell<ElementSpatialAudioMode>(ApplicationSettingsAttachments.ApplicationSettingsIndex.ElementSpatialAudioMode, applicationSettingsValue);
-				
-					return new SettingsAttachments
+					applicationSettingsAttachments.ElementTheme = GetSettingCell<ElementTheme>(ApplicationSettings.ApplicationSettingsIndex.ElementTheme, applicationSettingsValue);
+					applicationSettingsAttachments.ElementSoundPlayerState = GetSettingCell<ElementSoundPlayerState>(ApplicationSettings.ApplicationSettingsIndex.ElementSoundPlayerState, applicationSettingsValue);
+					applicationSettingsAttachments.ElementSpatialAudioMode = GetSettingCell<ElementSpatialAudioMode>(ApplicationSettings.ApplicationSettingsIndex.ElementSpatialAudioMode, applicationSettingsValue);
+
+					return new Settings
 					{
 						UserDataAttachments = userDataAttachments,
 						ApplicationSettings = applicationSettingsAttachments
@@ -115,14 +116,11 @@ namespace OxygenVK.AppSource.LocalSettings
 		/// <param name="settingsComposite">Составное значение параметра (если изменяемых/сохраняемых параметров несколько нужно использовать только один объект ApplicationDataCompositeValue на всех)</param>
 		public static void SetSettingCell(object cellName, long containerName, object objSetting, SettingsCategory settingsCategory, ApplicationDataCompositeValue settingsComposite)
 		{
-			settingsComposite[cellName.ToString()] = objSetting == null ? "" : ComplianceCheck(objSetting) ? objSetting : (int)objSetting;
+			settingsComposite[cellName.ToString()] = objSetting == null ? string.Empty : ComplianceCheck(objSetting) ? objSetting : (int)objSetting;
 			localSettings.Containers[containerName.ToString()].Values[GetSettingsCategory(settingsCategory)] = settingsComposite;
 		}
 
-		private static T GetSettingCell<T>(object cellName, ApplicationDataCompositeValue settingsComposite)
-		{
-			return (T)settingsComposite[cellName.ToString()];
-		}
+		private static T GetSettingCell<T>(object cellName, ApplicationDataCompositeValue settingsComposite) => (T)settingsComposite[cellName.ToString()];
 
 		/// <summary>
 		/// Удалят контейнер с сохранёнными данными пользователя
@@ -138,7 +136,7 @@ namespace OxygenVK.AppSource.LocalSettings
 
 		private static string GetSettingsCategory(SettingsCategory settingsCategory)
 		{
-			switch (settingsCategory)
+			switch(settingsCategory)
 			{
 				case SettingsCategory.UserData:
 					return compositeValueNames.TheNameOfTheCompoundUserDataAttachment;
@@ -150,62 +148,48 @@ namespace OxygenVK.AppSource.LocalSettings
 
 		private static bool ComplianceCheck(object val)
 		{
-			bool isMeetsTheRequirements = false;
-			switch (val)
+			bool isMeetsTheRequirements = true;
+			switch(val)
 			{
 				case sbyte:
-					isMeetsTheRequirements = true;
 					break;
 				case short:
-					isMeetsTheRequirements = true;
 					break;
 				case ushort:
-					isMeetsTheRequirements = true;
 					break;
 				case int:
-					isMeetsTheRequirements = true;
 					break;
 				case uint:
-					isMeetsTheRequirements = true;
 					break;
 				case long:
-					isMeetsTheRequirements = true;
 					break;
 				case ulong:
-					isMeetsTheRequirements = true;
 					break;
 				case float:
-					isMeetsTheRequirements = true;
 					break;
 				case double:
-					isMeetsTheRequirements = true;
 					break;
 				case bool:
-					isMeetsTheRequirements = true;
 					break;
 				case char:
-					isMeetsTheRequirements = true;
 					break;
 				case string:
-					isMeetsTheRequirements = true;
 					break;
 				case DateTime:
-					isMeetsTheRequirements = true;
 					break;
 				case TimeSpan:
-					isMeetsTheRequirements = true;
 					break;
 				case System.Drawing.Point:
-					isMeetsTheRequirements = true;
 					break;
 				case Windows.Foundation.Rect:
-					isMeetsTheRequirements = true;
 					break;
 				case ApplicationDataCompositeValue:
-					isMeetsTheRequirements = true;
 					break;
 				case null:
-					//throw new NullReferenceException("LocalSettings.GetType() return null");
+					throw new NullReferenceException("LocalSettings.GetType() return null");
+
+				default:
+					isMeetsTheRequirements = false;
 					break;
 			}
 			return isMeetsTheRequirements;

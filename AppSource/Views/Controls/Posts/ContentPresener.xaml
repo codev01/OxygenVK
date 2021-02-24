@@ -1,0 +1,95 @@
+﻿<UserControl
+	x:Class="OxygenVK.AppSource.Views.Controls.Posts.ContentPresener"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:ic="using:OxygenVK.AppSource.Views.Controls.Posts.ImageContainer"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+	SizeChanged="ContentPresener_SizeChanged"
+	mc:Ignorable="d">
+	<StackPanel Margin="0,0,24,0">
+		<RelativePanel>
+			<PersonPicture x:Name="headPicture" Height="50" />
+			<StackPanel
+				Margin="12,0,0,0"
+				Orientation="Vertical"
+				RelativePanel.AlignVerticalCenterWith="headPicture"
+				RelativePanel.RightOf="headPicture">
+				<TextBlock FontSize="17" Text="{Binding OwnerName}" Style="{StaticResource BaseTextBlockStyle}" />
+				<TextBlock Foreground="Gray" Text="1 янв в 13:10" />
+			</StackPanel>
+			<Button
+				Width="50"
+				Height="50"
+				Background="Transparent"
+				BorderThickness="0"
+				CornerRadius="{ThemeResource ControlCornerRadius}"
+				RelativePanel.AlignRightWithPanel="True">
+				<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE011;" />
+			</Button>
+		</RelativePanel>
+		<TextBlock
+			Visibility="Collapsed"
+			Margin="12,0,12,0"
+			HorizontalAlignment="Left"
+			EntranceNavigationTransitionInfo.IsTargetElement="True"
+			FontSize="16"
+			IsTextSelectionEnabled="True"
+			MaxLines="7"
+			TextWrapping="Wrap">
+			Если вaм пoвeзлo и вы мoжeтe нaблюдaть нoчaми звeзднoe нeбo, тo вы мoжeтe увидeть мeтeoритный дoждь, кoтoрый будeт дo кoнцa aпрeля, a oжидaeмый пик сeгoдня и зaвтрa (22.04 - 23.04).<LineBreak />
+			Кaждый гoд в aпрeлe Зeмля прoхoдит сквoзь шлeйф пыли, кoтoрый oстaвляeт пoслe сeбя кoмeтa Тэтчeр. Прoхoдя чeрeз aтмoсфeру Зeмли, мeтeoры сгoрaют и oстaвляют длинныe вспышки.
+			Присылaйтe свoи фoтoгрaфии, eсли зaфиксируeтe чтo-тo стрaннoe</TextBlock>
+		<HyperlinkButton
+			Margin="12,0,0,4"
+			HorizontalAlignment="Left"
+			Content="Показать полностью..." />
+		<ic:ImageContainer x:Name="ImageContainer" Attachments="{Binding Attachments}" />
+		<RelativePanel Background="{ThemeResource RegionBrush}" Margin="0,0,-2,0">
+			<StackPanel Orientation="Horizontal">
+				<Button
+					Width="50"
+					Height="50"
+					Background="Transparent"
+					CornerRadius="{ThemeResource ControlCornerRadius}">
+					<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE00B;" />
+				</Button>
+				<Button
+					Width="50"
+					Height="50"
+					Background="Transparent"
+					CornerRadius="{ThemeResource ControlCornerRadius}">
+					<SymbolIcon Symbol="Message" />
+				</Button>
+				<Button
+					Width="50"
+					Height="50"
+					Background="Transparent"
+					CornerRadius="{ThemeResource ControlCornerRadius}">
+					<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72D;" />
+				</Button>
+			</StackPanel>
+			<StackPanel
+				Orientation="Horizontal"
+				RelativePanel.AlignRightWithPanel="True"
+				RelativePanel.AlignVerticalCenterWithPanel="True">
+				<SymbolIcon
+					Width="40"
+					Foreground="Gray"
+					Symbol="View" />
+				<TextBlock
+					Margin="0,0,12,0"
+					Foreground="Gray"
+					Text="2.8K" />
+			</StackPanel>
+		</RelativePanel>
+		<Border Height="50" VerticalAlignment="Stretch" Background="{ThemeResource RegionBrush}">
+			<Rectangle
+				Height="1"
+				Margin="0,15,0,0"
+				HorizontalAlignment="Stretch"
+				VerticalAlignment="Top"
+				Fill="{ThemeResource SystemControlAcrylicWindowBrush}" />
+		</Border>
+	</StackPanel>
+</UserControl>

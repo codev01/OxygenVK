@@ -11,7 +11,7 @@
 		<ScalarTransition Duration="0:0:0.5" />
 	</UserControl.OpacityTransition>
 	<UserControl.Resources>
-		<ResourceDictionary Source="/AppSource/Dictionaries/ApplicationThemeDictionary.xaml" />
+		<ResourceDictionary Source="/AppSource/Dictionaries/ApplicationTheme.xaml" />
 	</UserControl.Resources>
 	<Grid
 		x:Name="WebAuth"

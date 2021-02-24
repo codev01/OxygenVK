@@ -5,9 +5,6 @@ namespace OxygenVK.AppSource.Views.Settings.Controls
 	public sealed partial class StylePreviewControl : UserControl
 	{
 		public string Title { get; set; }
-		public StylePreviewControl()
-		{
-			InitializeComponent();
-		}
+		public StylePreviewControl() => InitializeComponent();
 	}
 }

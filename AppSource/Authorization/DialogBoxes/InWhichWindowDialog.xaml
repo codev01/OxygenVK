@@ -12,7 +12,7 @@
 	Loaded="ContentDialog_Loaded"
 	mc:Ignorable="d">
 	<ContentDialog.Resources>
-		<ResourceDictionary Source="/AppSource/Dictionaries/ApplicationThemeDictionary.xaml" />
+		<ResourceDictionary Source="/AppSource/Dictionaries/ApplicationTheme.xaml" />
 	</ContentDialog.Resources>
 	<StackPanel>
 		<CheckBox

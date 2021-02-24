@@ -1,6 +1,6 @@
-﻿namespace OxygenVK.AppSource.Views.Controls.Posts.Attachments
+﻿namespace OxygenVK.AppSource.Views.Controls.Posts.ImageContainer
 {
-	public class ImageContainerAttachment
+	public partial class ContainerElement
 	{
 		public double Width { get; set; }
 
@@ -14,10 +14,7 @@
 
 		public bool LastRow { get; set; }
 
-		public double GetRatio()
-		{
-			return Width / Height;
-		}
+		public double GetRatio() => Width / Height;
 
 		public void SetViewSize(double width, double height, bool lastColumn, bool lastRow)
 		{

@@ -1,9 +1,9 @@
 ﻿using Windows.Storage;
 using Windows.UI.Xaml;
 
-namespace OxygenVK.AppSource.LocalSettings.Attachments
+namespace OxygenVK.AppSource.LocaSettings.Attachments
 {
-	public class ApplicationSettingsAttachments
+	public class ApplicationSettings
 	{
 		public static long UserID { get; set; } = 0;
 
@@ -19,10 +19,10 @@ namespace OxygenVK.AppSource.LocalSettings.Attachments
 			get => elementTheme;
 			set
 			{
-				if (value != elementTheme)
+				if(value != elementTheme)
 				{
 					elementTheme = value;
-					if (IsSet)
+					if(IsSet)
 					{
 						LocalSettings.SetSettingCell(ApplicationSettingsIndex.ElementTheme, UserID, value, SettingsCategory, ApplicationDataCompositeValue);
 					}
@@ -34,10 +34,10 @@ namespace OxygenVK.AppSource.LocalSettings.Attachments
 			get => elementSoundPlayerState;
 			set
 			{
-				if (value != elementSoundPlayerState)
+				if(value != elementSoundPlayerState)
 				{
 					elementSoundPlayerState = value;
-					if (IsSet)
+					if(IsSet)
 					{
 						LocalSettings.SetSettingCell(ApplicationSettingsIndex.ElementSoundPlayerState, UserID, value, SettingsCategory, ApplicationDataCompositeValue);
 					}
@@ -49,10 +49,10 @@ namespace OxygenVK.AppSource.LocalSettings.Attachments
 			get => elementSpatialAudioMode;
 			set
 			{
-				if (value != elementSpatialAudioMode)
+				if(value != elementSpatialAudioMode)
 				{
 					elementSpatialAudioMode = value;
-					if (IsSet)
+					if(IsSet)
 					{
 						LocalSettings.SetSettingCell(ApplicationSettingsIndex.ElementSpatialAudioMode, UserID, value, SettingsCategory, ApplicationDataCompositeValue);
 					}

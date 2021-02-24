@@ -26,17 +26,14 @@ namespace OxygenVK
 
 			RequiresPointerMode = ApplicationRequiresPointerMode.WhenRequested;
 
-			if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 6))
+			if(ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 6))
 			{
 				FocusVisualKind = AnalyticsInfo.VersionInfo.DeviceFamily == "Xbox" ? FocusVisualKind.Reveal : FocusVisualKind.HighVisibility;
 			}
 			Analytics.TrackEvent("Приложение было открыто");
 		}
 
-		protected override void OnLaunched(LaunchActivatedEventArgs e)
-		{
-			new WindowGenerator(e, null);
-		}
+		protected override void OnLaunched(LaunchActivatedEventArgs e) => new WindowGenerator(e, null);
 
 		private void OnSuspending(object sender, SuspendingEventArgs e)
 		{
@@ -47,7 +44,7 @@ namespace OxygenVK
 
 		public static TEnum GetEnum<TEnum>(string text) where TEnum : struct
 		{
-			if (!typeof(TEnum).GetTypeInfo().IsEnum)
+			if(!typeof(TEnum).GetTypeInfo().IsEnum)
 			{
 				throw new InvalidOperationException("Generic parameter 'TEnum' must be an enum.");
 			}

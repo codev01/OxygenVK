@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -6,8 +7,10 @@ using System.Timers;
 
 using OxygenVK.AppSource.Authorization;
 using OxygenVK.AppSource.Authorization.Controls;
-using OxygenVK.AppSource.LocalSettings.Attachments;
+using OxygenVK.AppSource.LocaSettings.Attachments;
 using OxygenVK.AppSource.Views;
+using OxygenVK.AppSource.Views.Controls.Posts;
+using OxygenVK.AppSource.Views.Controls.Posts.ImageContainer;
 using OxygenVK.AppSource.Views.Settings;
 using OxygenVK.AppSource.Views.User;
 
@@ -17,7 +20,9 @@ using VkNet.Model;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
@@ -46,6 +51,7 @@ namespace OxygenVK.AppSource
 		public MainPage()
 		{
 			InitializeComponent();
+
 			Navigation.IsPaneOpen = false;
 			Window.Current.SetTitleBar(AppTitleBar);
 		}
@@ -62,6 +68,20 @@ namespace OxygenVK.AppSource
 			LoadNavigationContent();
 
 			Navigation.IsPaneOpen = true;
+
+			foreach(NavigationItems item in new NavigationItemsList().NavigationItems.OrderBy(i => i.Index))
+			{
+				MUXC.NavigationViewItem navigationViewItem = new MUXC.NavigationViewItem
+				{
+					Content = item.Content,
+					Tag = item.Tag,
+					Icon = item.Icon
+				};
+
+				AutomationProperties.SetName(navigationViewItem, "Item" + item.Index);
+
+				Navigation.MenuItems.Add(navigationViewItem);
+			}
 		}
 
 		private async void LoadNavigationContent()
@@ -70,8 +90,8 @@ namespace OxygenVK.AppSource
 			firstANDlastNameSplitButton.Text = profileInfo.FirstName + " " + profileInfo.LastName;
 
 			ApplicationView.GetForCurrentView().Title = new WindowNamesHelper(profileInfo.FirstName + " " + profileInfo.LastName).GetNameWindow();
-			
-			foreach (VkNet.Model.Attachments.Photo photo in await Parameter.VkApi.Photo.GetAsync(new VkNet.Model.RequestParams.PhotoGetParams
+
+			foreach(VkNet.Model.Attachments.Photo photo in await Parameter.VkApi.Photo.GetAsync(new VkNet.Model.RequestParams.PhotoGetParams
 			{
 				AlbumId = PhotoAlbumType.Profile,
 				Count = 1
@@ -93,12 +113,12 @@ namespace OxygenVK.AppSource
 		{
 			Parameter = e?.Parameter as Parameter;
 
-			foreach (User item in await Parameter.VkApi.Users.GetAsync(new long[0]))
+			foreach(User item in await Parameter.VkApi.Users.GetAsync(new long[0]))
 			{
 				UserID = item.Id;
 			}
 
-			if (e.Parameter as string != "")
+			if(e.Parameter as string != string.Empty)
 			{
 				ThemeHelper.RootTheme = App.GetEnum<ElementTheme>(Parameter.ApplicationSettings.ElementTheme.ToString());
 				ElementSoundPlayer.State = Parameter.ApplicationSettings.ElementSoundPlayerState;
@@ -110,7 +130,7 @@ namespace OxygenVK.AppSource
 
 		private async void AddAccountsButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
 		{
-			if (WindowGenerator.AuthorizationPageWindowOpened && AuthorizationPage.IsThePageIsUsedInNavigation)
+			if(WindowGenerator.AuthorizationPageWindowOpened && AuthorizationPage.IsThePageIsUsedInNavigation)
 			{
 				await ApplicationViewSwitcher.SwitchAsync(WindowGenerator.AuthorizationPageWindowID);
 			}
@@ -126,30 +146,28 @@ namespace OxygenVK.AppSource
 			UpdateIndicatorForeground(Selection.NavigationUserPage);
 		}
 
-		private async void WorkWithUserData_OnListUpdated(List<SettingsAttachments> SettingsAttachments)
-		{
+		private async void WorkWithUserData_OnListUpdated(List<Settings> SettingsAttachments) =>
 			await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
 			{
 				AccountsSplitButtonList_Add(SettingsAttachments);
 			});
-		}
 
-		private void AccountsSplitButtonList_Add(List<SettingsAttachments> settingsAttachments)
+		private void AccountsSplitButtonList_Add(List<Settings> settingsAttachments)
 		{
 			listAccounts.Visibility = Visibility.Visible;
 			accountsSplitButtonList.Items.Clear();
 
-			if (settingsAttachments.Count != 0)
+			if(settingsAttachments.Count != 0)
 			{
-				foreach (SettingsAttachments item in settingsAttachments)
+				foreach(Settings item in settingsAttachments)
 				{
-					if (Parameter != null)
+					if(Parameter != null)
 					{
-						if (UserID != item.UserDataAttachments.UserID)
+						if(UserID != item.UserDataAttachments.UserID)
 						{
 							accountsSplitButtonList.Items.Add(new CardAttachmetsHelper(Frame, item).AddNewHorizontalUserCard());
 						}
-						else if (settingsAttachments.Count <= 1)
+						else if(settingsAttachments.Count <= 1)
 						{
 							listAccounts.Visibility = Visibility.Collapsed;
 							accountsSplitButtonList.Items.Clear();
@@ -162,7 +180,7 @@ namespace OxygenVK.AppSource
 				listAccounts.Visibility = Visibility.Collapsed;
 				accountsSplitButtonList.Items.Clear();
 			}
-			if (isNVFirstLoaded)
+			if(isNVFirstLoaded)
 			{
 				Navigation.IsPaneOpen = true;
 				isNVFirstLoaded = false;
@@ -171,7 +189,7 @@ namespace OxygenVK.AppSource
 
 		private void UpdateIndicatorForeground(Selection selection)
 		{
-			if (selection == Selection.NavigationUserPage)
+			if(selection == Selection.NavigationUserPage)
 			{
 				Application.Current.Resources["NavigationViewSelectionIndicatorForeground"] = Colors.Transparent;
 				IsNavigatedUserPage = true;
@@ -183,7 +201,7 @@ namespace OxygenVK.AppSource
 			}
 
 			ElementTheme theme = RequestedTheme;
-			if (Application.Current.RequestedTheme == ApplicationTheme.Dark)
+			if(Application.Current.RequestedTheme == ApplicationTheme.Dark)
 			{
 				RequestedTheme = ElementTheme.Light;
 			}
@@ -194,32 +212,29 @@ namespace OxygenVK.AppSource
 			RequestedTheme = theme;
 		}
 
-		private Parameter GetParameter()
+		private Parameter GetParameter() => new Parameter
 		{
-			return new Parameter
-			{
-				ApplicationSettings = Parameter.ApplicationSettings,
-				VkApi = Parameter.VkApi
-			};
-		}
+			ApplicationSettings = Parameter.ApplicationSettings,
+			VkApi = Parameter.VkApi
+		};
 
 		private void Navigation_ItemInvoked(MUXC.NavigationView sender, MUXC.NavigationViewItemInvokedEventArgs args)
 		{
-			if (IsNavigatedUserPage)
+			if(IsNavigatedUserPage)
 			{
 				UpdateIndicatorForeground(Selection.SelectionNavigationItem);
 			}
-			switch (args.InvokedItemContainer.Tag.ToString())
+			switch(args.InvokedItemContainer.Tag.ToString())
 			{
 				case "news":
-					new RootFrameNavigation(contentFrame, typeof(SettingsPage), GetParameter());
+					//new RootFrameNavigation(contentFrame, typeof(SettingsPage), GetParameter());
 					break;
 				case "test":
 					break;
 
 				case "Параметры":
 					new RootFrameNavigation(contentFrame, typeof(SettingsPage), GetParameter());
-						break;
+					break;
 			}
 		}
 
@@ -273,7 +288,7 @@ namespace OxygenVK.AppSource
 
 		public void AppTitleBar_Margin(Enum displayMode, bool paneIsOpen)
 		{
-			switch (displayMode)
+			switch(displayMode)
 			{
 				case MUXC.NavigationViewDisplayMode.Minimal:
 
@@ -281,7 +296,7 @@ namespace OxygenVK.AppSource
 					accountsSplitButton.Margin = new Thickness(5, 48, -75, 0);
 					accountsSplitButton.Translation = new Vector3(-80, 0, 0);
 
-					if (paneIsOpen)
+					if(paneIsOpen)
 					{
 						AppTitleBar.Margin = new Thickness(80, 0, 0, 0);
 					}
@@ -308,6 +323,12 @@ namespace OxygenVK.AppSource
 
 					break;
 			}
+		}
+
+		private void BorderRoot_SizeChanged(object sender, SizeChangedEventArgs e)
+		{
+			AnimationWidth.To = e.NewSize.Width;
+			StoryboardAnimationRootContentWidth.Begin();
 		}
 	}
 }
